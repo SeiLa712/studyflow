@@ -65,8 +65,8 @@ CREATE TABLE provas (
 INSERT INTO usuarios(nome, email, senha, perfil)
 VALUES(
 	'Admin joao', 
-    'joaoadm@gmail.com', 
-    'neymarnelhordetodos', 
+    'adm@gmail.com', 
+    '$2a$10$7aVzLkUBw5Re8aEIZtzwUOetRamaAfSU.BLxfe0L90cQuc8aw.Lq6', 
     'estudante'
 );
 
