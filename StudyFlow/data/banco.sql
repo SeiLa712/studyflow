@@ -62,6 +62,26 @@ CREATE TABLE provas (
         ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS sessoes_estudo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    nome VARCHAR(100) NOT NULL,
+    materia VARCHAR(150) NOT NULL,
+
+    foco_min INT NOT NULL,
+    pausa_min INT NOT NULL,
+
+    cor VARCHAR(20) NOT NULL,
+
+    id_usuario INT NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id)
+        ON DELETE CASCADE
+);
+
 INSERT INTO usuarios(nome, email, senha, perfil)
 VALUES(
 	'Admin joao', 
