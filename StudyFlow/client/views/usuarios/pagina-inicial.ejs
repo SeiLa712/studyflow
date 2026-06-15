@@ -77,22 +77,22 @@
           <button id="closeModal">✕</button>
         </div>
 
-        <form id="activityForm">
+        <form id="activityForm" action="/tarefas/criar" method="POST">
           <label>Título</label>
-          <input type="text" id="titulo" required />
+          <input type="name" id="titulo" required />
 
-          <label>Disciplina</label>
-          <input type="text" id="disciplina" required />
+          <label>Descrição</label>
+          <textarea name="descricao"></textarea>
 
           <label>Data</label>
-          <input type="date" id="data" required />
+          <input type="date" name="data_vencimento" required />
 
           <label>Urgência</label>
 
-          <select id="urgencia">
-            <option value="baixo">Baixo</option>
-            <option value="medio">Médio</option>
-            <option value="alto">Alto</option>
+          <select name="prioridade">
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
           </select>
 
           <div class="modal-buttons">
