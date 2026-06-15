@@ -12,41 +12,44 @@
     />
   </head>
   <body>
-    <aside class="sidebar">
-      <div>
-        <div class="logo-area">
-          <h2>StudyFlow</h2>
-          <span>Calendário Inteligente</span>
+    <header>
+      <aside class="sidebar">
+        <div>
+          <div class="logo-area">
+            <h2>StudyFlow</h2>
+            <span>Calendário Inteligente</span>
 
-          <button class="collapse-btn">◀</button>
+            <button class="collapse-btn">◀</button>
+          </div>
+
+          <nav class="menu">
+            <a href="barra-lateral" class="menu-item active">
+              <i class="fa-solid fa-graduation-cap"></i>
+              <span>Tela-inicial</span>
+            </a>
+
+            <a href="#" class="menu-item">
+              <i class="fa-solid fa-calendar"></i> <span>Calendário</span>
+            </a>
+
+            <a href="#" class="menu-item">
+              <i class="fa-solid fa-stopwatch"></i>
+              <span>Pomodoro</span>
+            </a>
+
+            <a href="#" class="menu-item">
+              <i class="fa-solid fa-users"></i> <span>Grupos</span>
+            </a>
+          </nav>
         </div>
 
-        <nav class="menu">
-          <a href="barra-lateral" class="menu-item active">
-            <i class="fa-solid fa-graduation-cap"></i> <span>Tela-inicial</span>
+        <div class="sidebar-footer">
+          <a href="#" class="logout">
+            <i class="fa-solid fa-sign-out-alt"></i> <span>Deslogar</span>
           </a>
-
-          <a href="#" class="menu-item">
-            <i class="fa-solid fa-calendar"></i> <span>Calendário</span>
-          </a>
-
-          <a href="#" class="menu-item">
-            <i class="fa-solid fa-stopwatch"></i>
-            <span>Pomodoro</span>
-          </a>
-
-          <a href="#" class="menu-item">
-            <i class="fa-solid fa-users"></i> <span>Grupos</span>
-          </a>
-        </nav>
-      </div>
-
-      <div class="sidebar-footer">
-        <a href="#" class="logout">
-          <i class="fa-solid fa-sign-out-alt"></i> <span>Deslogar</span>
-        </a>
-      </div>
-    </aside>
-    <script src="../js/barra-lateral.js"></script>
+        </div>
+      </aside>
+      <script src="../js/barra-lateral.js"></script>
   </body>
+  </header>
 </html>

@@ -1,1 +1,110 @@
-<%- include('../partials/barra-lateral') %>
+<!-- <%- include('../partials/barra-lateral') %> -->
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyFlow</title>
+    <link rel="stylesheet" href="../css/pagina-inicial.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <%- include('../partials/barra-lateral') %>
+    <main class="dashboard">
+      <section class="main-content">
+        <div class="header">
+          <div>
+            <h1>Bem-vindo ao StudyFlow</h1>
+            <p>Organize seus estudos e aumente sua produtividade.</p>
+          </div>
+
+          <button class="btn-add" id="openModal">+ Adicionar</button>
+        </div>
+        <div class="activities">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <h2>Próximas Atividades</h2>
+          </div>
+
+          <div id="tasksContainer">
+            <div class="task-card urgent">
+              <h3>Entrega do TCC</h3>
+              <p>12/04/2026</p>
+            </div>
+
+            <div class="task-card medium">
+              <h3>Prova de Cálculo III</h3>
+              <p>13/04/2026</p>
+            </div>
+
+            <div class="task-card low">
+              <h3>Trabalho em Grupo</h3>
+              <p>14/04/2026</p>
+            </div>
+          </div>
+        </div>
+        <section class="weekly-calendar">
+          <div class="calendar-header">
+            <h2>Calendário Semanal</h2>
+            <span id="weekRange"></span>
+          </div>
+
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </section>
+      </section>
+      <aside class="pomodoro-card">
+        <h2>Timer Rápido</h2>
+
+        <div class="timer-circle">25:00</div>
+
+        <button class="play-btn">Iniciar</button>
+
+        <button class="reset-btn">Reiniciar</button>
+      </aside>
+    </main>
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Adicionar Nova Atividade</h2>
+          <button id="closeModal">✕</button>
+        </div>
+
+        <form id="activityForm">
+          <label>Título</label>
+          <input type="text" id="titulo" required />
+
+          <label>Disciplina</label>
+          <input type="text" id="disciplina" required />
+
+          <label>Data</label>
+          <input type="date" id="data" required />
+
+          <label>Urgência</label>
+
+          <select id="urgencia">
+            <option value="baixo">Baixo</option>
+            <option value="medio">Médio</option>
+            <option value="alto">Alto</option>
+          </select>
+
+          <div class="modal-buttons">
+            <button type="button" class="cancel-btn" id="cancelModal">
+              Cancelar
+            </button>
+
+            <button type="submit" class="save-btn">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="../js/pagina-inicial.js"></script>
+  </body>
+</html>

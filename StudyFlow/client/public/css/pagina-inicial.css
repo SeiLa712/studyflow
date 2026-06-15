@@ -1,0 +1,440 @@
+/* =======================
+   CONFIGURAÇÕES GERAIS
+======================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: #f5f5f7;
+}
+
+/* =======================
+   DASHBOARD
+======================= */
+
+.dashboard {
+  margin-left: 260px;
+  padding: 30px;
+
+  display: flex;
+  gap: 24px;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  margin-bottom: 8px;
+}
+
+.header p {
+  color: #6b7280;
+}
+
+.btn-add {
+  background: #6366f1;
+  color: white;
+  border: none;
+
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.activities {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  max-height: 500px;
+  overflow-y: auto;
+
+  padding-right: 8px;
+}
+
+.task-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+
+  border: 1px solid #e5e7eb;
+
+  position: relative;
+}
+
+.task-card p {
+  margin-top: 6px;
+  color: #6b7280;
+}
+
+.urgent {
+  border-left: 5px solid #ef4444;
+}
+
+.medium {
+  border-left: 5px solid #f59e0b;
+}
+.low {
+  border-left: 5px solid #42f50b;
+}
+/* =======================
+   POMODORO
+======================= */
+
+.pomodoro-card {
+  width: 320px;
+
+  background: white;
+  border-radius: 12px;
+
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+
+  height: fit-content;
+}
+
+.timer-circle {
+  width: 200px;
+  height: 200px;
+
+  border: 6px solid #6366f1;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 20px auto;
+
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.play-btn {
+  width: 100%;
+
+  border: none;
+  background: #6366f1;
+  color: white;
+
+  padding: 14px;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.reset-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  background: #e5e7eb;
+} 
+
+/* ==========================
+   CALENDÁRIO SEMANAL
+========================== */
+
+.weekly-calendar {
+  margin-top: 40px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.calendar-header {
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-header h2 {
+  font-size: 22px;
+}
+
+.calendar-header span {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day-column {
+  min-height: 180px;
+  border-right: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.day-column:last-child {
+  border-right: none;
+}
+
+.day-header {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.day-header span {
+  display: block;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.day-header strong {
+  font-size: 18px;
+  color: #111827;
+}
+
+.active-day {
+  background: #f8f9ff;
+}
+
+.active-day strong {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 32px;
+  height: 32px;
+
+  background: #6366f1;
+  color: white;
+  border-radius: 50%;
+}
+
+.event {
+  margin: 12px;
+  padding: 10px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.prova {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.trabalho {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.estudo {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.calendar-legend {
+  display: flex;
+  gap: 20px;
+
+  padding: 16px 20px;
+  border-top: 1px solid #e5e7eb;
+
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+  display: inline-block;
+
+  margin-right: 6px;
+}
+
+.red {
+  background: #ef4444;
+}
+
+.blue {
+  background: #3b82f6;
+}
+
+.purple {
+  background: #8b5cf6;
+}
+/* =======================
+   MODAL
+======================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal {
+  width: 500px;
+  background: white;
+
+  border-radius: 16px;
+
+  padding: 25px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.modal-header button {
+  border: none;
+  background: none;
+
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal input,
+.modal select {
+  padding: 12px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+.cancel-btn {
+  flex: 1;
+  padding: 12px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #e5e7eb;
+  cursor: pointer;
+}
+
+.save-btn {
+  flex: 1;
+  padding: 12px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #6366f1;
+  color: white;
+
+  cursor: pointer;
+}
+
+/* =======================
+   SCROLL PERSONALIZADO
+======================= */
+
+.activities::-webkit-scrollbar {
+  width: 8px;
+}
+
+.activities::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 10px;
+}
+
+.activities::-webkit-scrollbar-thumb {
+  background: #6366f1;
+  border-radius: 10px;
+}
+
+/* =======================
+   EVENTOS DO CALENDÁRIO
+======================= */
+
+.events-container {
+  padding: 8px;
+}
+
+/* =======================
+   EXCLUSÃO DE ATIVIDADES
+======================= */
+
+.delete-task {
+  position: absolute;
+
+  top: 15px;
+  right: 15px;
+
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #fee2e2;
+  color: #ef4444;
+
+  cursor: pointer;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: 0.2s;
+}
+
+.task-card:hover .delete-task {
+  opacity: 1;
+  visibility: visible;
+}
+
+.delete-task:hover {
+  background: #fecaca;
+}
