@@ -9,3 +9,10 @@ registerBtn.addEventListener('click', () => {
 loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
+
+const btn = document.querySelector(".collapse-btn");
+const sidebar = document.querySelector(".sidebar");
+
+btn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+});

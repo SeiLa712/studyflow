@@ -1,54 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/barra-lateral.css">
-    <title>Document</title>
-</head>
-<body>
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyFlow</title>
+
+    <link rel="stylesheet" href="../css/barra-lateral.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+  <body>
     <aside class="sidebar">
-    <div class="logo-area">
-        <h2>StudyFlow</h2>
-        <span>Calendário Inteligente</span>
+      <div>
+        <div class="logo-area">
+          <h2>StudyFlow</h2>
+          <span>Calendário Inteligente</span>
 
-        <button class="collapse-btn">
-            ◀
-        </button>
-    </div>
-
-    <nav class="menu">
-        <a href="#" class="menu-item active">
-            <i>📊</i>
-            <span>Dashboard</span>
-        </a>
-
-        <a href="#" class="menu-item">
-            <i>📅</i>
-            <span>Calendário</span>
-        </a>
-
-        <a href="#" class="menu-item">
-            <i>⏱️</i>
-            <span>Pomodoro</span>
-        </a>
-
-        <a href="#" class="menu-item">
-            <i>👥</i>
-            <span>Grupos</span>
-        </a>
-    </nav>
-
-    <div class="sidebar-footer">
-        <div class="project-card">
-            <p>TCC - Sistema de Organização Acadêmica</p>
+          <button class="collapse-btn">◀</button>
         </div>
 
+        <nav class="menu">
+          <a href="barra-lateral" class="menu-item active">
+            <i class="fa-solid fa-graduation-cap"></i> <span>Tela-inicial</span>
+          </a>
+
+          <a href="#" class="menu-item">
+            <i class="fa-solid fa-calendar"></i> <span>Calendário</span>
+          </a>
+
+          <a href="#" class="menu-item">
+            <i class="fa-solid fa-stopwatch"></i>
+            <span>Pomodoro</span>
+          </a>
+
+          <a href="#" class="menu-item">
+            <i class="fa-solid fa-users"></i> <span>Grupos</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
         <a href="#" class="logout">
-            <i>↪</i>
-            <span>Deslogar</span>
+          <i class="fa-solid fa-sign-out-alt"></i> <span>Deslogar</span>
         </a>
-    </div>
-</aside>
-</body>
+      </div>
+    </aside>
+    <script src="../js/barra-lateral.js"></script>
+  </body>
 </html>

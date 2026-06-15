@@ -1,0 +1,113 @@
+/* =======================
+   SIDEBAR
+======================= */
+
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  position: fixed;
+
+  transition: 0.3s;
+}
+
+.logo-area {
+  padding: 24px 20px;
+  position: relative;
+}
+
+.logo-area h2 {
+  font-size: 32px;
+}
+
+.logo-area span {
+  color: #9ca3af;
+}
+
+.collapse-btn {
+  position: absolute;
+  right: -14px;
+  top: 20px;
+
+  width: 28px;
+  height: 28px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #6366f1;
+  color: white;
+  cursor: pointer;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: #374151;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+  border-radius: 12px;
+}
+
+.menu-item.active {
+  background: #6366f1;
+  color: white;
+}
+
+.sidebar-footer {
+  padding: 16px;
+}
+
+.project-card {
+  background: #f3f4f6;
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.logout {
+  text-decoration: none;
+  color: #6b7280;
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+/* ==========================
+   SIDEBAR FECHADA
+========================== */
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed h2,
+.sidebar.collapsed span,
+.sidebar.collapsed .project-card {
+  display: none;
+}
+
+.sidebar.collapsed .menu-item,
+.sidebar.collapsed .logout {
+  justify-content: center;
+}
+
+.sidebar.collapsed + .dashboard {
+  margin-left: 80px;
+}

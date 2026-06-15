@@ -10,49 +10,53 @@ const usuarioModel = require("../models/usuarioModel.js")
 
 module.exports = {
     //FUNÇÕES DE LOGIN
-    login: async (req,res) =>{
-    try{
-        // Pega as infomações das caixinhas da view, de acordo com o name delas
-        const { email, senha } = req.body
-        console.log("Dados:", email, senha)
+login: async (req, res) => {
+    try {
+        // Pega as informações das caixinhas da view
+        const { email, senha } = req.body;
+        console.log("Dados:", email, senha);
 
-        // Executa a função de busca no model
-        const usuario = await usuarioModel.buscarPorEmail(email)
-        console.log(usuario)
+        // Busca o usuário pelo email
+        const usuario = await usuarioModel.buscarPorEmail(email);
+        console.log("Usuário encontrado:", usuario);
 
-        // Se não existir, mensagem de erro
-        if (!usuario){
-            return res.status(404).render('erro', { mensagem: "Credenciais inválidas"})
+        // Se não existir
+        if (!usuario) {
+            return res.redirect('/login');
         }
 
-        // compara a senha que o usuário digitou, com a senha do usuario retornado no banco
-        const senhaValida = await bcrypt.compare(senha, usuario.senha)
+        // Compara a senha digitada com a senha do banco
+        const senhaValida = await bcrypt.compare(senha, usuario.senha);
 
-        // Se senhas não coincidirem, mensagem de erro
-        if (!senhaValida){
-            return res.status(404).render('erro', { mensagem: "Credenciais inválidas"})
+        // Se a senha estiver errada
+        if (!senhaValida) {
+            return res.redirect('/login');
         }
 
-        // Gera o token de acesso, contendo o perfil 
+        // Gera o token
         const token = jwt.sign(
-            {id: usuario.id, perfil: usuario.perfil, nome: usuario.nome},
+            {
+                id: usuario.id,
+                perfil: usuario.perfil,
+                nome: usuario.nome
+            },
             process.env.JWT_SECRET,
-            {expiresIn: '2h'}       
-        )
+            { expiresIn: '2h' }
+        );
 
-        // Guardar o token nos cookies do navegador
-        res.cookie('token', token, { httpOnly: true })
+        // Salva o token nos cookies
+        res.cookie('token', token, {
+            httpOnly: true
+        });
 
-        // REDIRECIONAMENTO
+        console.log("LOGIN REALIZADO COM SUCESSO");
+
+        // Redireciona para a página inicial
         return res.redirect('/usuarios/pagina-inicial');
 
-        // ao fim, redireciona o usuario
-        res.redirect(redirecionadoPara)
-
-    }
-    catch(erro){
-        console.log(erro)
-        res.status(500).render('erro', { mensagem: "Erro interno no servidor"})
+    } catch (erro) {
+        console.error(erro);
+        return res.status(500).send("Erro interno no servidor");
     }
 },
 
