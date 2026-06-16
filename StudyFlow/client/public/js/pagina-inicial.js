@@ -300,109 +300,56 @@ const tasksContainer =
   document.getElementById("tasksContainer");
 
 // Executa quando o usuário envia o formulário
-activityForm.addEventListener("submit", (e) => {
-
-  // Impede o recarregamento da página
+activityForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Recupera o título informado
-  const titulo =
-    document.getElementById("titulo").value;
+  const nome =
+    document.getElementById("nome").value;
 
-  // Recupera a disciplina informada
-  const disciplina =
-    document.getElementById("disciplina").value;
+  const descricao =
+    document.querySelector(
+      'textarea[name="descricao"]'
+    ).value;
 
-  // Recupera a data informada
-  const dataInput =
-    document.getElementById("data").value;
+  const data_vencimento =
+    document.querySelector(
+      'input[name="data_vencimento"]'
+    ).value;
 
-  // Divide a data recebida (AAAA-MM-DD)
-  const [ano, mes, dia] =
-    dataInput.split("-");
+  const prioridade =
+    document.querySelector(
+      'select[name="prioridade"]'
+    ).value;
 
-  // Cria um objeto Date
-  const data =
-    new Date(ano, mes - 1, dia);
+  try {
+    const resposta = await fetch(
+      "/tarefas/criar",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          nome,
+          descricao,
+          data_vencimento,
+          prioridade
+        })
+      }
+    );
 
-  // Recupera o nível de urgência selecionado
-  const urgencia =
-    document.getElementById("urgencia").value;
+    if (resposta.ok) {
+      activityForm.reset();
+      modalOverlay.classList.remove("show");
 
-  // Gera um ID único utilizando o timestamp atual
-  const taskId = Date.now();
+      alert("Tarefa criada com sucesso!");
 
-  // Cria o card da atividade
-  const card =
-    document.createElement("div");
-
-  card.classList.add("task-card");
-
-  // Salva o ID da atividade
-  card.dataset.taskId = taskId;
-
-  // Define a aparência do card conforme a urgência
-  if (urgencia === "alto") {
-    card.classList.add("urgent");
-  }
-
-  if (urgencia === "medio") {
-    card.classList.add("medium");
-  }
-
-  // Monta o conteúdo HTML do card
-  card.innerHTML = `
-    <button class="delete-task">
-      🗑️
-    </button>
-
-    <h3>${titulo}</h3>
-    <p>${disciplina}</p>
-    <p>${data.toLocaleDateString("pt-BR")}</p>
-  `;
-
-  // Adiciona a atividade no topo da lista
-  tasksContainer.prepend(card);
-
-  // Cria também o evento correspondente no calendário
-  adicionarEventoCalendario(
-    taskId,
-    titulo,
-    data,
-    urgencia
-  );
-
-  // Seleciona o botão de exclusão do card recém-criado
-  const deleteBtn =
-    card.querySelector(".delete-task");
-
-  // Evento de exclusão da atividade
-  deleteBtn.addEventListener("click", () => {
-
-    // Solicita confirmação antes de excluir
-    if (
-      confirm(
-        "Deseja excluir esta atividade?"
-      )
-    ) {
-
-      // Recupera o ID da atividade
-      const id =
-        card.dataset.taskId;
-
-      // Remove todos os elementos que possuem esse ID
-      // (card da atividade + evento do calendário)
-      document
-        .querySelectorAll(
-          `[data-task-id="${id}"]`
-        )
-        .forEach((item) => item.remove());
+      location.reload();
+    } else {
+      alert("Erro ao criar tarefa.");
     }
-  });
-
-  // Limpa os campos do formulário
-  activityForm.reset();
-
-  // Fecha o modal após adicionar a atividade
-  modalOverlay.classList.remove("show");
+  } catch (erro) {
+    console.error(erro);
+    alert("Erro ao conectar ao servidor.");
+  }
 });

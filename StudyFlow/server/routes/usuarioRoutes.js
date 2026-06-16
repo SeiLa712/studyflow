@@ -5,6 +5,8 @@ const router = express.Router();
 
 const usuarioController = require("../controllers/usuarioController.js")
 
+const atividadeModel = require("../models/atividadeModel");
+
 //importar o multer
 const upload = require("../config/multer.js")
 
@@ -34,8 +36,25 @@ router.get("/", (req, res) => {
   res.status(200).render('usuarios/listar')
 });
 
-router.get('/pagina-inicial', (req, res) => {
-    res.render('usuarios/pagina-inicial');
+router.get('/pagina-inicial', async (req, res) => {
+    try {
+
+        const tarefas =
+            await atividadeModel.listarPorUsuario(
+                req.usuario.id
+            );
+
+        res.render(
+            'usuarios/pagina-inicial',
+            { tarefas }
+        );
+
+    } catch (erro) {
+        console.error(erro);
+        res.status(500).send(
+            "Erro ao carregar tarefas"
+        );
+    }
 });
 
 //Retornar a página de cadastro

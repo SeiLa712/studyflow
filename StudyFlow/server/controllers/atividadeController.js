@@ -1,30 +1,25 @@
 const atividadeModel = require("../models/atividadeModel");
 
-async function criarAtividade(req, res) {
-    try {
-        const { titulo, disciplina, data, urgencia } = req.body;
+exports.criarAtividade = async (req, res) => {
+  try {
+    const {
+      nome,
+      descricao,
+      data_vencimento,
+      prioridade
+    } = req.body;
 
-        await atividadeModel.inserir({
-            titulo,
-            disciplina,
-            data,
-            urgencia
-        });
+    await atividadeModel.criar({
+      nome,
+      descricao,
+      data_vencimento,
+      prioridade,
+      id_usuario: req.usuario.id
+    });
 
-        res.status(201).json({
-            sucesso: true,
-            mensagem: "Atividade criada com sucesso"
-        });
-
-    } catch (erro) {
-        console.error(erro);
-        res.status(500).json({
-            sucesso: false,
-            mensagem: "Erro ao salvar atividade"
-        });
-    }
-}
-
-module.exports = {
-    criarAtividade
+    res.redirect("/usuarios/pagina-inicial");
+  } catch (erro) {
+    console.error(erro);
+    res.status(500).send("Erro ao criar atividade");
+  }
 };
