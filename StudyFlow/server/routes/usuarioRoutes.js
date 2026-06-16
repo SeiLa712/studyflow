@@ -62,6 +62,23 @@ router.get("/cadastro", (req, res) => {
   res.status(200).render('usuarios/cadastrar')
 });
 
+// Vai para a tela de calendario
+router.get('/calendario', async (req, res) => {
+    try {
+       
+        const tarefas = await atividadeModel.listarPorUsuario(req.usuario.id);
+
+       
+        res.render('usuarios/calendario', { 
+            usuario: req.usuario,
+            tarefas: tarefas 
+        });
+
+    } catch (erro) {
+        console.error("Erro ao carregar dados do calendário:", erro);
+        res.status(500).send("Erro interno ao carregar o calendário");
+    }
+});
 
 
 module.exports = router
