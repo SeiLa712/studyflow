@@ -1,3 +1,4 @@
+const atividades = window.atividades || [];
 
 // =======================
 // POMODORO
@@ -77,7 +78,8 @@ resetBtn.addEventListener("click", () => {
   playBtn.textContent = "▶ Iniciar";
 });
 
-atualizarTimer();// =======================
+atualizarTimer();
+// =======================
 // CALENDÁRIO SEMANAL
 // =======================
 
@@ -192,6 +194,25 @@ function gerarSemanaAtual() {
 
 // Executa a função assim que a página carrega
 gerarSemanaAtual();
+
+
+// Agora adiciona as atividades vindas do banco
+if (typeof atividades !== "undefined") {
+
+  atividades.forEach((atividade) => {
+
+    adicionarEventoCalendario(
+      atividade.id,
+      atividade.nome,
+      atividade.data_vencimento,
+      atividade.prioridade
+    );
+
+  });
+
+}
+
+console.log("Atividades:", atividades);
 
 // =======================
 // MODAL
@@ -352,4 +373,34 @@ activityForm.addEventListener("submit", async (e) => {
     console.error(erro);
     alert("Erro ao conectar ao servidor.");
   }
+});
+
+document.querySelectorAll(".btn-delete").forEach((btn) => {
+  btn.addEventListener("click", async (e) => {
+
+    const card = e.target.closest(".task-card"); // 🔥 AQUI o card existe
+
+    const id = card.dataset.id;
+
+    console.log("ID da tarefa:", id);
+
+    const confirmDelete = confirm("Deseja excluir esta tarefa?");
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`/tarefas/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        card.remove();
+      } else {
+        alert("Erro ao excluir tarefa");
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert("Erro no servidor");
+    }
+  });
 });

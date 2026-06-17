@@ -34,3 +34,25 @@ exports.listarPorUsuario = async (idUsuario) => {
 
   return rows;
 };
+
+exports.listar = () => {
+  return new Promise((resolve, reject) => {
+    db.all(
+      `
+      SELECT *
+      FROM tarefas
+      ORDER BY data_vencimento ASC
+      `,
+      [],
+      (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      }
+    );
+  });
+};
+
+exports.deletar = (id) => {
+  const sql = "DELETE FROM tarefas WHERE id = ?";
+  return db.query(sql, [id]);
+};

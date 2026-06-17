@@ -39,21 +39,23 @@ router.get("/", (req, res) => {
 router.get('/pagina-inicial', async (req, res) => {
     try {
 
-        const tarefas =
+        console.log("USUARIO LOGADO:", req.usuario);
+
+        const atividades =
             await atividadeModel.listarPorUsuario(
                 req.usuario.id
             );
 
+        console.log("ID USUARIO:", req.usuario.id);
+        console.log("ATIVIDADES:", atividades);
+
         res.render(
             'usuarios/pagina-inicial',
-            { tarefas }
+            { atividades }
         );
 
     } catch (erro) {
         console.error(erro);
-        res.status(500).send(
-            "Erro ao carregar tarefas"
-        );
     }
 });
 
