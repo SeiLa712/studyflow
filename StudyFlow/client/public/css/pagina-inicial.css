@@ -81,16 +81,35 @@ body {
   color: #6b7280;
 }
 
-.urgent {
+.event.urgent {
+  border-left: 5px solid #ef4444;
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.event.medium {
+  border-left: 5px solid #f59e0b;
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.event.low {
+  border-left: 5px solid #42f50b;
+  background: #dcfce7;
+  color: #16a34a;
+}
+.task-card.urgent {
   border-left: 5px solid #ef4444;
 }
 
-.medium {
+.task-card.medium {
   border-left: 5px solid #f59e0b;
 }
-.low {
+
+.task-card.low {
   border-left: 5px solid #42f50b;
 }
+
 /* =======================
    POMODORO
 ======================= */

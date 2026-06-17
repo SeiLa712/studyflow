@@ -281,19 +281,12 @@ function adicionarEventoCalendario(taskId, titulo, data, urgencia) {
       evento.classList.add("event");
 
       // Define cores diferentes conforme o nível de urgência
-      if (urgencia === "alto") {
-        evento.style.background = "#fee2e2";
-        evento.style.color = "#dc2626";
-      }
-
-      if (urgencia === "medio") {
-        evento.style.background = "#fef3c7";
-        evento.style.color = "#d97706";
-      }
-
-      if (urgencia === "baixo") {
-        evento.style.background = "#dbeafe";
-        evento.style.color = "#2563eb";
+      if (urgencia === "alta") {
+        evento.classList.add("urgent");
+      } else if (urgencia === "media") {
+        evento.classList.add("medium");
+      } else {
+        evento.classList.add("low");
       }
 
       // Define o texto exibido no calendário
