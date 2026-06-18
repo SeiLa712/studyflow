@@ -85,6 +85,9 @@
         </div>
 
         <form id="activityForm" action="/tarefas/criar" method="POST">
+
+          <input type="hidden" name="origem" value="pagina-inicial">
+
           <label>Título</label>
           <input type="text" id="nome" name="nome" required />
 

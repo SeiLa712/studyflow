@@ -1,186 +1,285 @@
-/* --- ADICIONE ISSO AQUI NO TOPO DO ARQUIVO --- */
-.main-container {
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
-    background-color: #ffffff;
-    box-sizing: border-box;
+/* =======================
+   CONFIGURAÇÕES GERAIS
+======================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif; /* Alinha com a fonte moderna do Figma */
+  background: #f5f5f7;
 }
-/* -------------------------------------------- */
+
+/* =======================
+   CONTAINER PRINCIPAL
+======================= */
+
+.main-container {
+  width: 100%;
+}
 
 .calendar-section {
-    flex: 1;
-    padding: 40px 40px 40px 300px; /* Alinhamento correto contando com a largura da sidebar fixed */
-    background-color: #ffffff;
+  margin-left: 260px; /* mesma sidebar da página inicial */
+  padding: 30px;
 }
 
+/* =======================
+   CABEÇALHO
+======================= */
+
 .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
 .calendar-header h1 {
-    font-size: 1.85rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin: 0 0 4px 0;
+  font-size: 2rem;
+  color: #111827;
+  margin-bottom: 4px;
 }
 
-.calendar-header .subtitle {
-    color: #94a3b8;
-    margin: 0;
-    font-size: 0.95rem;
+.subtitle {
+  color: #6b7280;
 }
 
 .btn-nova-atividade {
-    background-color: #4f46e5;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .btn-nova-atividade:hover {
-    background-color: #4338ca;
+  background: #4f46e5;
 }
 
+/* =======================
+   NAVEGAÇÃO DE MESES
+======================= */
+
 .month-navigation {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
 }
 
 .month-navigation h2 {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin: 0;
-}
-
-.nav-arrows {
-    display: flex;
-    gap: 12px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
 }
 
 .arrow-btn {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    color: #1e293b;
+  border: none;
+  background: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #374151;
 }
 
-/* Estrutura do Grid */
+.arrow-btn:hover {
+  color: #6366f1;
+}
+
+/* =======================
+   CALENDÁRIO
+======================= */
+
 .calendar-grid-container {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    border-top: 1px solid #e5e7eb;
-    border-left: 1px solid #e5e7eb;
-    border-radius: 8px;
-    overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  overflow: hidden;
 }
 
 .weekday-header {
-    text-align: center;
-    font-weight: 600;
-    color: #9ca3af;
-    padding: 14px 0;
-    background-color: #ffffff;
-    border-right: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
+  text-align: center;
+  padding: 16px;
+  font-weight: 600;
+  color: #6b7280;
+
+  border-bottom: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+
+  background: #fafafa;
+}
+
+.weekday-header:last-child {
+  border-right: none;
 }
 
 .calendar-day {
-    background-color: #ffffff;
-    border-right: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
-    min-height: 110px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
+  min-height: 120px;
 
-.day-number {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #4b5563;
-    margin-bottom: 8px;
-}
+  padding: 10px;
 
-/* Estilo do dia focado/selecionado */
-.calendar-day.selected-day {
-    background-color: #f5f3ff;
-    box-shadow: inset 0 0 0 2px #4f46e5;
-}
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
 
-.calendar-day.selected-day .day-number {
-    color: #4f46e5;
-    font-weight: 700;
+  background: white;
 }
 
 .calendar-day.empty {
-    background-color: #fafafa;
+  background: #fafafa;
 }
+
+.day-number {
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 8px;
+
+  display: block;
+}
+
+/* =======================
+   TAREFAS
+======================= */
 
 .activities-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* Blocos de Atividades Dinâmicas */
 .activity-tag {
-    font-size: 0.73rem;
-    font-weight: 600;
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  padding: 5px 8px;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: white;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.tag-prova { background-color: #ef4444; }
-.tag-trabalho { background-color: #ec4899; }
-.tag-estudo { background-color: #3b82f6; }
-
-/* Barra de Legendas */
-.legend-container {
-    display: flex;
-    gap: 24px;
-    margin-top: 24px;
+.tag-estudo {
+  background: #3b82f6;
 }
 
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: #4b5563;
-    font-weight: 500;
+.tag-trabalho {
+  background: #ec4899;
 }
 
-.bullet {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    display: inline-block;
+.tag-prova {
+  background: #ef4444;
 }
 
-.bullet-prova { background-color: #ef4444; }
-.bullet-trabalho { background-color: #ec4899; }
-.bullet-estudo { background-color: #3b82f6; }
+/* =======================
+   MODAL
+======================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal {
+  width: 500px;
+  max-width: 90%;
+
+  background: white;
+  border-radius: 16px;
+
+  padding: 25px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.modal-header button {
+  background: none;
+  border: none;
+
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal label {
+  font-weight: 600;
+}
+
+.modal input,
+.modal textarea,
+.modal select {
+  padding: 12px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+}
+
+.modal textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.cancel-btn,
+.save-btn {
+  flex: 1;
+
+  padding: 12px;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+}
+
+.save-btn {
+  background: #6366f1;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #4f46e5;
+}

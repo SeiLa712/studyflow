@@ -6,7 +6,8 @@ exports.criarAtividade = async (req, res) => {
       nome,
       descricao,
       data_vencimento,
-      prioridade
+      prioridade,
+      redirectTo
     } = req.body;
 
     await atividadeModel.criar({
@@ -17,7 +18,10 @@ exports.criarAtividade = async (req, res) => {
       id_usuario: req.usuario.id
     });
 
-    res.redirect("/usuarios/pagina-inicial");
+    return res.redirect(
+      redirectTo || "/usuarios/pagina-inicial"
+    );
+
   } catch (erro) {
     console.error(erro);
     res.status(500).send("Erro ao criar atividade");
@@ -31,6 +35,7 @@ exports.paginaInicial = async (req, res) => {
     res.render("usuarios/pagina-inicial", {
       atividades
     });
+
   } catch (erro) {
     console.error(erro);
     res.status(500).send("Erro ao carregar atividades");
@@ -44,6 +49,7 @@ exports.excluir = async (req, res) => {
     await atividadeModel.deletar(id);
 
     return res.sendStatus(200);
+
   } catch (erro) {
     console.error(erro);
     return res.sendStatus(500);
