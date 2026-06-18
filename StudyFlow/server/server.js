@@ -59,6 +59,9 @@ const atividadesRoutes = require("./routes/atividadesRoutes");
 // Requisições comecando com /tarefas é gerenciada pelo sub-arquivo de rotas
 app.use("/tarefas", atividadesRoutes);
 
+//Importar as rotas de pomodoro
+const pomodoroRoutes = require("./routes/pomodoroRoutes");
+app.use("/usuarios/pomodoro", pomodoroRoutes);
 
 // //Função para subir o servidor
 // app.listen(port, () => {
