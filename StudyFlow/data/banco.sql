@@ -62,16 +62,18 @@ CREATE TABLE provas (
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS sessoes_estudo (
+CREATE TABLE pomodoros (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
     nome VARCHAR(100) NOT NULL,
-    materia VARCHAR(150) NOT NULL,
+    descricao TEXT,
 
     foco_min INT NOT NULL,
     pausa_min INT NOT NULL,
 
-    cor VARCHAR(20) NOT NULL,
+    ciclos INT DEFAULT 4,
+
+    cor VARCHAR(20) DEFAULT '#6d5dfc',
 
     id_usuario INT NOT NULL,
 

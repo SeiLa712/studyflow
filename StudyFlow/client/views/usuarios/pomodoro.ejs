@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyFlow - Pomodoro</title>
+
+    <link rel="stylesheet" href="pomodoro.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    📅
+                </div>
+
+                <div>
+                    <h2>StudyFlow</h2>
+                    <p>Calendário Inteligente</p>
+                </div>
+
+            </div>
+
+            <nav class="menu">
+
+                <a href="#">
+                    🏠 Dashboard
+                </a>
+
+                <a href="#">
+                    📅 Calendário
+                </a>
+
+                <a href="#" class="active">
+                    ⏱ Pomodoro
+                </a>
+
+                <a href="#">
+                    👥 Grupos
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <strong>Estatísticas</strong>
+
+                <span>Hoje</span>
+
+                <h3 id="tempoHoje">
+                    2h 30min
+                </h3>
+
+            </div>
+
+        </aside>
+
+        <!-- CONTEÚDO -->
+
+        <main class="content">
+
+            <!-- CABEÇALHO -->
+
+            <div class="header">
+
+                <div>
+
+                    <h1>
+                        Técnica Pomodoro
+                    </h1>
+
+                    <p>
+                        Mantenha o foco com intervalos programados
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- GRID -->
+
+            <div class="grid">
+
+                <!-- CARD TIMER -->
+
+                <section class="timer-card">
+
+                    <div class="timer-tabs">
+
+                        <button class="tab active">
+                            Foco
+                        </button>
+
+                        <button class="tab">
+                            Pausa
+                        </button>
+
+                    </div>
+
+                    <div class="timer-circle">
+
+                        <h1 id="timerDisplay">
+                            25:00
+                        </h1>
+
+                    </div>
+
+                    <p class="timer-text">
+                        Sessão de foco
+                    </p>
+
+                    <div class="timer-buttons">
+
+                        <button
+                            id="btnPlay"
+                            onclick="iniciarTimer()"
+                        >
+                            ▶
+                        </button>
+
+                        <button
+                            id="btnPause"
+                            onclick="pausarTimer()"
+                        >
+                            ⏸
+                        </button>
+
+                        <button
+                            id="btnReset"
+                            onclick="resetarTimer()"
+                        >
+                            ↻
+                        </button>
+
+                    </div>
+
+                </section>
+
+                <!-- SESSÕES -->
+
+                <aside class="sessions-card">
+
+                    <div class="sessions-header">
+
+                        <h2>
+                            Sessões de Estudo
+                        </h2>
+
+                        <button
+                            class="novaSessao"
+                            onclick="abrirFormulario()"
+                        >
+                            + Nova Sessão
+                        </button>
+
+                    </div>
+
+                    <!-- FORMULÁRIO -->
+
+                    <div
+                        id="formularioSessao"
+                        class="formulario"
+                    >
+
+                        <input
+                            type="text"
+                            id="nomeSessao"
+                            placeholder="Nome da sessão"
+                        >
+
+                        <input
+                            type="number"
+                            id="tempoFoco"
+                            placeholder="Tempo de foco (min)"
+                        >
+
+                        <input
+                            type="number"
+                            id="tempoPausa"
+                            placeholder="Tempo de pausa (min)"
+                        >
+
+                        <div class="form-buttons">
+
+                            <button onclick="salvarSessao()">
+                                Salvar
+                            </button>
+
+                            <button onclick="fecharFormulario()">
+                                Cancelar
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- LISTA -->
+
+                    <div id="listaSessoes">
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </main>
+
+    </div>
+    <script src="pomodoro.js"></script>
+
+</body>
+
+</html>
