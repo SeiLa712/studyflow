@@ -1,3 +1,4 @@
+const atividades = window.atividades || [];
 
 // =======================
 // POMODORO
@@ -77,7 +78,8 @@ resetBtn.addEventListener("click", () => {
   playBtn.textContent = "▶ Iniciar";
 });
 
-atualizarTimer();// =======================
+atualizarTimer();
+// =======================
 // CALENDÁRIO SEMANAL
 // =======================
 
@@ -193,6 +195,25 @@ function gerarSemanaAtual() {
 // Executa a função assim que a página carrega
 gerarSemanaAtual();
 
+
+// Agora adiciona as atividades vindas do banco
+if (typeof atividades !== "undefined") {
+
+  atividades.forEach((atividade) => {
+
+    adicionarEventoCalendario(
+      atividade.id,
+      atividade.nome,
+      atividade.data_vencimento,
+      atividade.prioridade
+    );
+
+  });
+
+}
+
+console.log("Atividades:", atividades);
+
 // =======================
 // MODAL
 // =======================
@@ -260,19 +281,12 @@ function adicionarEventoCalendario(taskId, titulo, data, urgencia) {
       evento.classList.add("event");
 
       // Define cores diferentes conforme o nível de urgência
-      if (urgencia === "alto") {
-        evento.style.background = "#fee2e2";
-        evento.style.color = "#dc2626";
-      }
-
-      if (urgencia === "medio") {
-        evento.style.background = "#fef3c7";
-        evento.style.color = "#d97706";
-      }
-
-      if (urgencia === "baixo") {
-        evento.style.background = "#dbeafe";
-        evento.style.color = "#2563eb";
+      if (urgencia === "alta") {
+        evento.classList.add("urgent");
+      } else if (urgencia === "media") {
+        evento.classList.add("medium");
+      } else {
+        evento.classList.add("low");
       }
 
       // Define o texto exibido no calendário
@@ -300,109 +314,86 @@ const tasksContainer =
   document.getElementById("tasksContainer");
 
 // Executa quando o usuário envia o formulário
-activityForm.addEventListener("submit", (e) => {
-
-  // Impede o recarregamento da página
+activityForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Recupera o título informado
-  const titulo =
-    document.getElementById("titulo").value;
+  const nome =
+    document.getElementById("nome").value;
 
-  // Recupera a disciplina informada
-  const disciplina =
-    document.getElementById("disciplina").value;
+  const descricao =
+    document.querySelector(
+      'textarea[name="descricao"]'
+    ).value;
 
-  // Recupera a data informada
-  const dataInput =
-    document.getElementById("data").value;
+  const data_vencimento =
+    document.querySelector(
+      'input[name="data_vencimento"]'
+    ).value;
 
-  // Divide a data recebida (AAAA-MM-DD)
-  const [ano, mes, dia] =
-    dataInput.split("-");
+  const prioridade =
+    document.querySelector(
+      'select[name="prioridade"]'
+    ).value;
 
-  // Cria um objeto Date
-  const data =
-    new Date(ano, mes - 1, dia);
+  try {
+    const resposta = await fetch(
+      "/tarefas/criar",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          nome,
+          descricao,
+          data_vencimento,
+          prioridade
+        })
+      }
+    );
 
-  // Recupera o nível de urgência selecionado
-  const urgencia =
-    document.getElementById("urgencia").value;
+    if (resposta.ok) {
+      activityForm.reset();
+      modalOverlay.classList.remove("show");
 
-  // Gera um ID único utilizando o timestamp atual
-  const taskId = Date.now();
+      alert("Tarefa criada com sucesso!");
 
-  // Cria o card da atividade
-  const card =
-    document.createElement("div");
-
-  card.classList.add("task-card");
-
-  // Salva o ID da atividade
-  card.dataset.taskId = taskId;
-
-  // Define a aparência do card conforme a urgência
-  if (urgencia === "alto") {
-    card.classList.add("urgent");
+      location.reload();
+    } else {
+      alert("Erro ao criar tarefa.");
+    }
+  } catch (erro) {
+    console.error(erro);
+    alert("Erro ao conectar ao servidor.");
   }
+});
 
-  if (urgencia === "medio") {
-    card.classList.add("medium");
-  }
+document.querySelectorAll(".btn-delete").forEach((btn) => {
+  btn.addEventListener("click", async (e) => {
 
-  // Monta o conteúdo HTML do card
-  card.innerHTML = `
-    <button class="delete-task">
-      🗑️
-    </button>
+    const card = e.target.closest(".task-card"); // 🔥 AQUI o card existe
 
-    <h3>${titulo}</h3>
-    <p>${disciplina}</p>
-    <p>${data.toLocaleDateString("pt-BR")}</p>
-  `;
+    const id = card.dataset.id;
 
-  // Adiciona a atividade no topo da lista
-  tasksContainer.prepend(card);
+    console.log("ID da tarefa:", id);
 
-  // Cria também o evento correspondente no calendário
-  adicionarEventoCalendario(
-    taskId,
-    titulo,
-    data,
-    urgencia
-  );
+    const confirmDelete = confirm("Deseja excluir esta tarefa?");
+    if (!confirmDelete) return;
 
-  // Seleciona o botão de exclusão do card recém-criado
-  const deleteBtn =
-    card.querySelector(".delete-task");
+    try {
+      const response = await fetch(`/tarefas/${id}`, {
+        method: "DELETE",
+      });
 
-  // Evento de exclusão da atividade
-  deleteBtn.addEventListener("click", () => {
+      if (response.ok) {
+        card.remove();
+      } else {
+        alert("Erro ao excluir tarefa");
+      }
 
-    // Solicita confirmação antes de excluir
-    if (
-      confirm(
-        "Deseja excluir esta atividade?"
-      )
-    ) {
-
-      // Recupera o ID da atividade
-      const id =
-        card.dataset.taskId;
-
-      // Remove todos os elementos que possuem esse ID
-      // (card da atividade + evento do calendário)
-      document
-        .querySelectorAll(
-          `[data-task-id="${id}"]`
-        )
-        .forEach((item) => item.remove());
+    } catch (err) {
+      console.error(err);
+      alert("Erro no servidor");
     }
   });
-
-  // Limpa os campos do formulário
-  activityForm.reset();
-
-  // Fecha o modal após adicionar a atividade
-  modalOverlay.classList.remove("show");
 });

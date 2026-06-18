@@ -21,7 +21,7 @@
             <p>Organize seus estudos e aumente sua produtividade.</p>
           </div>
 
-          <button class="btn-add" id="openModal">+ Adicionar</button>
+          <button class="btn-add" id="openModal">Adicionar Atividade</button>
         </div>
         <div class="activities">
           <div
@@ -35,21 +35,28 @@
           </div>
 
           <div id="tasksContainer">
-            <div class="task-card urgent">
-              <h3>Entrega do TCC</h3>
-              <p>12/04/2026</p>
-            </div>
+          <% atividades.forEach(atividade => { %>
 
-            <div class="task-card medium">
-              <h3>Prova de Cálculo III</h3>
-              <p>13/04/2026</p>
-            </div>
+          <div class="task-card
+          <%= atividade.prioridade === 'alta'
+          ? 'urgent'
+          : atividade.prioridade === 'media'
+          ? 'medium'
+          : 'low' %>"
+          data-id="<%= atividade.id %>">
 
-            <div class="task-card low">
-              <h3>Trabalho em Grupo</h3>
-              <p>14/04/2026</p>
-            </div>
+          <h3><%= atividade.nome %></h3>
+
+          <p>
+              <%= new Date(atividade.data_vencimento)
+              .toLocaleDateString('pt-BR') %>
+          </p>
+          <!-- botão de excluir -->
+          <button class="btn-delete">🗑</button>
           </div>
+
+          <% }) %>
+        </div>
         </div>
         <section class="weekly-calendar">
           <div class="calendar-header">
@@ -78,8 +85,11 @@
         </div>
 
         <form id="activityForm" action="/tarefas/criar" method="POST">
+
+          <input type="hidden" name="origem" value="pagina-inicial">
+
           <label>Título</label>
-          <input type="name" id="titulo" required />
+          <input type="text" id="nome" name="nome" required />
 
           <label>Descrição</label>
           <textarea name="descricao"></textarea>
@@ -105,6 +115,10 @@
         </form>
       </div>
     </div>
+    <script>
+      window.atividades = <%- JSON.stringify(atividades || []) %>;
+    </script>
+
     <script src="../js/pagina-inicial.js"></script>
   </body>
 </html>

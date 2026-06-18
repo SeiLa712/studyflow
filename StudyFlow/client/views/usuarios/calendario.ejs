@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendário - StudyFlow</title>
+
+  <link rel="stylesheet" href="/css/calendario.css">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+</head>
+
+<body>
+
+  <%- include('../partials/barra-lateral') %>
+
+  <%
+    const anoAtual = ano;
+    const mesAtual = mes;
+
+    const nomeMes = new Date(
+      anoAtual,
+      mesAtual
+    ).toLocaleDateString(
+      "pt-BR",
+      {
+        month: "long",
+        year: "numeric"
+      }
+    );
+
+    const primeiroDia = new Date(
+      anoAtual,
+      mesAtual,
+      1
+    ).getDay();
+
+    const diasNoMes = new Date(
+      anoAtual,
+      mesAtual + 1,
+      0
+    ).getDate();
+  %>
+
+  <div class="main-container">
+
+    <main class="calendar-section">
+
+      <header class="calendar-header">
+
+        <div class="title-group">
+          <h1>Calendário</h1>
+          <p class="subtitle">
+            Visualize todas as suas atividades acadêmicas
+          </p>
+        </div>
+
+        <button
+          class="btn-nova-atividade"
+          id="openModal"
+        >
+          Adicionar Atividade
+        </button>
+
+      </header>
+
+      <div class="month-navigation">
+
+        <button
+          class="arrow-btn"
+          id="prevMonth"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <h2
+          id="currentMonth"
+          data-mes="<%= mesAtual %>"
+          data-ano="<%= anoAtual %>"
+        >
+          <%= nomeMes %>
+        </h2>
+
+        <button
+          class="arrow-btn"
+          id="nextMonth"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
+
+      </div>
+
+      <div class="calendar-grid-container">
+
+        <div class="weekday-header">Dom</div>
+        <div class="weekday-header">Seg</div>
+        <div class="weekday-header">Ter</div>
+        <div class="weekday-header">Qua</div>
+        <div class="weekday-header">Qui</div>
+        <div class="weekday-header">Sex</div>
+        <div class="weekday-header">Sáb</div>
+
+        <% for(let i = 0; i < primeiroDia; i++) { %>
+          <div class="calendar-day empty"></div>
+        <% } %>
+
+        <% for(let dia = 1; dia <= diasNoMes; dia++) { %>
+
+          <div class="calendar-day">
+
+            <span class="day-number">
+              <%= dia %>
+            </span>
+
+            <div class="activities-wrapper">
+
+              <% tarefas.forEach(tarefa => { %>
+
+                <%
+                  const dataTarefa =
+                    new Date(
+                      tarefa.data_vencimento
+                    );
+
+                  const diaTarefa =
+                    dataTarefa.getUTCDate();
+
+                  const mesTarefa =
+                    dataTarefa.getUTCMonth();
+
+                  const anoTarefa =
+                    dataTarefa.getUTCFullYear();
+
+                  let classeCor =
+                    "tag-estudo";
+
+                  if (
+                    tarefa.prioridade === "alta"
+                  ) {
+                    classeCor =
+                      "tag-prova";
+                  }
+                  else if (
+                    tarefa.prioridade === "media"
+                  ) {
+                    classeCor =
+                      "tag-trabalho";
+                  }
+                %>
+
+                <% if (
+                  diaTarefa === dia &&
+                  mesTarefa === mesAtual &&
+                  anoTarefa === anoAtual
+                ) { %>
+
+                  <div
+                    class="activity-tag <%= classeCor %>"
+                    title="<%= tarefa.nome %>"
+                  >
+                    <%= tarefa.nome %>
+                  </div>
+
+                <% } %>
+
+              <% }) %>
+
+            </div>
+
+          </div>
+
+        <% } %>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- MODAL -->
+
+  <div
+    class="modal-overlay"
+    id="modalOverlay"
+  >
+
+    <div class="modal">
+
+      <div class="modal-header">
+
+        <h2>
+          Adicionar Nova Atividade
+        </h2>
+
+        <button
+          id="closeModal"
+          type="button"
+        >
+          ✕
+        </button>
+
+      </div>
+
+      <form
+        action="/tarefas/criar"
+        method="POST"
+      >
+
+        <input
+          type="hidden"
+          name="redirectTo"
+          value="/usuarios/calendario"
+        >
+
+        <label>Título</label>
+
+        <input
+          type="text"
+          name="nome"
+          required
+        >
+
+        <label>Descrição</label>
+
+        <textarea
+          name="descricao"
+        ></textarea>
+
+        <label>Data</label>
+
+        <input
+          type="date"
+          name="data_vencimento"
+          required
+        >
+
+        <label>Prioridade</label>
+
+        <select name="prioridade">
+
+          <option value="baixa">
+            Baixa
+          </option>
+
+          <option value="media">
+            Média
+          </option>
+
+          <option value="alta">
+            Alta
+          </option>
+
+        </select>
+
+        <div class="modal-buttons">
+
+          <button
+            type="button"
+            class="cancel-btn"
+            id="cancelModal"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="save-btn"
+          >
+            Adicionar
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <script src="/js/calendario.js"></script>
+
+</body>
+</html>

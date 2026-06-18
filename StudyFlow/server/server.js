@@ -27,6 +27,11 @@ app.set("views", path.join(__dirname, "../client/views"));
 // Deixa a pasta public acessível ao usuário
 app.use(express.static(path.join(__dirname, "../client/public")));
 
+app.use((req, res, next) => {
+ res.locals.pagina = req.path.split('/').pop();
+  next();
+});
+
 // ROTAS PÚBLICAS
 // Criação de rotas padrão
 app.get("/", (req, res) => {
@@ -49,6 +54,12 @@ const usuariosRoutes = require("./routes/usuarioRoutes.js");
 // Requisições comecando com /usuarios é gerenciada pelo sub-arquivo de rotas
 app.use("/usuarios", usuariosRoutes);
 
+//Importar as rotas de usuário
+const atividadesRoutes = require("./routes/atividadesRoutes");
+// Requisições comecando com /tarefas é gerenciada pelo sub-arquivo de rotas
+app.use("/tarefas", atividadesRoutes);
+
+
 // //Função para subir o servidor
 // app.listen(port, () => {
 //   console.log(`Servidor ativo na porta: ${port}`);
@@ -69,8 +80,8 @@ const pool = require("./config/db.js");
       console.log(`Servidor funcionando na porta ${port}`);
     });
   } catch (erro) {
-    // Se deu erro, avisa e encerra a tentativa
-    console.log("Erro ao tentar conectar com o banco de dados");
+   // Adicione o (error) ou (err) no final para o terminal nos dizer o motivo
+console.log("Erro ao tentar conectar com o banco de dados", erro)
     process.exit(1);
   }
 })();

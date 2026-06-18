@@ -1,33 +1,25 @@
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StudyFlow</title>
+<link rel="stylesheet" href="/css/barra-lateral.css" />
 
-    <link rel="stylesheet" href="../css/barra-lateral.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-  </head>
-  <body>
-    <header>
-      <aside class="sidebar">
-        <div>
-          <div class="logo-area">
-            <h2>StudyFlow</h2>
-            <span>Calendário Inteligente</span>
+<aside class="sidebar">
+  <div>
+    <div class="logo-area">
+      <h2>StudyFlow</h2>
+      <span>Organize seus estudos.</span>
+      <button class="collapse-btn">◀</button>
+    </div>
 
-            <button class="collapse-btn">◀</button>
-          </div>
+    <nav class="menu">
+      <a href="/usuarios/pagina-inicial" class="menu-item <%= locals.pagina === 'pagina-inicial' ? 'active' : '' %>">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Tela-inicial</span>
+      </a>
 
-          <nav class="menu">
-            <a href="pagina-inicial" class="menu-item active">
-              <i class="fa-solid fa-graduation-cap"></i>
-              <span>Tela-inicial</span>
-            </a>
+      <a href="/usuarios/calendario" class="menu-item <%= locals.pagina === 'calendario' ? 'active' : '' %>">
+        <i class="fa-solid fa-calendar"></i>
+        <span>Calendário</span>
+      </a>
 
+<<<<<<< HEAD
             <a href="calendario" class="menu-item">
               <i class="fa-solid fa-calendar"></i> <span>Calendário</span>
             </a>
@@ -36,20 +28,29 @@
               <i class="fa-solid fa-stopwatch"></i>
               <span>Pomodoro</span>
             </a>
+=======
+      <a href="#" class="menu-item <%= locals.pagina === 'pomodoro' ? 'active' : '' %>">
+        <i class="fa-solid fa-stopwatch"></i>
+        <span>Pomodoro</span>
+      </a>
 
-            <a href="#" class="menu-item">
-              <i class="fa-solid fa-users"></i> <span>Grupos</span>
-            </a>
-          </nav>
-        </div>
+      <a href="#" class="menu-item <%= locals.pagina === 'grupos' ? 'active' : '' %>">
+        <i class="fa-solid fa-users"></i>
+        <span>Grupos</span>
+      </a>
+      <a href="#" class="menu-item <%= locals.pagina === 'kanban' ? 'active' : '' %>">
+        <i class="fa-solid fa-tasks"></i>
+        <span>kanban</span>
+      </a>
+    </nav>
+  </div>
+>>>>>>> main
 
-        <div class="sidebar-footer">
-          <a href="/usuarios/logout" class="logout">
-            <i class="fa-solid fa-sign-out-alt"></i> <span>Deslogar</span>
-          </a>
-        </div>
-      </aside>
-      <script src="../js/barra-lateral.js"></script>
-  </body>
-  </header>
-</html>
+  <div class="sidebar-footer">
+    <a href="/usuarios/logout" class="logout">
+      <i class="fa-solid fa-sign-out-alt"></i> <span>Deslogar</span>
+    </a>
+  </div>
+</aside>
+
+<script src="/js/barra-lateral.js"></script>

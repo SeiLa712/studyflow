@@ -5,6 +5,10 @@ const router = express.Router();
 
 const usuarioController = require("../controllers/usuarioController.js")
 
+const atividadeModel = require("../models/atividadeModel");
+
+const calendarioController = require("../controllers/calendarioController");
+
 //importar o multer
 const upload = require("../config/multer.js")
 
@@ -34,8 +38,27 @@ router.get("/", (req, res) => {
   res.status(200).render('usuarios/listar')
 });
 
-router.get('/pagina-inicial', (req, res) => {
-    res.render('usuarios/pagina-inicial');
+router.get('/pagina-inicial', async (req, res) => {
+    try {
+
+        console.log("USUARIO LOGADO:", req.usuario);
+
+        const atividades =
+            await atividadeModel.listarPorUsuario(
+                req.usuario.id
+            );
+
+        console.log("ID USUARIO:", req.usuario.id);
+        console.log("ATIVIDADES:", atividades);
+
+        res.render(
+            'usuarios/pagina-inicial',
+            { atividades }
+        );
+
+    } catch (erro) {
+        console.error(erro);
+    }
 });
 
 //Retornar a página de cadastro
@@ -43,6 +66,12 @@ router.get("/cadastro", (req, res) => {
   res.status(200).render('usuarios/cadastrar')
 });
 
+// Vai para a tela de calendario
+router.get(
+  "/calendario",
+  verificarAutenticacao,
+  calendarioController.calendario
+);
 
 
 module.exports = router
