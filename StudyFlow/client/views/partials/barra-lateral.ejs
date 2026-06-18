@@ -19,32 +19,21 @@
         <span>Calendário</span>
       </a>
 
-<<<<<<< HEAD
-            <a href="calendario" class="menu-item">
-              <i class="fa-solid fa-calendar"></i> <span>Calendário</span>
-            </a>
-
-            <a href="pomodoro0" class="menu-item">
-              <i class="fa-solid fa-stopwatch"></i>
-              <span>Pomodoro</span>
-            </a>
-=======
-      <a href="#" class="menu-item <%= locals.pagina === 'pomodoro' ? 'active' : '' %>">
+      <a href="/usuarios/pomodoro" class="menu-item <%= locals.pagina === 'pomodoro' ? 'active' : '' %>">
         <i class="fa-solid fa-stopwatch"></i>
         <span>Pomodoro</span>
       </a>
 
-      <a href="#" class="menu-item <%= locals.pagina === 'grupos' ? 'active' : '' %>">
+      <a href="/usuarios/grupos" class="menu-item <%= locals.pagina === 'grupos' ? 'active' : '' %>">
         <i class="fa-solid fa-users"></i>
         <span>Grupos</span>
       </a>
-      <a href="#" class="menu-item <%= locals.pagina === 'kanban' ? 'active' : '' %>">
+      <a href="/usuarios/kanban" class="menu-item <%= locals.pagina === 'kanban' ? 'active' : '' %>">
         <i class="fa-solid fa-tasks"></i>
         <span>kanban</span>
       </a>
     </nav>
   </div>
->>>>>>> main
 
   <div class="sidebar-footer">
     <a href="/usuarios/logout" class="logout">

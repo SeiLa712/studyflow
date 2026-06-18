@@ -2,75 +2,21 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyFlow - Pomodoro</title>
-
-    <link rel="stylesheet" href="pomodoro.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomodoro</title>
+    <link rel="stylesheet" href="../css/pomodoro.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
 
 <body>
-
-    <div class="container">
-
         <!-- SIDEBAR -->
-
-        <aside class="sidebar">
-
-            <div class="logo">
-
-                <div class="logo-icon">
-                    📅
-                </div>
-
-                <div>
-                    <h2>StudyFlow</h2>
-                    <p>Calendário Inteligente</p>
-                </div>
-
-            </div>
-
-            <nav class="menu">
-
-                <a href="#">
-                    🏠 Dashboard
-                </a>
-
-                <a href="#">
-                    📅 Calendário
-                </a>
-
-                <a href="#" class="active">
-                    ⏱ Pomodoro
-                </a>
-
-                <a href="#">
-                    👥 Grupos
-                </a>
-
-            </nav>
-
-            <div class="sidebar-footer">
-
-                <strong>Estatísticas</strong>
-
-                <span>Hoje</span>
-
-                <h3 id="tempoHoje">
-                    2h 30min
-                </h3>
-
-            </div>
-
-        </aside>
-
+        <%- include('../partials/barra-lateral') %>
         <!-- CONTEÚDO -->
-
+    <div class="container"></div>
         <main class="content">
 
             <!-- CABEÇALHO -->

@@ -14,118 +14,35 @@ body {
 
 /* LAYOUT */
 
-.container {
-    display: flex;
+.pomodoro-container {
     min-height: 100vh;
 }
+/* MENU DO POMODORO (evita conflito com a sidebar) */
 
-/* SIDEBAR */
-
-.sidebar {
-    width: 260px;
-    background: #ffffff;
-    border-right: 1px solid #e5e7eb;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    padding: 25px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    margin-bottom: 40px;
-}
-
-.logo-icon {
-    width: 48px;
-    height: 48px;
-
-    border-radius: 12px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background: #6d5dfc;
-    color: white;
-    font-size: 22px;
-}
-
-.logo h2 {
-    font-size: 22px;
-    font-weight: 700;
-}
-
-.logo p {
-    font-size: 13px;
-    color: #7b7b7b;
-}
-
-/* MENU */
-
-.menu {
+.pomodoro-menu {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.menu a {
+.pomodoro-menu a {
     text-decoration: none;
-
     color: #4b5563;
-
     padding: 14px 16px;
-
     border-radius: 12px;
-
     transition: 0.2s;
 }
 
-.menu a:hover {
+.pomodoro-menu a:hover {
     background: #f3f4f6;
 }
 
-.menu a.active {
+.pomodoro-menu a.active {
     background: #6d5dfc;
     color: white;
 }
-
-/* SIDEBAR FOOTER */
-
-.sidebar-footer {
-    background: #f3f4f6;
-
-    border-radius: 16px;
-
-    padding: 20px;
-}
-
-.sidebar-footer span {
-    display: block;
-
-    margin-top: 10px;
-
-    color: gray;
-
-    font-size: 14px;
-}
-
-.sidebar-footer h3 {
-    margin-top: 5px;
-
-    font-size: 28px;
-}
-
 /* CONTEÚDO */
-
-.content {
-    flex: 1;
-
+.pomodoro-content {
     padding: 45px;
 }
 
