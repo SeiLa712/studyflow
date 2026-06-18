@@ -1,3 +1,19 @@
+/* --- ADICIONE ISSO AQUI NO TOPO DO ARQUIVO --- */
+.main-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif; /* Alinha com a fonte moderna do Figma */
+}
+/* -------------------------------------------- */
+
 .calendar-section {
     flex: 1;
     padding: 40px 40px 40px 300px; /* Alinhamento correto contando com a largura da sidebar fixed */

@@ -73,7 +73,8 @@ router.get('/calendario', async (req, res) => {
        
         res.render('usuarios/calendario', { 
             usuario: req.usuario,
-            tarefas: tarefas 
+            tarefas: tarefas,
+            pagina: 'calendario'
         });
 
     } catch (erro) {
