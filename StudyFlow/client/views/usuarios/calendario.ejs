@@ -1,11 +1,11 @@
 <%- include('../partials/header') %>
 
+<link rel="stylesheet" href="/css/calendario.css">
+
 <div class="main-container">
-    <!-- Inclui a barra lateral oficial do projeto -->
+    
     <%- include('../partials/barra-lateral') %>
 
-    <link rel="stylesheet" href="/StudyFlow/client/public/css/calendario.css">
-    <!-- Conteúdo Principal do Calendário -->
     <main class="calendar-section">
         <header class="calendar-header">
             <div class="title-group">
@@ -15,7 +15,6 @@
             <button class="btn-nova-atividade">+ Nova Atividade</button>
         </header>
 
-        <!-- Navegação do Mês -->
         <div class="month-navigation">
             <h2 id="current-month">Abril 2026</h2>
             <div class="nav-arrows">
@@ -24,7 +23,6 @@
             </div>
         </div>
 
-        <!-- Grade dos dias -->
         <div class="calendar-grid-container">
             <div class="weekday-header">Dom</div>
             <div class="weekday-header">Seg</div>
@@ -34,20 +32,16 @@
             <div class="weekday-header">Sex</div>
             <div class="weekday-header">Sáb</div>
 
-            <!-- Espaços vazios: Abril de 2026 começa na Quarta-feira -->
             <div class="calendar-day empty"></div>
             <div class="calendar-day empty"></div>
             <div class="calendar-day empty"></div>
 
-            <!-- Geração automática dos 30 dias do mês -->
             <% for(let dia = 1; dia <= 30; dia++) { %>
                 
-                <!-- O dia 12 fica destacado visualmente para seguir o seu mockup original -->
                 <div class="calendar-day <%= dia === 12 ? 'selected-day' : '' %>">
                     <span class="day-number"><%= dia %></span>
                     
                     <div class="activities-wrapper">
-                        <!-- Varre as tarefas que vieram do Banco de Dados através da rota -->
                         <% if (typeof tarefas !== 'undefined' && tarefas.length > 0) { %>
                             <% tarefas.forEach(tarefa => { %>
                                 <% 
@@ -60,15 +54,14 @@
                                 %>
 
                                 <% if (diaDaTarefa === dia) { %>
-                                    <!-- Define a cor da tag de acordo com a categoria no banco -->
-                                    <% 
-                                        let classeCor = 'tag-estudo'; // Azul padrão
-                                        if (categoria.includes('prova')) {
-                                            classeCor = 'tag-prova'; // Vermelho
-                                        } else if (categoria.includes('trabalho') || categoria.includes('entrega')) {
-                                            classeCor = 'tag-trabalho'; // Rosa
-                                        }
-                                    %>
+                                     <% 
+                                         let classeCor = 'tag-estudo'; // Azul padrão
+                                         if (categoria.includes('prova')) {
+                                             classeCor = 'tag-prova'; // Vermelho
+                                         } else if (categoria.includes('trabalho') || categoria.includes('entrega')) {
+                                             classeCor = 'tag-trabalho'; // Rosa
+                                         }
+                                     %>
                                     <div class="activity-tag <%= classeCor %>" title="<%= tarefa.titulo %>">
                                         <%= tarefa.titulo %>
                                     </div>
@@ -80,7 +73,6 @@
             <% } %>
         </div>
 
-        <!-- Legenda inferior -->
         <footer class="legend-container">
             <div class="legend-item"><span class="bullet bullet-prova"></span> Prova</div>
             <div class="legend-item"><span class="bullet bullet-trabalho"></span> Trabalho</div>
