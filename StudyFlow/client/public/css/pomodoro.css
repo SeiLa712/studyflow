@@ -1,7 +1,10 @@
-/* RESET */
+/* =========================
+   RESET
+========================= */
 
 * {
     margin: 0;
+    padding: 0;
     padding: 0;
     box-sizing: border-box;
 }
@@ -12,41 +15,31 @@ body {
     color: #1f2937;
 }
 
-/* LAYOUT */
+/* =========================
+   VARIÁVEIS
+========================= */
 
-.pomodoro-container {
+:root {
+    --sidebar-width: 260px;
+}
+
+/* =========================
+   LAYOUT PRINCIPAL
+========================= */
+
+.pomodoro-content {
+    margin-left: var(--sidebar-width);
+    padding: 40px;
     min-height: 100vh;
 }
-/* MENU DO POMODORO (evita conflito com a sidebar) */
 
-.pomodoro-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+/* =========================
+   HEADER
+========================= */
 
-.pomodoro-menu a {
-    text-decoration: none;
-    color: #4b5563;
-    padding: 14px 16px;
-    border-radius: 12px;
-    transition: 0.2s;
+.header {
+    margin-bottom: 30px;
 }
-
-.pomodoro-menu a:hover {
-    background: #f3f4f6;
-}
-
-.pomodoro-menu a.active {
-    background: #6d5dfc;
-    color: white;
-}
-/* CONTEÚDO */
-.pomodoro-content {
-    padding: 45px;
-}
-
-/* HEADER */
 
 .header h1 {
     font-size: 34px;
@@ -55,76 +48,66 @@ body {
 
 .header p {
     margin-top: 8px;
-
     color: #777;
 }
 
-/* GRID */
+/* =========================
+   GRID
+========================= */
 
 .grid {
     display: grid;
-
     grid-template-columns: 1.3fr 0.9fr;
-
     gap: 30px;
-
-    margin-top: 35px;
 }
 
-/* CARD TIMER */
+/* =========================
+   TIMER CARD
+========================= */
 
 .timer-card {
     background: white;
-
     border-radius: 22px;
-
     padding: 35px;
-
     border: 1px solid #ececec;
 }
 
-/* TABS */
+/* =========================
+   TABS
+========================= */
 
 .timer-tabs {
     display: flex;
-
     justify-content: center;
-
     gap: 10px;
 }
 
 .tab {
     border: none;
-
     padding: 10px 25px;
-
     border-radius: 10px;
-
     background: #f1f1f1;
-
     cursor: pointer;
-
     font-size: 15px;
+    transition: 0.2s;
 }
 
 .tab.active {
-    background: #6d5dfc;
-
+    background: #6366f1;
     color: white;
 }
 
-/* TIMER */
+/* =========================
+   TIMER CÍRCULO (ANIMADO)
+========================= */
 
 .timer-circle {
+    width: 280px;
+    height: 280px;
 
-    width: 320px;
-    height: 320px;
+    margin: 35px auto;
 
-    margin: 40px auto;
-
-    border-radius: 50%;
-
-    border: 10px solid #6d5dfc;
+    position: relative;
 
     display: flex;
     justify-content: center;
@@ -133,170 +116,161 @@ body {
     background: white;
 }
 
+/* SVG */
+.progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+}
+
+/* fundo */
+.ring-bg {
+    fill: none;
+    stroke: #e5e7eb;
+    stroke-width: 12;
+}
+
+/* progresso */
+.ring-fill {
+    fill: none;
+    stroke: #6366f1;
+    stroke-width: 12;
+    stroke-linecap: round;
+
+    stroke-dasharray: 753.98;
+    stroke-dashoffset: 753.98;
+
+    transition: stroke-dashoffset 0.4s linear;
+}
+
+/* texto central */
 .timer-circle h1 {
-
-    font-size: 72px;
-
+    font-size: 68px;
     font-weight: 700;
-
     color: #1f2937;
+    z-index: 2;
+    position: relative;
 }
 
+/* texto abaixo do timer */
 .timer-text {
-
     text-align: center;
-
-    color: gray;
-
-    margin-top: -10px;
+    color: #6b7280;
 }
 
-/* BOTÕES TIMER */
+/* =========================
+   BOTÕES TIMER
+========================= */
 
 .timer-buttons {
-
     display: flex;
-
     justify-content: center;
-
     gap: 18px;
-
     margin-top: 35px;
 }
 
 .timer-buttons button {
-
     width: 58px;
     height: 58px;
 
     border: none;
-
     border-radius: 50%;
 
     cursor: pointer;
-
     font-size: 20px;
 
     transition: 0.2s;
 }
 
-#btnPlay {
-
-    background: #6d5dfc;
-
-    color: white;
-}
-
-#btnPause {
-
-    background: #ececec;
-}
-
-#btnReset {
-
-    background: #ececec;
-}
-
 .timer-buttons button:hover {
-
     transform: scale(1.05);
 }
 
-/* CARD SESSÕES */
+#btnPlay {
+    background: #6366f1;
+    color: white;
+}
+
+#btnPause,
+#btnReset {
+    background: #ececec;
+    color: #6b7280;
+}
+
+/* =========================
+   SESSÕES
+========================= */
 
 .sessions-card {
-
     background: white;
-
     border-radius: 22px;
-
     border: 1px solid #ececec;
-
     padding: 25px;
 }
 
-/* HEADER SESSÕES */
-
 .sessions-header {
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     margin-bottom: 20px;
 }
 
 .sessions-header h2 {
-
     font-size: 22px;
 }
 
 .novaSessao {
-
-    background: #6d5dfc;
-
+    background: #6366f1;
     color: white;
-
     border: none;
-
     padding: 10px 18px;
-
     border-radius: 10px;
-
     cursor: pointer;
 }
 
-/* FORMULÁRIO */
+/* =========================
+   FORMULÁRIO
+========================= */
 
 .formulario {
-
     display: none;
-
     margin-bottom: 25px;
 }
 
 .formulario input {
-
     width: 100%;
-
     padding: 12px;
-
     margin-bottom: 10px;
 
     border-radius: 10px;
-
     border: 1px solid #d9d9d9;
 
     outline: none;
 }
 
 .form-buttons {
-
     display: flex;
-
     gap: 10px;
 }
 
 .form-buttons button {
-
     flex: 1;
 
     border: none;
-
     padding: 12px;
 
     border-radius: 10px;
 
     cursor: pointer;
 
-    background: #6d5dfc;
-
+    background: #6366f1;
     color: white;
 }
 
-/* SESSÕES */
+/* =========================
+   LISTA SESSÕES
+========================= */
 
 #listaSessoes {
     display: flex;
@@ -307,9 +281,14 @@ body {
 .sessao-card {
     background: #ffffff;
     border: 1px solid #e5e7eb;
+
     border-radius: 14px;
+
     padding: 16px 18px;
+
     transition: all 0.3s ease;
+
+    cursor: pointer;
 }
 
 .sessao-card:hover {
@@ -326,8 +305,6 @@ body {
 .sessao-topo h3 {
     font-size: 18px;
     font-weight: 600;
-    color: #1f2937;
-    margin: 0;
 }
 
 .acoes-topo {
@@ -337,7 +314,6 @@ body {
 }
 
 .btn-iniciar,
-.btn-editar,
 .btn-excluir {
     border: none;
     background: transparent;
@@ -350,16 +326,11 @@ body {
     color: #6366f1;
 }
 
-.btn-editar {
-    color: #f59e0b;
-}
-
 .btn-excluir {
     color: #ef4444;
 }
 
 .btn-iniciar:hover,
-.btn-editar:hover,
 .btn-excluir:hover {
     transform: scale(1.15);
 }
@@ -367,7 +338,9 @@ body {
 .sessao-info {
     display: flex;
     gap: 18px;
+
     margin-top: 15px;
+
     color: #94a3b8;
     font-size: 14px;
 }
@@ -376,4 +349,58 @@ body {
     display: flex;
     align-items: center;
     gap: 5px;
+}
+#btnToggle {
+    background: #6366f1;
+    color: white;
+
+    width: 58px;
+    height: 58px;
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+    font-size: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
+    transition: 0.2s;
+}
+
+#btnToggle:hover {
+    transform: scale(1.08);
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 1200px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .timer-circle {
+        width: 240px;
+        height: 240px;
+    }
+
+    .timer-circle h1 {
+        font-size: 56px;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+    .pomodoro-content {
+        margin-left: 0;
+        padding: 20px;
+    }
 }

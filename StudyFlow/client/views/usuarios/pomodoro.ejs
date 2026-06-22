@@ -2,172 +2,169 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pomodoro</title>
-    <link rel="stylesheet" href="../css/pomodoro.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-  </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro - StudyFlow</title>
+
+    <link rel="stylesheet" href="/css/pomodoro.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
 
 <body>
-        <!-- SIDEBAR -->
-        <%- include('../partials/barra-lateral') %>
-        <!-- CONTEÚDO -->
-    <div class="container"></div>
-        <main class="content">
 
-            <!-- CABEÇALHO -->
+    <%- include('../partials/barra-lateral') %>
 
-            <div class="header">
+    <main class="pomodoro-content">
 
-                <div>
+        <div class="header">
+            <div>
+                <h1>Técnica Pomodoro</h1>
+                <p>Mantenha o foco com intervalos programados</p>
+            </div>
+        </div>
 
-                    <h1>
-                        Técnica Pomodoro
-                    </h1>
+        <div class="grid">
 
-                    <p>
-                        Mantenha o foco com intervalos programados
-                    </p>
+            <!-- TIMER -->
+            <section class="timer-card">
+
+                <!-- TABS -->
+                <div class="timer-tabs">
+
+                    <button class="tab active">
+                        Foco
+                    </button>
+
+                    <button class="tab">
+                        Pausa
+                    </button>
 
                 </div>
 
-            </div>
+                <!-- TIMER CÍRCULO (SVG) -->
+                <div class="timer-circle">
 
-            <!-- GRID -->
+                    <svg class="progress-ring" width="280" height="280" viewBox="0 0 280 280">
+                        <circle class="ring-bg" cx="140" cy="140" r="120"></circle>
+                        <circle class="ring-fill" cx="140" cy="140" r="120"></circle>
+                    </svg>
 
-            <div class="grid">
+                    <h1 id="timerDisplay">25:00</h1>
 
-                <!-- CARD TIMER -->
+                </div>
 
-                <section class="timer-card">
+                <!-- TEXTO -->
+                <p class="timer-text" id="timerText">
+                    Sessão de foco
+                </p>
 
-                    <div class="timer-tabs">
+                <!-- BOTÕES -->
+                <div class="timer-buttons">
 
-                        <button class="tab active">
-                            Foco
-                        </button>
+                    <button id="btnToggle" onclick="toggleTimer()">▶</button>
+                    <button id="btnReset" onclick="resetarTimer()">↻</button>
 
-                        <button class="tab">
-                            Pausa
-                        </button>
+                </div>
 
-                    </div>
+            </section>
 
-                    <div class="timer-circle">
+            <!-- SESSÕES -->
+            <aside class="sessions-card">
 
-                        <h1 id="timerDisplay">
-                            25:00
-                        </h1>
+                <div class="sessions-header">
+                    <h2>Minhas sessões</h2>
 
-                    </div>
+                    <button class="novaSessao" onclick="abrirFormulario()">
+                        Adicionar nova sessão
+                    </button>
+                </div>
 
-                    <p class="timer-text">
-                        Sessão de foco
-                    </p>
+                <!-- FORMULÁRIO -->
+                <div id="formularioSessao" class="formulario">
 
-                    <div class="timer-buttons">
+                    <form action="/usuarios/pomodoro/cadastrar" method="POST">
 
-                        <button
-                            id="btnPlay"
-                            onclick="iniciarTimer()"
-                        >
-                            ▶
-                        </button>
+                        <input type="text" name="nome" placeholder="Nome da sessão" required>
 
-                        <button
-                            id="btnPause"
-                            onclick="pausarTimer()"
-                        >
-                            ⏸
-                        </button>
+                        <input type="text" name="descricao" placeholder="Descrição">
 
-                        <button
-                            id="btnReset"
-                            onclick="resetarTimer()"
-                        >
-                            ↻
-                        </button>
+                        <input type="number" name="foco_min" placeholder="Tempo de foco (min)" required>
 
-                    </div>
+                        <input type="number" name="pausa_min" placeholder="Tempo de pausa (min)" required>
 
-                </section>
-
-                <!-- SESSÕES -->
-
-                <aside class="sessions-card">
-
-                    <div class="sessions-header">
-
-                        <h2>
-                            Sessões de Estudo
-                        </h2>
-
-                        <button
-                            class="novaSessao"
-                            onclick="abrirFormulario()"
-                        >
-                            + Nova Sessão
-                        </button>
-
-                    </div>
-
-                    <!-- FORMULÁRIO -->
-
-                    <div
-                        id="formularioSessao"
-                        class="formulario"
-                    >
-
-                        <input
-                            type="text"
-                            id="nomeSessao"
-                            placeholder="Nome da sessão"
-                        >
-
-                        <input
-                            type="number"
-                            id="tempoFoco"
-                            placeholder="Tempo de foco (min)"
-                        >
-
-                        <input
-                            type="number"
-                            id="tempoPausa"
-                            placeholder="Tempo de pausa (min)"
-                        >
+                        <input type="number" name="ciclos" placeholder="Quantidade de ciclos" value="4">
 
                         <div class="form-buttons">
 
-                            <button onclick="salvarSessao()">
-                                Salvar
-                            </button>
+                            <button type="submit">Salvar</button>
 
-                            <button onclick="fecharFormulario()">
+                            <button type="button" onclick="fecharFormulario()">
                                 Cancelar
                             </button>
 
                         </div>
 
-                    </div>
+                    </form>
 
-                    <!-- LISTA -->
+                </div>
 
-                    <div id="listaSessoes">
+                <!-- LISTA DE SESSÕES -->
+                <div id="listaSessoes">
 
-                    </div>
+                    <% if (pomodoros.length === 0) { %>
+                        <p>Nenhuma sessão cadastrada.</p>
+                    <% } %>
 
-                </aside>
+                    <% pomodoros.forEach(pomodoro => { %>
 
-            </div>
+                        <div class="sessao-card"
+                            onclick="usarSessao(
+                                <%= pomodoro.foco_min %>,
+                                <%= pomodoro.pausa_min %>,
+                                '<%= pomodoro.nome %>'
+                            )">
 
-        </main>
+                            <div class="sessao-topo">
 
-    </div>
-    <script src="pomodoro.js"></script>
+                                <div>
+                                    <h3><%= pomodoro.nome %></h3>
+                                </div>
+
+                                <div class="acoes-topo">
+
+                                    <a href="/usuarios/pomodoro/excluir/<%= pomodoro.id %>"
+                                        class="btn-excluir"
+                                        title="Excluir">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                            <div class="sessao-info">
+
+                                <span><i class="fa-solid fa-stopwatch"></i> Foco: <%= pomodoro.foco_min %> min</span>
+                                <span><i class="fa-solid fa-coffee"></i> Pausa: <%= pomodoro.pausa_min %> min</span>
+                                <span><i class="fa-solid fa-sync"></i> Ciclos: <%= pomodoro.ciclos %></span>
+
+                            </div>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+    <script src="/js/pomodoro.js"></script>
 
 </body>
 
