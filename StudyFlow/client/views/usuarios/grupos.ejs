@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grupos de Estudo - StudyFlow</title>
+    <link rel="stylesheet" href="/css/barra-lateral.css" />
+    <link rel="stylesheet" href="/css/grupos.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <%- include('../partials/barra-lateral') %>
+    <main class="grupos-container">
+      <div class="header">
+        <div>
+          <h1>Grupos de Estudo</h1>
+          <p>Colabore com colegas em trabalhos e estudos</p>
+        </div>
+        <button class="btn-add" id="openModal">+ Novo Grupo</button>
+      </div>
+
+      <div class="grupos-grid" id="gruposContainer">
+        <% grupos.forEach(grupo => { %>
+        <div class="grupo-card" data-id="<%= grupo.id %>">
+          <div class="grupo-header">
+            <h3><%= grupo.nome %></h3>
+            <button class="btn-delete-grupo" data-id="<%= grupo.id %>">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+          <% if (grupo.descricao) { %>
+            <p class="disciplina"><%= grupo.descricao %></p>
+          <% } %>
+          
+          <div class="grupo-info">
+            <div class="membros">
+              <i class="fa-solid fa-users"></i>
+              <span><%= grupo.total_membros %> membros</span>
+              <% if (grupo.membros_preview) { %>
+                <span class="membros-list">
+                  (<%= grupo.membros_preview %>
+                  <% if (grupo.membros_extras > 0) { %>
+                    +<%= grupo.membros_extras %>
+                  <% } %>)
+                </span>
+              <% } %>
+            </div>
+            
+            <div class="proxima-sessao">
+              <% if (grupo.proxima_data && grupo.proxima_hora) { %>
+                <i class="fa-solid fa-calendar"></i>
+                <span><%= grupo.proxima_data %></span>
+                <i class="fa-solid fa-clock"></i>
+                <span><%= grupo.proxima_hora %></span>
+              <% } %>
+            </div>
+          </div>
+
+          <button class="btn-add-membro" data-id="<%= grupo.id %>">
+            + Adicionar Membro
+          </button>
+        </div>
+        <% }) %>
+
+      </div>
+    </main>
+
+    <!-- Modal Criar Grupo -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Criar Novo Grupo</h2>
+          <button id="closeModal">✕</button>
+        </div>
+
+        <form id="grupoForm" action="/usuarios/grupos/criar" method="POST">
+          <label>Nome do Grupo</label>
+          <input type="text" id="nome" name="nome" required placeholder="Ex: Grupo TCC" />
+
+          <label>Matéria</label>
+          <input type="text" id="disciplina" name="disciplina" required placeholder="Ex: Cálculo I" />
+
+          <label>Descrição (opcional)</label>
+          <textarea name="descricao" placeholder="Descreva o objetivo do grupo..."></textarea>
+
+          <div class="modal-buttons">
+            <button type="button" class="cancel-btn" id="cancelModal">
+              Cancelar
+            </button>
+            <button type="submit" class="save-btn">Criar Grupo</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Adicionar Membro -->
+    <div class="modal-overlay" id="modalMembroOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Adicionar Membro</h2>
+          <button id="closeModalMembro">✕</button>
+        </div>
+
+        <form id="membroForm">
+          <input type="hidden" id="grupoId" name="grupoId" />
+          
+          <label>Email do Usuário</label>
+          <input type="email" id="email_usuario" name="email_usuario" required placeholder="email@exemplo.com" />
+
+          <div class="modal-buttons">
+            <button type="button" class="cancel-btn" id="cancelModalMembro">
+              Cancelar
+            </button>
+            <button type="submit" class="save-btn">Adicionar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      window.grupos = <%= JSON.stringify(grupos || []) %>;
+    </script>
+
+    <script src="/js/grupos.js"></script>
+  </body>
+</html>

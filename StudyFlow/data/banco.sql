@@ -13,6 +13,7 @@ CREATE TABLE usuarios (
 CREATE TABLE grupos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
+    disciplina VARCHAR(100) NOT NULL,
     descricao TEXT,
     prioridade ENUM('baixa', 'media', 'alta') DEFAULT 'media',
     id_usuario INT NOT NULL,
@@ -20,6 +21,36 @@ CREATE TABLE grupos (
 
     FOREIGN KEY (id_usuario)
         REFERENCES usuarios(id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE grupo_membros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_grupo INT NOT NULL,
+    id_usuario INT NOT NULL,
+    data_entrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (id_grupo)
+        REFERENCES grupos(id)
+        ON DELETE CASCADE,
+    
+    FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id)
+        ON DELETE CASCADE,
+
+    UNIQUE KEY unique_membro (id_grupo, id_usuario)
+);
+
+CREATE TABLE grupo_sessoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_grupo INT NOT NULL,
+    data_sessao DATE NOT NULL,
+    hora_sessao TIME NOT NULL,
+    descricao TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (id_grupo)
+        REFERENCES grupos(id)
         ON DELETE CASCADE
 );
 

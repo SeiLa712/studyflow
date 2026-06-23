@@ -63,6 +63,10 @@ app.use("/tarefas", atividadesRoutes);
 const pomodoroRoutes = require("./routes/pomodoroRoutes");
 app.use("/usuarios/pomodoro", pomodoroRoutes);
 
+//Importar as rotas de grupos
+const gruposRoutes = require("./routes/gruposRoutes");
+app.use("/usuarios", gruposRoutes);
+
 // //Função para subir o servidor
 // app.listen(port, () => {
 //   console.log(`Servidor ativo na porta: ${port}`);
