@@ -181,6 +181,28 @@ CREATE TABLE IF NOT EXISTS kanban_cards (
         ON DELETE CASCADE
 );
 
+CREATE TABLE tarefas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    prioridade ENUM('baixa', 'media', 'alta') DEFAULT 'media',
+    data_vencimento DATE,
+    concluida BOOLEAN DEFAULT FALSE,
+
+    id_usuario INT NOT NULL,
+    id_grupo INT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (id_grupo)
+        REFERENCES grupos(id)
+        ON DELETE SET NULL
+);
+
 -- ===========================
 -- USUÁRIO PADRÃO
 -- ===========================
