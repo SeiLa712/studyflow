@@ -1,213 +1,328 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>StudyFlow - Kanban</title>
 
-    <link rel="stylesheet" href="/css/kanban.css">
-
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
-</head>
 
-<body>
+    <link rel="stylesheet" href="/css/barra-lateral.css" />
+    <link rel="stylesheet" href="/css/kanban.css" />
+  </head>
 
-<%- include('../partials/barra-lateral') %>
+  <body>
+    <% locals.pagina = "kanban"; %>
+    <%- include('../partials/barra-lateral') %>
 
-<main class="kanban-board-page">
+    <%
+      const listaColunas = typeof colunas !== "undefined" ? colunas : [];
+      const listaCards = typeof cards !== "undefined" ? cards : [];
+      const dadosKanban = typeof kanban !== "undefined" ? kanban : { id: null, nome: "Quadro Kanban" };
+    %>
 
-    <section class="kanban-top">
+    <main class="kanban-board-page">
+      <header class="kanban-header">
         <div>
-            <h1><%= kanban.nome %></h1>
-            <p>Organize suas tarefas acadêmicas em colunas de progresso</p>
+          <h1><%= dadosKanban.nome || "Quadro Kanban" %></h1>
+          <p>Organize suas atividades acadêmicas em colunas de progresso.</p>
         </div>
 
-        <button class="btn-add-column" onclick="abrirModalColuna()">
-            + Coluna
+        <button class="btn-primary" type="button" onclick="abrirModalColuna()">
+          <i class="fa-solid fa-plus"></i>
+          Nova Coluna
         </button>
-    </section>
+      </header>
 
-    <section class="board">
+      <section class="kanban-board">
+        <% if (!listaColunas || listaColunas.length === 0) { %>
+          <div class="empty-column">
+            Nenhuma coluna encontrada. Clique em "Nova Coluna" para começar.
+          </div>
+        <% } %>
 
-        <% colunas.forEach(coluna => { %>
+        <% listaColunas.forEach(coluna => { %>
+          <%
+            const cardsDaColuna = listaCards.filter(card => card.id_coluna == coluna.id);
+          %>
 
-            <div class="column" data-id="<%= coluna.id %>">
+          <div class="kanban-column" data-column-id="<%= coluna.id %>">
+            <div class="column-header">
+              <h2><%= coluna.nome %></h2>
 
-                <div class="column-header">
-                    <h3><%= coluna.nome %></h3>
-
-                    <span>
-                        <%= cards.filter(card => card.id_coluna == coluna.id).length %>
-                    </span>
-                </div>
-
-                <div class="cards-area">
-
-                    <% cards
-                        .filter(card => card.id_coluna == coluna.id)
-                        .forEach(card => { %>
-
-                        <div class="card" draggable="true" data-id="<%= card.id %>">
-                            <strong><%= card.titulo %></strong>
-
-                            <% if (card.descricao) { %>
-                                <p><%= card.descricao %></p>
-                            <% } %>
-                        </div>
-
-                    <% }) %>
-
-                </div>
-
-                <button class="btn-add-card" onclick="abrirModalCard(<%= coluna.id %>)">
-                    + Adicionar card
-                </button>
-
+              <span class="column-count">
+                <%= cardsDaColuna.length %>
+              </span>
             </div>
 
+            <div class="cards-container" data-column-id="<%= coluna.id %>">
+              <% if (cardsDaColuna.length === 0) { %>
+                <div class="empty-column">
+                  Arraste cards para cá ou adicione um novo.
+                </div>
+              <% } %>
+
+              <% cardsDaColuna.forEach(card => { %>
+                <article
+                  class="kanban-card"
+                  draggable="true"
+                  data-card-id="<%= card.id %>"
+                >
+                  <div class="card-header">
+                    <h3><%= card.titulo %></h3>
+                  </div>
+
+                  <% if (card.descricao) { %>
+                    <p><%= card.descricao %></p>
+                  <% } else { %>
+                    <p>Sem descrição.</p>
+                  <% } %>
+                </article>
+              <% }) %>
+            </div>
+
+            <button
+              class="btn-add-card"
+              type="button"
+              onclick="abrirModalCard('<%= coluna.id %>')"
+            >
+              <i class="fa-solid fa-plus"></i>
+              Adicionar card
+            </button>
+          </div>
         <% }) %>
+      </section>
+    </main>
 
-    </section>
+    <!-- MODAL CRIAR COLUNA -->
+    <div class="modal-overlay" id="modalColuna">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Nova Coluna</h2>
 
-</main>
-
-<!-- MODAL CRIAR COLUNA -->
-<div class="modal-overlay" id="modalColuna">
-    <div class="modal-kanban">
+          <button type="button" onclick="fecharModalColuna()">
+            ✕
+          </button>
+        </div>
 
         <form action="/kanban/colunas" method="POST">
-            <input type="hidden" name="idKanban" value="<%= kanban.id %>">
+          <input
+            type="hidden"
+            name="idKanban"
+            value="<%= dadosKanban.id %>"
+          />
 
-            <input
-                type="text"
-                name="nome"
-                class="modal-input"
-                placeholder="Nome da coluna *"
-                required
+          <label>Nome da coluna</label>
+          <input
+            type="text"
+            name="nome"
+            placeholder="Ex: A Fazer"
+            required
+          />
+
+          <div class="modal-buttons">
+            <button
+              type="button"
+              class="cancel-btn"
+              onclick="fecharModalColuna()"
             >
+              Cancelar
+            </button>
 
-            <div class="modal-actions">
-                <button type="button" class="btn-cancelar" onclick="fecharModalColuna()">
-                    Cancelar
-                </button>
-
-                <button type="submit" class="btn-confirmar">
-                    Criar
-                </button>
-            </div>
+            <button type="submit" class="save-btn">
+              Criar Coluna
+            </button>
+          </div>
         </form>
-
+      </div>
     </div>
-</div>
 
-<!-- MODAL CRIAR CARD -->
-<div class="modal-overlay" id="modalCard">
-    <div class="modal-kanban">
+    <!-- MODAL CRIAR CARD -->
+    <div class="modal-overlay" id="modalCard">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Novo Card</h2>
+
+          <button type="button" onclick="fecharModalCard()">
+            ✕
+          </button>
+        </div>
 
         <form action="/kanban/cards" method="POST">
-            <input type="hidden" name="id_coluna" id="inputIdColuna">
+          <input
+            type="hidden"
+            name="id_coluna"
+            id="inputIdColuna"
+          />
 
-            <input
-                type="text"
-                name="titulo"
-                class="modal-input"
-                placeholder="Título do card *"
-                required
+          <label>Título</label>
+          <input
+            type="text"
+            name="titulo"
+            placeholder="Ex: Estudar Banco de Dados"
+            required
+          />
+
+          <label>Descrição</label>
+          <textarea
+            name="descricao"
+            placeholder="Digite uma descrição para o card..."
+          ></textarea>
+
+          <div class="modal-buttons">
+            <button
+              type="button"
+              class="cancel-btn"
+              onclick="fecharModalCard()"
             >
+              Cancelar
+            </button>
 
-            <textarea
-                name="descricao"
-                class="modal-textarea"
-                placeholder="Descrição (opcional)"
-            ></textarea>
-
-            <div class="modal-actions">
-                <button type="button" class="btn-cancelar" onclick="fecharModalCard()">
-                    Cancelar
-                </button>
-
-                <button type="submit" class="btn-confirmar">
-                    Adicionar
-                </button>
-            </div>
+            <button type="submit" class="save-btn">
+              Adicionar Card
+            </button>
+          </div>
         </form>
-
+      </div>
     </div>
-</div>
 
-<script>
-    function abrirModalColuna() {
-        document.getElementById("modalColuna").classList.add("active");
-    }
+    <script>
+      // =========================
+      // MODAIS
+      // =========================
 
-    function fecharModalColuna() {
-        document.getElementById("modalColuna").classList.remove("active");
-    }
+      function abrirModalColuna() {
+        const modal = document.getElementById("modalColuna");
+        modal.classList.add("show");
+      }
 
-    function abrirModalCard(idColuna) {
-        document.getElementById("inputIdColuna").value = idColuna;
-        document.getElementById("modalCard").classList.add("active");
-    }
+      function fecharModalColuna() {
+        const modal = document.getElementById("modalColuna");
+        modal.classList.remove("show");
+      }
 
-    function fecharModalCard() {
-        document.getElementById("modalCard").classList.remove("active");
-    }
+      function abrirModalCard(idColuna) {
+        const inputIdColuna = document.getElementById("inputIdColuna");
+        const modal = document.getElementById("modalCard");
 
-    document.querySelectorAll(".modal-overlay").forEach(modal => {
-        modal.addEventListener("click", function(e) {
-            if (e.target === modal) {
-                modal.classList.remove("active");
-            }
+        inputIdColuna.value = idColuna;
+        modal.classList.add("show");
+      }
+
+      function fecharModalCard() {
+        const modal = document.getElementById("modalCard");
+        modal.classList.remove("show");
+      }
+
+      document.querySelectorAll(".modal-overlay").forEach((modal) => {
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            modal.classList.remove("show");
+          }
         });
-    });
+      });
 
-    const cards = document.querySelectorAll(".card");
-    const columns = document.querySelectorAll(".column");
+      // =========================
+      // DRAG AND DROP
+      // =========================
 
-    let draggedCard = null;
+      let draggedCard = null;
 
-    cards.forEach(card => {
+      function atualizarContadores() {
+        document.querySelectorAll(".kanban-column").forEach((coluna) => {
+          const contador = coluna.querySelector(".column-count");
+          const totalCards = coluna.querySelectorAll(".kanban-card").length;
+
+          if (contador) {
+            contador.textContent = totalCards;
+          }
+        });
+      }
+
+      function removerEmptyState(container) {
+        const empty = container.querySelector(".empty-column");
+
+        if (empty) {
+          empty.remove();
+        }
+      }
+
+      function adicionarEmptyStateSeNecessario(container) {
+        const temCard = container.querySelector(".kanban-card");
+
+        if (!temCard) {
+          const empty = document.createElement("div");
+          empty.classList.add("empty-column");
+          empty.textContent = "Arraste cards para cá ou adicione um novo.";
+
+          container.appendChild(empty);
+        }
+      }
+
+      document.querySelectorAll(".kanban-card").forEach((card) => {
         card.addEventListener("dragstart", () => {
-            draggedCard = card;
-            card.classList.add("dragging");
+          draggedCard = card;
+          card.classList.add("dragging");
         });
 
         card.addEventListener("dragend", () => {
-            card.classList.remove("dragging");
-            draggedCard = null;
+          card.classList.remove("dragging");
+          draggedCard = null;
+
+          document.querySelectorAll(".cards-container").forEach((container) => {
+            container.classList.remove("drag-over");
+          });
         });
-    });
+      });
 
-    columns.forEach(column => {
-        column.addEventListener("dragover", e => {
-            e.preventDefault();
+      document.querySelectorAll(".cards-container").forEach((container) => {
+        container.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          container.classList.add("drag-over");
         });
 
-        column.addEventListener("drop", async () => {
-            if (!draggedCard) return;
+        container.addEventListener("dragleave", () => {
+          container.classList.remove("drag-over");
+        });
 
-            const idCard = draggedCard.dataset.id;
-            const idColuna = column.dataset.id;
+        container.addEventListener("drop", async (e) => {
+          e.preventDefault();
 
-            const cardsArea = column.querySelector(".cards-area");
-            cardsArea.appendChild(draggedCard);
+          if (!draggedCard) return;
 
+          const containerAnterior = draggedCard.parentElement;
+
+          removerEmptyState(container);
+
+          container.appendChild(draggedCard);
+          container.classList.remove("drag-over");
+
+          adicionarEmptyStateSeNecessario(containerAnterior);
+          atualizarContadores();
+
+          const idCard = draggedCard.dataset.cardId;
+          const idColuna = container.dataset.columnId;
+
+          try {
             await fetch("/kanban/cards/mover", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    idCard,
-                    idColuna
-                })
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                idCard,
+                idColuna
+              })
             });
+          } catch (erro) {
+            console.error("Erro ao mover card:", erro);
+            alert("Erro ao mover card.");
+          }
         });
-    });
-</script>
-
-</body>
+      });
+    </script>
+  </body>
 </html>
