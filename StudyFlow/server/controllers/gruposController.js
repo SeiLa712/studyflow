@@ -2,10 +2,20 @@ const gruposModel = require("../models/gruposModel");
 
 exports.paginaGrupos = async (req, res) => {
   try {
-    const grupos = await gruposModel.listarPorUsuario(req.usuario.id);
+    const idUsuario = req.usuario.id;
+
+    const gruposCriados = await gruposModel.listarCriadosPorUsuario(idUsuario);
+    const gruposParticipando = await gruposModel.listarParticipandoPorUsuario(idUsuario);
 
     res.render("usuarios/grupos", {
-      grupos
+      gruposCriados,
+      gruposParticipando,
+
+      // mantém compatibilidade com scripts antigos
+      grupos: [
+        ...gruposCriados,
+        ...gruposParticipando
+      ]
     });
 
   } catch (erro) {

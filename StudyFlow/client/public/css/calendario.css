@@ -283,3 +283,35 @@ body {
 .save-btn:hover {
   background: #4f46e5;
 }
+
+/* =======================
+   MODAL DE DETALHES
+======================= */
+
+.detalhes-atividade {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detalhes-atividade p {
+  color: #374151;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.detalhes-atividade strong {
+  color: #111827;
+}
+
+.task-card {
+  cursor: pointer;
+}
+
+.activity-tag {
+  cursor: pointer;
+}
+
+.calendar-day:not(.empty) {
+  cursor: pointer;
+}

@@ -137,6 +137,19 @@ function gerarSemanaAtual() {
     // Adiciona a classe padrão da coluna
     coluna.classList.add("day-column");
 
+    const dataISO = data.toISOString().split("T")[0];
+    coluna.dataset.date = dataISO;
+    
+    coluna.addEventListener("click", () => {
+      const inputData = document.querySelector('input[name="data_vencimento"]');
+      
+      if (inputData) {
+        inputData.value = dataISO;
+      }
+      
+      modalOverlay.classList.add("show");
+    });
+
     // Verifica se a data gerada corresponde ao dia atual
     const ehHoje =
       data.getDate() === hoje.getDate() &&
@@ -292,6 +305,25 @@ function adicionarEventoCalendario(taskId, titulo, data, urgencia) {
       // Define o texto exibido no calendário
       evento.textContent = titulo;
 
+      evento.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const atividade = atividades.find((item) => item.id === taskId);
+
+      if (!atividade) return;
+
+      const fakeElement = {
+        dataset: {
+        titulo: atividade.nome,
+        descricao: atividade.descricao || "Sem descrição.",
+        data: atividade.data_vencimento.split("T")[0],
+        prioridade: atividade.prioridade
+      }
+    };
+    
+    abrirDetalhesAtividade(fakeElement);
+  });
+
       // Insere o evento dentro do dia correspondente
       coluna
         .querySelector(".events-container")
@@ -396,4 +428,61 @@ document.querySelectorAll(".btn-delete").forEach((btn) => {
       alert("Erro no servidor");
     }
   });
+});
+// =======================
+// MODAL DETALHES DA ATIVIDADE
+// =======================
+
+const modalDetalhesOverlay = document.getElementById("modalDetalhesOverlay");
+const closeDetalhesModal = document.getElementById("closeDetalhesModal");
+
+const detalheTitulo = document.getElementById("detalheTitulo");
+const detalheDescricao = document.getElementById("detalheDescricao");
+const detalheData = document.getElementById("detalheData");
+const detalhePrioridade = document.getElementById("detalhePrioridade");
+
+function formatarDataBR(dataISO) {
+  if (!dataISO) return "Sem data";
+
+  const [ano, mes, dia] = dataISO.split("-");
+  return `${dia}/${mes}/${ano}`;
+}
+
+function formatarPrioridade(prioridade) {
+  if (prioridade === "alta") return "Alta prioridade";
+  if (prioridade === "media") return "Média prioridade";
+  return "Baixa prioridade";
+}
+
+function abrirDetalhesAtividade(elemento) {
+  detalheTitulo.textContent = elemento.dataset.titulo || "Atividade";
+  detalheDescricao.textContent = elemento.dataset.descricao || "Sem descrição.";
+  detalheData.textContent = formatarDataBR(elemento.dataset.data);
+  detalhePrioridade.textContent = formatarPrioridade(elemento.dataset.prioridade);
+
+  modalDetalhesOverlay.classList.add("show");
+}
+
+function fecharDetalhesAtividade() {
+  modalDetalhesOverlay.classList.remove("show");
+}
+
+document.querySelectorAll(".task-card").forEach((card) => {
+  card.addEventListener("click", () => {
+    abrirDetalhesAtividade(card);
+  });
+});
+
+document.querySelectorAll(".btn-delete").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+});
+
+closeDetalhesModal?.addEventListener("click", fecharDetalhesAtividade);
+
+modalDetalhesOverlay?.addEventListener("click", (e) => {
+  if (e.target === modalDetalhesOverlay) {
+    fecharDetalhesAtividade();
+  }
 });

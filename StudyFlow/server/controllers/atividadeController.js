@@ -30,10 +30,20 @@ exports.criarAtividade = async (req, res) => {
 
 exports.paginaInicial = async (req, res) => {
   try {
-    const atividades = await atividadeModel.listar();
+    const idUsuario = req.usuario.id;
+
+    const atividadesProximas =
+      await atividadeModel.listarProximasPorUsuario(idUsuario);
+
+    const atividadesCalendario =
+      await atividadeModel.listarCalendarioPorUsuario(idUsuario);
 
     res.render("usuarios/pagina-inicial", {
-      atividades
+      atividadesProximas,
+      atividadesCalendario,
+
+      // Mantém compatibilidade caso alguma parte antiga ainda use "atividades"
+      atividades: atividadesProximas
     });
 
   } catch (erro) {

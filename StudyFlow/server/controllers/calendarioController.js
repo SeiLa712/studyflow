@@ -2,7 +2,7 @@ const atividadeModel = require("../models/atividadeModel");
 
 exports.calendario = async (req, res) => {
   try {
-    const tarefas = await atividadeModel.listarPorUsuario(
+    const tarefas = await atividadeModel.listarCalendarioPorUsuario(
       req.usuario.id
     );
 

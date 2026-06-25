@@ -10,7 +10,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
 
-    <link rel="stylesheet" href="/css/barra-lateral.css" />
     <link rel="stylesheet" href="/css/grupos.css" />
   </head>
 
@@ -29,79 +28,141 @@
         </button>
       </div>
 
-      <div class="grupos-grid" id="gruposContainer">
-        <% if (!grupos || grupos.length === 0) { %>
-          <div class="empty-state">
-            <i class="fa-solid fa-users"></i>
-            <p>Nenhum grupo criado ainda.</p>
-            <button class="btn-add" type="button" onclick="document.getElementById('modalOverlay').classList.add('active')">
-              Criar primeiro grupo
-            </button>
-          </div>
-        <% } %>
+      <!-- GRUPOS CRIADOS -->
+      <section class="grupos-section">
+        <div class="section-title">
+          <h2>Grupos que eu criei</h2>
+          <p>Grupos criados por você</p>
+        </div>
 
-        <% grupos.forEach(grupo => { %>
-          <div
-            class="grupo-card"
-            data-id="<%= grupo.id %>"
-            data-nome="<%= grupo.nome %>"
-          >
-            <div class="grupo-header">
-              <h3><%= grupo.nome %></h3>
+        <div class="grupos-grid">
+          <% if (!gruposCriados || gruposCriados.length === 0) { %>
+            <div class="empty-state">
+              <i class="fa-solid fa-users"></i>
+              <p>Você ainda não criou nenhum grupo.</p>
+            </div>
+          <% } %>
+
+          <% gruposCriados.forEach(grupo => { %>
+            <div
+              class="grupo-card"
+              data-id="<%= grupo.id %>"
+              data-nome="<%= grupo.nome %>"
+            >
+              <div class="grupo-header">
+                <h3><%= grupo.nome %></h3>
+
+                <button
+                  class="btn-delete-grupo"
+                  data-id="<%= grupo.id %>"
+                  title="Excluir grupo"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+
+              <% if (grupo.descricao) { %>
+                <p class="disciplina"><%= grupo.descricao %></p>
+              <% } else { %>
+                <p class="disciplina"><%= grupo.disciplina %></p>
+              <% } %>
+
+              <div class="grupo-info">
+                <div class="membros">
+                  <i class="fa-solid fa-users"></i>
+                  <span><%= grupo.total_membros || 0 %> membros</span>
+
+                  <% if (grupo.membros_preview) { %>
+                    <span class="membros-list">
+                      (<%= grupo.membros_preview %>
+                      <% if (grupo.membros_extras > 0) { %>
+                        +<%= grupo.membros_extras %>
+                      <% } %>)
+                    </span>
+                  <% } %>
+                </div>
 
               <button
-                class="btn-delete-grupo"
+                class="btn-add-membro"
                 data-id="<%= grupo.id %>"
-                title="Excluir grupo"
+                type="button"
               >
-                <i class="fa-solid fa-trash"></i>
+                + Adicionar Membro
               </button>
             </div>
+          <% }) %>
+        </div>
+      </section>
 
-            <% if (grupo.descricao) { %>
-              <p class="disciplina"><%= grupo.descricao %></p>
-            <% } else { %>
-              <p class="disciplina"><%= grupo.disciplina %></p>
-            <% } %>
+      <!-- GRUPOS QUE PARTICIPO -->
+      <section class="grupos-section">
+        <div class="section-title">
+          <h2>Grupos que participo</h2>
+          <p>Grupos onde você foi adicionado como membro</p>
+        </div>
 
-            <div class="grupo-info">
-              <div class="membros">
-                <i class="fa-solid fa-users"></i>
-                <span><%= grupo.total_membros || 0 %> membros</span>
-
-                <% if (grupo.membros_preview) { %>
-                  <span class="membros-list">
-                    (<%= grupo.membros_preview %>
-                    <% if (grupo.membros_extras > 0) { %>
-                      +<%= grupo.membros_extras %>
-                    <% } %>)
-                  </span>
-                <% } %>
-              </div>
-
-              <div class="proxima-sessao">
-                <% if (grupo.proxima_data && grupo.proxima_hora) { %>
-                  <i class="fa-solid fa-calendar"></i>
-                  <span><%= grupo.proxima_data %></span>
-
-                  <i class="fa-solid fa-clock"></i>
-                  <span><%= grupo.proxima_hora %></span>
-                <% } else { %>
-                  <span class="sem-sessao"></span>
-                <% } %>
-              </div>
+        <div class="grupos-grid">
+          <% if (!gruposParticipando || gruposParticipando.length === 0) { %>
+            <div class="empty-state">
+              <i class="fa-solid fa-user-group"></i>
+              <p>Você ainda não foi adicionado em nenhum grupo.</p>
             </div>
+          <% } %>
 
-            <button
-              class="btn-add-membro"
+          <% gruposParticipando.forEach(grupo => { %>
+            <div
+              class="grupo-card grupo-participando"
               data-id="<%= grupo.id %>"
-              type="button"
+              data-nome="<%= grupo.nome %>"
             >
-              + Adicionar Membro
-            </button>
-          </div>
-        <% }) %>
-      </div>
+              <div class="grupo-header">
+                <h3><%= grupo.nome %></h3>
+                <span class="badge-participando">Participando</span>
+              </div>
+
+              <% if (grupo.descricao) { %>
+                <p class="disciplina"><%= grupo.descricao %></p>
+              <% } else { %>
+                <p class="disciplina"><%= grupo.disciplina %></p>
+              <% } %>
+
+              <div class="grupo-info">
+                <div class="membros">
+                  <i class="fa-solid fa-users"></i>
+                  <span><%= grupo.total_membros || 0 %> membros</span>
+
+                  <% if (grupo.membros_preview) { %>
+                    <span class="membros-list">
+                      (<%= grupo.membros_preview %>
+                      <% if (grupo.membros_extras > 0) { %>
+                        +<%= grupo.membros_extras %>
+                      <% } %>)
+                    </span>
+                  <% } %>
+                </div>
+
+                <div class="proxima-sessao">
+                  <% if (grupo.proxima_data && grupo.proxima_hora) { %>
+                    <i class="fa-solid fa-calendar"></i>
+                    <span><%= grupo.proxima_data %></span>
+
+                    <i class="fa-solid fa-clock"></i>
+                    <span><%= grupo.proxima_hora %></span>
+                  <% } %>
+                </div>
+              </div>
+
+              <button
+                class="btn-add-membro"
+                data-id="<%= grupo.id %>"
+                type="button"
+              >
+                + Adicionar Membro
+              </button>
+            </div>
+          <% }) %>
+        </div>
+      </section>
     </main>
 
     <!-- MODAL CRIAR GRUPO -->
@@ -221,7 +282,10 @@
     </div>
 
     <script>
-      window.grupos = <%- JSON.stringify(grupos || []) %>;
+      window.grupos = <%- JSON.stringify([
+        ...(gruposCriados || []),
+        ...(gruposParticipando || [])
+      ]) %>;
     </script>
 
     <script src="/js/grupos.js"></script>

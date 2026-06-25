@@ -1,77 +1,103 @@
-//importação do módulo express
+// Importação do módulo express
 const express = require("express");
-
 const router = express.Router();
 
-const usuarioController = require("../controllers/usuarioController.js")
-
-const atividadeModel = require("../models/atividadeModel");
-
+// Controllers
+const usuarioController = require("../controllers/usuarioController.js");
 const calendarioController = require("../controllers/calendarioController");
 
-//importar o multer
-const upload = require("../config/multer.js")
+// Models
+const atividadeModel = require("../models/atividadeModel");
 
-// importar o middleware de autenticação
-const{verificarAutenticacao} = require("../middlewares/authMiddleware.js")
+// Multer
+const upload = require("../config/multer.js");
 
-// Declaração das rotas do usuário
-// ROTAS PÚBLICAS
-// Envia os dados de login
-router.post("/login", usuarioController.login)
+// Middleware de autenticação
+const { verificarAutenticacao } = require("../middlewares/authMiddleware.js");
 
-// Rota de saida
-router.get("/logout", usuarioController.logout)
+/* =========================
+   ROTAS PÚBLICAS
+========================= */
 
-//ROTA DE CADASTRO de usuario
-//O multer, salva a imagem primeiro, através do upload.single, depois chama o controller
-router.post("/cadastrar", upload.single('foto'), usuarioController.cadastrar)
+// Login
+router.post("/login", usuarioController.login);
 
+// Logout
+router.get("/logout", usuarioController.logout);
 
-// ROTAS PRIVADAS
-//daqui pra baixo, so executa se tiver acesso para tal 
-router.use(verificarAutenticacao)
-//router.use(somenteAdmin)
+// Cadastro de usuário
+router.post(
+  "/cadastrar",
+  upload.single("foto"),
+  usuarioController.cadastrar
+);
 
-// Obtém a lista de usuários
+/* =========================
+   ROTAS PRIVADAS
+========================= */
+
+router.use(verificarAutenticacao);
+
+/* =========================
+   LISTAR USUÁRIOS
+========================= */
+
 router.get("/", (req, res) => {
-  res.status(200).render('usuarios/listar')
+  res.status(200).render("usuarios/listar");
 });
 
-router.get('/pagina-inicial', async (req, res) => {
-    try {
+/* =========================
+   PÁGINA INICIAL
+========================= */
 
-        console.log("USUARIO LOGADO:", req.usuario);
+router.get("/pagina-inicial", async (req, res) => {
+  try {
+    const idUsuario = req.usuario.id;
 
-        const atividades =
-            await atividadeModel.listarPorUsuario(
-                req.usuario.id
-            );
+    console.log("USUÁRIO LOGADO:", req.usuario);
+    console.log("ID USUÁRIO:", idUsuario);
 
-        console.log("ID USUARIO:", req.usuario.id);
-        console.log("ATIVIDADES:", atividades);
+    const atividadesProximas =
+      await atividadeModel.listarProximasPorUsuario(idUsuario);
 
-        res.render(
-            'usuarios/pagina-inicial',
-            { atividades }
-        );
+    const atividadesCalendario =
+      await atividadeModel.listarCalendarioPorUsuario(idUsuario);
 
-    } catch (erro) {
-        console.error(erro);
-    }
+    console.log("ATIVIDADES PRÓXIMAS:", atividadesProximas);
+    console.log("ATIVIDADES CALENDÁRIO:", atividadesCalendario);
+
+    return res.render("usuarios/pagina-inicial", {
+      atividadesProximas,
+      atividadesCalendario,
+
+      // Mantém compatibilidade com códigos antigos
+      atividades: atividadesProximas
+    });
+
+  } catch (erro) {
+    console.error("Erro ao carregar página inicial:", erro);
+
+    return res
+      .status(500)
+      .send("Erro ao carregar página inicial");
+  }
 });
 
-//Retornar a página de cadastro
+/* =========================
+   CADASTRO
+========================= */
+
 router.get("/cadastro", (req, res) => {
-  res.status(200).render('usuarios/cadastrar')
+  res.status(200).render("usuarios/cadastrar");
 });
 
-// Vai para a tela de calendario
+/* =========================
+   CALENDÁRIO
+========================= */
+
 router.get(
   "/calendario",
-  verificarAutenticacao,
   calendarioController.calendario
 );
 
-
-module.exports = router
+module.exports = router;

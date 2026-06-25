@@ -231,3 +231,141 @@ exports.buscarArquivoPorId = async (idArquivo) => {
 
   return rows[0];
 };
+exports.listarCriadosPorUsuario = async (idUsuario) => {
+  const [tablesMembros] = await db.query("SHOW TABLES LIKE 'grupo_membros'");
+  const tabelaMembrosExiste = tablesMembros.length > 0;
+
+  const [tablesSessoes] = await db.query("SHOW TABLES LIKE 'grupo_sessoes'");
+  const tabelaSessoesExiste = tablesSessoes.length > 0;
+
+  let sql;
+
+  if (tabelaMembrosExiste) {
+    sql = `
+      SELECT 
+        g.*,
+
+        COALESCE(
+          (SELECT COUNT(*) FROM grupo_membros WHERE id_grupo = g.id),
+          0
+        ) AS total_membros,
+
+        (
+          SELECT GROUP_CONCAT(u.nome SEPARATOR ', ')
+          FROM grupo_membros gm
+          JOIN usuarios u ON gm.id_usuario = u.id
+          WHERE gm.id_grupo = g.id
+          LIMIT 3
+        ) AS membros_preview,
+
+        COALESCE(
+          (SELECT COUNT(*) - 3 FROM grupo_membros WHERE id_grupo = g.id),
+          0
+        ) AS membros_extras,
+
+        ${tabelaSessoesExiste ? `
+          (
+            SELECT DATE_FORMAT(data_sessao, '%d/%m/%Y')
+            FROM grupo_sessoes
+            WHERE id_grupo = g.id
+            ORDER BY data_sessao ASC, hora_sessao ASC
+            LIMIT 1
+          )
+        ` : "NULL"} AS proxima_data,
+
+        ${tabelaSessoesExiste ? `
+          (
+            SELECT TIME_FORMAT(hora_sessao, '%H:%i')
+            FROM grupo_sessoes
+            WHERE id_grupo = g.id
+            ORDER BY data_sessao ASC, hora_sessao ASC
+            LIMIT 1
+          )
+        ` : "NULL"} AS proxima_hora
+
+      FROM grupos g
+      WHERE g.id_usuario = ?
+      ORDER BY g.created_at DESC
+    `;
+  } else {
+    sql = `
+      SELECT 
+        g.*,
+        0 AS total_membros,
+        NULL AS membros_preview,
+        0 AS membros_extras,
+        NULL AS proxima_data,
+        NULL AS proxima_hora
+      FROM grupos g
+      WHERE g.id_usuario = ?
+      ORDER BY g.created_at DESC
+    `;
+  }
+
+  const [rows] = await db.query(sql, [idUsuario]);
+  return rows;
+};
+
+exports.listarParticipandoPorUsuario = async (idUsuario) => {
+  const [tablesMembros] = await db.query("SHOW TABLES LIKE 'grupo_membros'");
+  const tabelaMembrosExiste = tablesMembros.length > 0;
+
+  if (!tabelaMembrosExiste) {
+    return [];
+  }
+
+  const [tablesSessoes] = await db.query("SHOW TABLES LIKE 'grupo_sessoes'");
+  const tabelaSessoesExiste = tablesSessoes.length > 0;
+
+  const sql = `
+    SELECT 
+      g.*,
+
+      COALESCE(
+        (SELECT COUNT(*) FROM grupo_membros WHERE id_grupo = g.id),
+        0
+      ) AS total_membros,
+
+      (
+        SELECT GROUP_CONCAT(u.nome SEPARATOR ', ')
+        FROM grupo_membros gm2
+        JOIN usuarios u ON gm2.id_usuario = u.id
+        WHERE gm2.id_grupo = g.id
+        LIMIT 3
+      ) AS membros_preview,
+
+      COALESCE(
+        (SELECT COUNT(*) - 3 FROM grupo_membros WHERE id_grupo = g.id),
+        0
+      ) AS membros_extras,
+
+      ${tabelaSessoesExiste ? `
+        (
+          SELECT DATE_FORMAT(data_sessao, '%d/%m/%Y')
+          FROM grupo_sessoes
+          WHERE id_grupo = g.id
+          ORDER BY data_sessao ASC, hora_sessao ASC
+          LIMIT 1
+        )
+      ` : "NULL"} AS proxima_data,
+
+      ${tabelaSessoesExiste ? `
+        (
+          SELECT TIME_FORMAT(hora_sessao, '%H:%i')
+          FROM grupo_sessoes
+          WHERE id_grupo = g.id
+          ORDER BY data_sessao ASC, hora_sessao ASC
+          LIMIT 1
+        )
+      ` : "NULL"} AS proxima_hora
+
+    FROM grupos g
+    INNER JOIN grupo_membros gm ON gm.id_grupo = g.id
+    WHERE gm.id_usuario = ?
+      AND g.id_usuario <> ?
+    ORDER BY gm.data_entrada DESC
+  `;
+
+  const [rows] = await db.query(sql, [idUsuario, idUsuario]);
+  return rows;
+};

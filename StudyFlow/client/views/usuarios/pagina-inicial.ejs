@@ -1,18 +1,34 @@
-<!-- <%- include('../partials/barra-lateral') %> -->
 <!doctype html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>StudyFlow</title>
-    <link rel="stylesheet" href="../css/pagina-inicial.css" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+
+    <link rel="stylesheet" href="/css/barra-lateral.css" />
+    <link rel="stylesheet" href="/css/pagina-inicial.css" />
   </head>
+
   <body>
     <%- include('../partials/barra-lateral') %>
+
+    <%
+      const listaProximas =
+        typeof atividadesProximas !== "undefined"
+          ? atividadesProximas
+          : atividades || [];
+
+      const listaCalendario =
+        typeof atividadesCalendario !== "undefined"
+          ? atividadesCalendario
+          : atividades || [];
+    %>
+
     <main class="dashboard">
       <section class="main-content">
         <div class="header">
@@ -21,8 +37,11 @@
             <p>Organize seus estudos e aumente sua produtividade.</p>
           </div>
 
-          <button class="btn-add" id="openModal">Adicionar Atividade</button>
+          <button class="btn-add" id="openModal">
+            Adicionar Atividade
+          </button>
         </div>
+
         <div class="activities">
           <div
             style="
@@ -35,29 +54,54 @@
           </div>
 
           <div id="tasksContainer">
-          <% atividades.forEach(atividade => { %>
+            <% if (!listaProximas || listaProximas.length === 0) { %>
+              <div class="task-empty">
+                <i class="fa-solid fa-circle-check"></i>
+                <p>Nenhuma atividade próxima no momento.</p>
+              </div>
+            <% } %>
 
-          <div class="task-card
-          <%= atividade.prioridade === 'alta'
-          ? 'urgent'
-          : atividade.prioridade === 'media'
-          ? 'medium'
-          : 'low' %>"
-          data-id="<%= atividade.id %>">
+            <% listaProximas.forEach(atividade => { %>
+              <div
+                class="task-card
+                <%= atividade.prioridade === 'alta'
+                ? 'urgent'
+                : atividade.prioridade === 'media'
+                ? 'medium'
+                : 'low' %>" 
+                data-id="<%= atividade.id %>"
+                data-titulo="<%= atividade.nome %>"
+                data-descricao="<%= atividade.descricao || 'Sem descrição.' %>"
+                data-data="<%= new Date(atividade.data_vencimento).toISOString().split('T')[0] %>"
+                data-prioridade="<%= atividade.prioridade %>"
+                >
+                <div>
+                  <h3><%= atividade.nome %></h3>
 
-          <h3><%= atividade.nome %></h3>
+                  <p>
+                    <%= new Date(atividade.data_vencimento)
+                      .toLocaleDateString('pt-BR') %>
+                  </p>
 
-          <p>
-              <%= new Date(atividade.data_vencimento)
-              .toLocaleDateString('pt-BR') %>
-          </p>
-          <!-- botão de excluir -->
-          <button class="btn-delete"><i class="fa-solid fa-trash"></i></button>
+                  <% if (atividade.prioridade) { %>
+                    <span class="task-priority">
+                      <%= atividade.prioridade === 'alta'
+                        ? 'Alta prioridade'
+                        : atividade.prioridade === 'media'
+                        ? 'Média prioridade'
+                        : 'Baixa prioridade' %>
+                    </span>
+                  <% } %>
+                </div>
+
+                <button class="btn-delete" title="Excluir atividade">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            <% }) %>
           </div>
+        </div>
 
-          <% }) %>
-        </div>
-        </div>
         <section class="weekly-calendar">
           <div class="calendar-header">
             <h2>Calendário Semanal</h2>
@@ -67,6 +111,7 @@
           <div class="calendar-grid" id="calendarGrid"></div>
         </section>
       </section>
+
       <aside class="pomodoro-card">
         <h2>Timer Rápido</h2>
 
@@ -77,29 +122,46 @@
         <button class="reset-btn">Reiniciar</button>
       </aside>
     </main>
+
+    <!-- MODAL ADICIONAR ATIVIDADE -->
     <div class="modal-overlay" id="modalOverlay">
       <div class="modal">
         <div class="modal-header">
           <h2>Adicionar Nova Atividade</h2>
-          <button id="closeModal">✕</button>
+          <button id="closeModal" type="button">✕</button>
         </div>
 
         <form id="activityForm" action="/tarefas/criar" method="POST">
-
-          <input type="hidden" name="origem" value="pagina-inicial">
+          <input
+            type="hidden"
+            name="redirectTo"
+            value="/usuarios/pagina-inicial"
+          />
 
           <label>Título</label>
-          <input type="text" id="nome" name="nome" required />
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            required
+            placeholder="Ex: Estudar Banco de Dados"
+          />
 
           <label>Descrição</label>
-          <textarea name="descricao"></textarea>
+          <textarea
+            name="descricao"
+            placeholder="Descrição da atividade..."
+          ></textarea>
 
           <label>Data</label>
-          <input type="date" name="data_vencimento" required />
+          <input
+            type="date"
+            name="data_vencimento"
+            required
+          />
 
           <label>Urgência</label>
-
-          <select name="prioridade">
+          <select name="prioridade" required>
             <option value="baixa">Baixa</option>
             <option value="media">Média</option>
             <option value="alta">Alta</option>
@@ -110,15 +172,46 @@
               Cancelar
             </button>
 
-            <button type="submit" class="save-btn">Adicionar</button>
+            <button type="submit" class="save-btn">
+              Adicionar
+            </button>
           </div>
         </form>
       </div>
     </div>
+<!-- MODAL DETALHES DA ATIVIDADE -->
+<div class="modal-overlay" id="modalDetalhesOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="detalheTitulo">Detalhes da Atividade</h2>
+
+      <button id="closeDetalhesModal" type="button">
+        ✕
+      </button>
+    </div>
+
+    <div class="detalhes-atividade">
+      <p>
+        <strong>Descrição:</strong>
+        <span id="detalheDescricao"></span>
+      </p>
+
+      <p>
+        <strong>Data:</strong>
+        <span id="detalheData"></span>
+      </p>
+
+      <p>
+        <strong>Prioridade:</strong>
+        <span id="detalhePrioridade"></span>
+      </p>
+    </div>
+  </div>
+</div>
     <script>
-      window.atividades = <%- JSON.stringify(atividades || []) %>;
+      window.atividades = <%- JSON.stringify(listaCalendario || []) %>;
     </script>
 
-    <script src="../js/pagina-inicial.js"></script>
+    <script src="/js/pagina-inicial.js"></script>
   </body>
 </html>

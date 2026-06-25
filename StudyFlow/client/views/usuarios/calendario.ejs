@@ -109,7 +109,10 @@
 
         <% for(let dia = 1; dia <= diasNoMes; dia++) { %>
 
-          <div class="calendar-day">
+          <div
+          class="calendar-day"
+          data-date="<%= anoAtual %>-<%= String(mesAtual + 1).padStart(2, '0') %>-<%= String(dia).padStart(2, '0') %>"
+          >
 
             <span class="day-number">
               <%= dia %>
@@ -158,10 +161,14 @@
                 ) { %>
 
                   <div
-                    class="activity-tag <%= classeCor %>"
-                    title="<%= tarefa.nome %>"
+                  class="activity-tag <%= classeCor %>"
+                  title="<%= tarefa.nome %>"
+                  data-titulo="<%= tarefa.nome %>"
+                  data-descricao="<%= tarefa.descricao || 'Sem descrição.' %>"
+                  data-data="<%= new Date(tarefa.data_vencimento).toISOString().split('T')[0] %>"
+                  data-prioridade="<%= tarefa.prioridade %>"
                   >
-                    <%= tarefa.nome %>
+                  <%= tarefa.nome %>
                   </div>
 
                 <% } %>
@@ -210,9 +217,9 @@
       >
 
         <input
-          type="hidden"
-          name="redirectTo"
-          value="/usuarios/calendario"
+        type="hidden"
+        name="redirectTo"
+        value="/usuarios/calendario?mes=<%= mesAtual %>&ano=<%= anoAtual %>"
         >
 
         <label>Título</label>
@@ -232,9 +239,10 @@
         <label>Data</label>
 
         <input
-          type="date"
-          name="data_vencimento"
-          required
+        type="date"
+        id="data_vencimento"
+        name="data_vencimento"
+        required
         >
 
         <label>Prioridade</label>
@@ -279,6 +287,35 @@
     </div>
 
   </div>
+<!-- MODAL DETALHES DA ATIVIDADE -->
+<div class="modal-overlay" id="modalDetalhesOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="detalheTitulo">Detalhes da Atividade</h2>
+
+      <button id="closeDetalhesModal" type="button">
+        ✕
+      </button>
+    </div>
+
+    <div class="detalhes-atividade">
+      <p>
+        <strong>Descrição:</strong>
+        <span id="detalheDescricao"></span>
+      </p>
+
+      <p>
+        <strong>Data:</strong>
+        <span id="detalheData"></span>
+      </p>
+
+      <p>
+        <strong>Prioridade:</strong>
+        <span id="detalhePrioridade"></span>
+      </p>
+    </div>
+  </div>
+</div>
 
   <script src="/js/calendario.js"></script>
 
