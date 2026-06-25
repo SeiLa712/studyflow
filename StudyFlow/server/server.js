@@ -67,6 +67,8 @@ app.use("/usuarios/pomodoro", pomodoroRoutes);
 const gruposRoutes = require("./routes/gruposRoutes");
 app.use("/usuarios", gruposRoutes);
 
+const kanbanRoutes = require('./routes/kanbanRoutes');
+app.use('/kanban', kanbanRoutes);
 // //Função para subir o servidor
 // app.listen(port, () => {
 //   console.log(`Servidor ativo na porta: ${port}`);

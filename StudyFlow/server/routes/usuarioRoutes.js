@@ -1,77 +1,59 @@
-//importação do módulo express
 const express = require("express");
-
 const router = express.Router();
 
-const usuarioController = require("../controllers/usuarioController.js")
-
+const usuarioController = require("../controllers/usuarioController.js");
 const atividadeModel = require("../models/atividadeModel");
-
 const calendarioController = require("../controllers/calendarioController");
 
-//importar o multer
-const upload = require("../config/multer.js")
+// upload
+const upload = require("../config/multer.js");
 
-// importar o middleware de autenticação
-const{verificarAutenticacao} = require("../middlewares/authMiddleware.js")
+// auth middleware
+const { verificarAutenticacao } = require("../middlewares/authMiddleware.js");
 
-// Declaração das rotas do usuário
+// =======================
 // ROTAS PÚBLICAS
-// Envia os dados de login
-router.post("/login", usuarioController.login)
+// =======================
 
-// Rota de saida
-router.get("/logout", usuarioController.logout)
+router.post("/login", usuarioController.login);
+router.get("/logout", usuarioController.logout);
+router.post("/cadastrar", upload.single('foto'), usuarioController.cadastrar);
 
-//ROTA DE CADASTRO de usuario
-//O multer, salva a imagem primeiro, através do upload.single, depois chama o controller
-router.post("/cadastrar", upload.single('foto'), usuarioController.cadastrar)
-
-
+// =======================
 // ROTAS PRIVADAS
-//daqui pra baixo, so executa se tiver acesso para tal 
-router.use(verificarAutenticacao)
-//router.use(somenteAdmin)
+// =======================
 
-// Obtém a lista de usuários
+router.use(verificarAutenticacao);
+
+// listar usuários
 router.get("/", (req, res) => {
-  res.status(200).render('usuarios/listar')
+  res.render("usuarios/listar");
 });
 
-router.get('/pagina-inicial', async (req, res) => {
-    try {
+// página inicial
+router.get("/pagina-inicial", async (req, res) => {
+  try {
+    const atividades = await atividadeModel.listarPorUsuario(req.usuario.id);
 
-        console.log("USUARIO LOGADO:", req.usuario);
+    res.render("usuarios/pagina-inicial", {
+      atividades
+    });
 
-        const atividades =
-            await atividadeModel.listarPorUsuario(
-                req.usuario.id
-            );
-
-        console.log("ID USUARIO:", req.usuario.id);
-        console.log("ATIVIDADES:", atividades);
-
-        res.render(
-            'usuarios/pagina-inicial',
-            { atividades }
-        );
-
-    } catch (erro) {
-        console.error(erro);
-    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erro ao carregar página inicial");
+  }
 });
 
-//Retornar a página de cadastro
 router.get("/cadastro", (req, res) => {
-  res.status(200).render('usuarios/cadastrar')
+  res.render("usuarios/cadastrar");
 });
 
-// Vai para a tela de calendario
+// calendário
 router.get(
   "/calendario",
   verificarAutenticacao,
   calendarioController.calendario
 );
 
-
-module.exports = router
+module.exports = router;
