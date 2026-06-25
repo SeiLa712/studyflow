@@ -57,6 +57,29 @@ CREATE TABLE IF NOT EXISTS grupo_membros (
     UNIQUE KEY unique_membro (id_grupo, id_usuario)
 );
 
+CREATE TABLE IF NOT EXISTS grupo_arquivos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    id_grupo INT NOT NULL,
+    id_usuario INT NOT NULL,
+
+    nome_original VARCHAR(255) NOT NULL,
+    nome_arquivo VARCHAR(255) NOT NULL,
+    caminho VARCHAR(255) NOT NULL,
+    mime_type VARCHAR(100),
+    tamanho_bytes INT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (id_grupo)
+        REFERENCES grupos(id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id)
+        ON DELETE CASCADE
+);
+
 -- ===========================
 -- POMODOROS
 -- ===========================

@@ -403,3 +403,145 @@ body {
     flex-direction: column;
   }
 }
+/* =======================
+   MODAL DE ARQUIVOS
+======================= */
+
+.modal-arquivos {
+  width: 650px;
+}
+
+.upload-arquivo-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.upload-arquivo-box input[type="file"] {
+  flex: 1;
+}
+
+.upload-arquivo-box .save-btn {
+  flex: 0;
+  padding: 12px 20px;
+}
+
+.arquivos-area {
+  margin-top: 25px;
+}
+
+.arquivos-area h3 {
+  font-size: 16px;
+  color: #111827;
+  margin-bottom: 14px;
+}
+
+.arquivos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.arquivo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  padding: 14px;
+}
+
+.arquivo-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.arquivo-info i {
+  width: 38px;
+  height: 38px;
+
+  background: #eef2ff;
+  color: #6366f1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.arquivo-info strong {
+  display: block;
+  color: #111827;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.arquivo-info span {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.btn-download {
+  text-decoration: none;
+  background: #6366f1;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 14px;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.btn-download:hover {
+  background: #4f46e5;
+}
+
+.empty-arquivos {
+  padding: 35px 20px;
+  text-align: center;
+
+  background: #f9fafb;
+  border: 2px dashed #e5e7eb;
+  border-radius: 14px;
+}
+
+.empty-arquivos i {
+  font-size: 42px;
+  color: #d1d5db;
+  margin-bottom: 12px;
+}
+
+.empty-arquivos p {
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .upload-arquivo-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .arquivo-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .btn-download {
+    width: 100%;
+    justify-content: center;
+  }
+}
