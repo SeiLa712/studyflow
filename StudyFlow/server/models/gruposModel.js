@@ -157,3 +157,77 @@ exports.listarSessoes = async (idGrupo) => {
   const [rows] = await db.query(sql, [idGrupo]);
   return rows;
 };
+exports.usuarioTemAcessoAoGrupo = async (idGrupo, idUsuario) => {
+  const sql = `
+    SELECT g.id
+    FROM grupos g
+    LEFT JOIN grupo_membros gm ON gm.id_grupo = g.id
+    WHERE g.id = ?
+      AND (
+        g.id_usuario = ?
+        OR gm.id_usuario = ?
+      )
+    LIMIT 1
+  `;
+
+  const [rows] = await db.query(sql, [idGrupo, idUsuario, idUsuario]);
+
+  return rows.length > 0;
+};
+
+exports.salvarArquivoGrupo = async (arquivo) => {
+  const sql = `
+    INSERT INTO grupo_arquivos
+    (
+      id_grupo,
+      id_usuario,
+      nome_original,
+      nome_arquivo,
+      caminho,
+      mime_type,
+      tamanho_bytes
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  const [result] = await db.query(sql, [
+    arquivo.id_grupo,
+    arquivo.id_usuario,
+    arquivo.nome_original,
+    arquivo.nome_arquivo,
+    arquivo.caminho,
+    arquivo.mime_type,
+    arquivo.tamanho_bytes
+  ]);
+
+  return result.insertId;
+};
+
+exports.listarArquivosGrupo = async (idGrupo) => {
+  const sql = `
+    SELECT 
+      ga.*,
+      u.nome AS nome_usuario
+    FROM grupo_arquivos ga
+    JOIN usuarios u ON u.id = ga.id_usuario
+    WHERE ga.id_grupo = ?
+    ORDER BY ga.created_at DESC
+  `;
+
+  const [rows] = await db.query(sql, [idGrupo]);
+
+  return rows;
+};
+
+exports.buscarArquivoPorId = async (idArquivo) => {
+  const sql = `
+    SELECT *
+    FROM grupo_arquivos
+    WHERE id = ?
+    LIMIT 1
+  `;
+
+  const [rows] = await db.query(sql, [idArquivo]);
+
+  return rows[0];
+};

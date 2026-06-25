@@ -161,3 +161,104 @@ exports.listarSessoes = async (req, res) => {
     return res.status(500).json({ erro: "Erro ao listar sessões" });
   }
 };
+
+const path = require("path");
+const fs = require("fs");
+
+exports.listarArquivos = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const temAcesso = await gruposModel.usuarioTemAcessoAoGrupo(
+      id,
+      req.usuario.id
+    );
+
+    if (!temAcesso) {
+      return res.status(403).json({ erro: "Você não tem acesso a este grupo" });
+    }
+
+    const arquivos = await gruposModel.listarArquivosGrupo(id);
+
+    return res.json(arquivos);
+
+  } catch (erro) {
+    console.error("Erro ao listar arquivos:", erro);
+    return res.status(500).json({ erro: "Erro ao listar arquivos" });
+  }
+};
+
+exports.uploadArquivo = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const temAcesso = await gruposModel.usuarioTemAcessoAoGrupo(
+      id,
+      req.usuario.id
+    );
+
+    if (!temAcesso) {
+      return res.status(403).json({ erro: "Você não tem acesso a este grupo" });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ erro: "Nenhum arquivo enviado" });
+    }
+
+    await gruposModel.salvarArquivoGrupo({
+      id_grupo: id,
+      id_usuario: req.usuario.id,
+      nome_original: req.file.originalname,
+      nome_arquivo: req.file.filename,
+      caminho: `/uploads/grupos/${req.file.filename}`,
+      mime_type: req.file.mimetype,
+      tamanho_bytes: req.file.size
+    });
+
+    return res.json({
+      sucesso: true,
+      mensagem: "Arquivo enviado com sucesso"
+    });
+
+  } catch (erro) {
+    console.error("Erro ao enviar arquivo:", erro);
+    return res.status(500).json({ erro: "Erro ao enviar arquivo" });
+  }
+};
+
+exports.downloadArquivo = async (req, res) => {
+  try {
+    const { id, arquivoId } = req.params;
+
+    const temAcesso = await gruposModel.usuarioTemAcessoAoGrupo(
+      id,
+      req.usuario.id
+    );
+
+    if (!temAcesso) {
+      return res.status(403).send("Você não tem acesso a este grupo");
+    }
+
+    const arquivo = await gruposModel.buscarArquivoPorId(arquivoId);
+
+    if (!arquivo || Number(arquivo.id_grupo) !== Number(id)) {
+      return res.status(404).send("Arquivo não encontrado");
+    }
+
+    const caminhoArquivo = path.join(
+      __dirname,
+      "../../client/public/uploads/grupos",
+      arquivo.nome_arquivo
+    );
+
+    if (!fs.existsSync(caminhoArquivo)) {
+      return res.status(404).send("Arquivo não encontrado no servidor");
+    }
+
+    return res.download(caminhoArquivo, arquivo.nome_original);
+
+  } catch (erro) {
+    console.error("Erro ao baixar arquivo:", erro);
+    return res.status(500).send("Erro ao baixar arquivo");
+  }
+};

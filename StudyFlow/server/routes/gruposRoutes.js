@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const uploadGrupos = require("../config/uploadGrupos");
+
 const gruposController = require("../controllers/gruposController");
 const { verificarAutenticacao } = require("../middlewares/authMiddleware");
 
@@ -39,6 +41,28 @@ router.get(
   gruposController.listarMembros
 );
 
+// listar arquivos do grupo
+router.get(
+  "/grupos/:id/arquivos",
+  verificarAutenticacao,
+  gruposController.listarArquivos
+);
+
+// enviar arquivo para o grupo
+router.post(
+  "/grupos/:id/arquivos",
+  verificarAutenticacao,
+  uploadGrupos.single("arquivo"),
+  gruposController.uploadArquivo
+);
+
+// baixar arquivo do grupo
+router.get(
+  "/grupos/:id/arquivos/:arquivoId/download",
+  verificarAutenticacao,
+  gruposController.downloadArquivo
+);
+
 // criar sessão do grupo
 router.post(
   "/grupos/:id/sessoes",
@@ -52,5 +76,6 @@ router.get(
   verificarAutenticacao,
   gruposController.listarSessoes
 );
+
 
 module.exports = router;
