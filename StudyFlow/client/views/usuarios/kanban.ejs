@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyFlow - Kanban</title>
+
+    <link rel="stylesheet" href="/css/kanban.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+</head>
+
+<body>
+
+<%- include('../partials/barra-lateral') %>
+
+<main class="kanban-board-page">
+
+    <section class="kanban-top">
+        <div>
+            <h1><%= kanban.nome %></h1>
+            <p>Organize suas tarefas acadêmicas em colunas de progresso</p>
+        </div>
+
+        <button class="btn-add-column" onclick="abrirModalColuna()">
+            + Coluna
+        </button>
+    </section>
+
+    <section class="board">
+
+        <% colunas.forEach(coluna => { %>
+
+            <div class="column" data-id="<%= coluna.id %>">
+
+                <div class="column-header">
+                    <h3><%= coluna.nome %></h3>
+
+                    <span>
+                        <%= cards.filter(card => card.id_coluna == coluna.id).length %>
+                    </span>
+                </div>
+
+                <div class="cards-area">
+
+                    <% cards
+                        .filter(card => card.id_coluna == coluna.id)
+                        .forEach(card => { %>
+
+                        <div class="card" draggable="true" data-id="<%= card.id %>">
+                            <strong><%= card.titulo %></strong>
+
+                            <% if (card.descricao) { %>
+                                <p><%= card.descricao %></p>
+                            <% } %>
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+                <button class="btn-add-card" onclick="abrirModalCard(<%= coluna.id %>)">
+                    + Adicionar card
+                </button>
+
+            </div>
+
+        <% }) %>
+
+    </section>
+
+</main>
+
+<!-- MODAL CRIAR COLUNA -->
+<div class="modal-overlay" id="modalColuna">
+    <div class="modal-kanban">
+
+        <form action="/kanban/colunas" method="POST">
+            <input type="hidden" name="idKanban" value="<%= kanban.id %>">
+
+            <input
+                type="text"
+                name="nome"
+                class="modal-input"
+                placeholder="Nome da coluna *"
+                required
+            >
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancelar" onclick="fecharModalColuna()">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="btn-confirmar">
+                    Criar
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!-- MODAL CRIAR CARD -->
+<div class="modal-overlay" id="modalCard">
+    <div class="modal-kanban">
+
+        <form action="/kanban/cards" method="POST">
+            <input type="hidden" name="id_coluna" id="inputIdColuna">
+
+            <input
+                type="text"
+                name="titulo"
+                class="modal-input"
+                placeholder="Título do card *"
+                required
+            >
+
+            <textarea
+                name="descricao"
+                class="modal-textarea"
+                placeholder="Descrição (opcional)"
+            ></textarea>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancelar" onclick="fecharModalCard()">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="btn-confirmar">
+                    Adicionar
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script>
+    function abrirModalColuna() {
+        document.getElementById("modalColuna").classList.add("active");
+    }
+
+    function fecharModalColuna() {
+        document.getElementById("modalColuna").classList.remove("active");
+    }
+
+    function abrirModalCard(idColuna) {
+        document.getElementById("inputIdColuna").value = idColuna;
+        document.getElementById("modalCard").classList.add("active");
+    }
+
+    function fecharModalCard() {
+        document.getElementById("modalCard").classList.remove("active");
+    }
+
+    document.querySelectorAll(".modal-overlay").forEach(modal => {
+        modal.addEventListener("click", function(e) {
+            if (e.target === modal) {
+                modal.classList.remove("active");
+            }
+        });
+    });
+
+    const cards = document.querySelectorAll(".card");
+    const columns = document.querySelectorAll(".column");
+
+    let draggedCard = null;
+
+    cards.forEach(card => {
+        card.addEventListener("dragstart", () => {
+            draggedCard = card;
+            card.classList.add("dragging");
+        });
+
+        card.addEventListener("dragend", () => {
+            card.classList.remove("dragging");
+            draggedCard = null;
+        });
+    });
+
+    columns.forEach(column => {
+        column.addEventListener("dragover", e => {
+            e.preventDefault();
+        });
+
+        column.addEventListener("drop", async () => {
+            if (!draggedCard) return;
+
+            const idCard = draggedCard.dataset.id;
+            const idColuna = column.dataset.id;
+
+            const cardsArea = column.querySelector(".cards-area");
+            cardsArea.appendChild(draggedCard);
+
+            await fetch("/kanban/cards/mover", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idCard,
+                    idColuna
+                })
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

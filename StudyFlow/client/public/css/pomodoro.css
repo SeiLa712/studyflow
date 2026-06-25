@@ -5,12 +5,11 @@
 * {
     margin: 0;
     padding: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    font-family: "Inter", sans-serif;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
     background: #f5f6fb;
     color: #1f2937;
 }
@@ -31,6 +30,7 @@ body {
     margin-left: var(--sidebar-width);
     padding: 40px;
     min-height: 100vh;
+    transition: margin-left 0.3s ease;
 }
 
 /* =========================
@@ -44,11 +44,13 @@ body {
 .header h1 {
     font-size: 34px;
     font-weight: 700;
+    color: #111827;
 }
 
 .header p {
     margin-top: 8px;
-    color: #777;
+    color: #6b7280;
+    font-size: 16px;
 }
 
 /* =========================
@@ -66,10 +68,11 @@ body {
 ========================= */
 
 .timer-card {
-    background: white;
+    background: #ffffff;
     border-radius: 22px;
     padding: 35px;
-    border: 1px solid #ececec;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
 /* =========================
@@ -86,10 +89,15 @@ body {
     border: none;
     padding: 10px 25px;
     border-radius: 10px;
-    background: #f1f1f1;
+    background: #f3f4f6;
+    color: #374151;
     cursor: pointer;
     font-size: 15px;
-    transition: 0.2s;
+    transition: 0.2s ease;
+}
+
+.tab:hover {
+    background: #e5e7eb;
 }
 
 .tab.active {
@@ -98,25 +106,22 @@ body {
 }
 
 /* =========================
-   TIMER CÍRCULO (ANIMADO)
+   TIMER CÍRCULO
 ========================= */
 
 .timer-circle {
     width: 280px;
     height: 280px;
-
     margin: 35px auto;
-
     position: relative;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    background: white;
+    background: #ffffff;
 }
 
-/* SVG */
 .progress-ring {
     position: absolute;
     top: 0;
@@ -124,14 +129,12 @@ body {
     transform: rotate(-90deg);
 }
 
-/* fundo */
 .ring-bg {
     fill: none;
     stroke: #e5e7eb;
     stroke-width: 12;
 }
 
-/* progresso */
 .ring-fill {
     fill: none;
     stroke: #6366f1;
@@ -144,7 +147,6 @@ body {
     transition: stroke-dashoffset 0.4s linear;
 }
 
-/* texto central */
 .timer-circle h1 {
     font-size: 68px;
     font-weight: 700;
@@ -153,10 +155,14 @@ body {
     position: relative;
 }
 
-/* texto abaixo do timer */
+/* =========================
+   TEXTO DO TIMER
+========================= */
+
 .timer-text {
     text-align: center;
     color: #6b7280;
+    font-size: 16px;
 }
 
 /* =========================
@@ -178,35 +184,44 @@ body {
     border-radius: 50%;
 
     cursor: pointer;
-    font-size: 20px;
+    font-size: 22px;
 
-    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s ease;
 }
 
 .timer-buttons button:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
-#btnPlay {
+#btnToggle {
     background: #6366f1;
     color: white;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
 }
 
-#btnPause,
 #btnReset {
-    background: #ececec;
+    background: #f3f4f6;
     color: #6b7280;
 }
 
+#btnReset:hover {
+    background: #e5e7eb;
+}
+
 /* =========================
-   SESSÕES
+   CARD DE SESSÕES
 ========================= */
 
 .sessions-card {
-    background: white;
+    background: #ffffff;
     border-radius: 22px;
-    border: 1px solid #ececec;
+    border: 1px solid #e5e7eb;
     padding: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
 .sessions-header {
@@ -218,6 +233,7 @@ body {
 
 .sessions-header h2 {
     font-size: 22px;
+    color: #111827;
 }
 
 .novaSessao {
@@ -227,15 +243,25 @@ body {
     padding: 10px 18px;
     border-radius: 10px;
     cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.novaSessao:hover {
+    background: #4f46e5;
 }
 
 /* =========================
-   FORMULÁRIO
+   FORMULÁRIO DE SESSÃO
 ========================= */
 
 .formulario {
     display: none;
     margin-bottom: 25px;
+    background: #f9fafb;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
 }
 
 .formulario input {
@@ -244,9 +270,15 @@ body {
     margin-bottom: 10px;
 
     border-radius: 10px;
-    border: 1px solid #d9d9d9;
+    border: 1px solid #d1d5db;
 
     outline: none;
+    font-size: 14px;
+    background: white;
+}
+
+.formulario input:focus {
+    border-color: #6366f1;
 }
 
 .form-buttons {
@@ -256,20 +288,34 @@ body {
 
 .form-buttons button {
     flex: 1;
-
     border: none;
     padding: 12px;
-
     border-radius: 10px;
-
     cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
 
+.form-buttons button[type="submit"] {
     background: #6366f1;
     color: white;
 }
 
+.form-buttons button[type="submit"]:hover {
+    background: #4f46e5;
+}
+
+.form-buttons button[type="button"] {
+    background: #e5e7eb;
+    color: #6b7280;
+}
+
+.form-buttons button[type="button"]:hover {
+    background: #d1d5db;
+}
+
 /* =========================
-   LISTA SESSÕES
+   LISTA DE SESSÕES
 ========================= */
 
 #listaSessoes {
@@ -278,16 +324,17 @@ body {
     gap: 15px;
 }
 
+#listaSessoes > p {
+    color: #6b7280;
+    font-size: 15px;
+}
+
 .sessao-card {
     background: #ffffff;
     border: 1px solid #e5e7eb;
-
     border-radius: 14px;
-
     padding: 16px 18px;
-
-    transition: all 0.3s ease;
-
+    transition: 0.3s ease;
     cursor: pointer;
 }
 
@@ -305,6 +352,7 @@ body {
 .sessao-topo h3 {
     font-size: 18px;
     font-weight: 600;
+    color: #111827;
 }
 
 .acoes-topo {
@@ -319,7 +367,8 @@ body {
     background: transparent;
     cursor: pointer;
     font-size: 18px;
-    transition: 0.2s;
+    transition: 0.2s ease;
+    text-decoration: none;
 }
 
 .btn-iniciar {
@@ -337,6 +386,7 @@ body {
 
 .sessao-info {
     display: flex;
+    flex-wrap: wrap;
     gap: 18px;
 
     margin-top: 15px;
@@ -349,30 +399,6 @@ body {
     display: flex;
     align-items: center;
     gap: 5px;
-}
-#btnToggle {
-    background: #6366f1;
-    color: white;
-
-    width: 58px;
-    height: 58px;
-
-    border: none;
-    border-radius: 50%;
-
-    cursor: pointer;
-    font-size: 22px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
-    transition: 0.2s;
-}
-
-#btnToggle:hover {
-    transform: scale(1.08);
 }
 
 /* =========================
@@ -389,18 +415,57 @@ body {
         height: 240px;
     }
 
+    .progress-ring {
+        width: 240px;
+        height: 240px;
+    }
+
     .timer-circle h1 {
         font-size: 56px;
     }
 }
 
-/* =========================
-   MOBILE
-========================= */
-
 @media (max-width: 768px) {
     .pomodoro-content {
-        margin-left: 0;
+        margin-left: 80px;
         padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 28px;
+    }
+
+    .timer-card,
+    .sessions-card {
+        padding: 22px;
+    }
+
+    .sessions-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .novaSessao {
+        width: 100%;
+    }
+
+    .timer-circle {
+        width: 220px;
+        height: 220px;
+    }
+
+    .progress-ring {
+        width: 220px;
+        height: 220px;
+    }
+
+    .timer-circle h1 {
+        font-size: 48px;
+    }
+
+    .sessao-info {
+        flex-direction: column;
+        gap: 8px;
     }
 }

@@ -1,11 +1,33 @@
 /* =======================
+   RESET
+======================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f5f6fb;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  color: #1f2937;
+}
+
+/* =======================
    GRUPOS DE ESTUDO
 ======================= */
 
 .grupos-container {
   margin-left: 260px;
-  padding: 30px;
+  padding: 40px;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
 }
+
+/* =======================
+   HEADER
+======================= */
 
 .header {
   display: flex;
@@ -17,10 +39,13 @@
 .header h1 {
   margin-bottom: 8px;
   color: #111827;
+  font-size: 34px;
+  font-weight: 700;
 }
 
 .header p {
   color: #6b7280;
+  font-size: 16px;
 }
 
 .btn-add {
@@ -31,8 +56,8 @@
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
-  transition: background 0.2s;
+  font-weight: 600;
+  transition: 0.2s ease;
 }
 
 .btn-add:hover {
@@ -50,15 +75,16 @@
 }
 
 .grupo-card {
-  background: white;
+  background: #ffffff;
   border-radius: 16px;
   padding: 24px;
   border: 1px solid #e5e7eb;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition: 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
 .grupo-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
 
@@ -73,16 +99,17 @@
   font-size: 20px;
   color: #111827;
   margin: 0;
+  font-weight: 700;
 }
 
 .btn-delete-grupo {
-  background: none;
+  background: transparent;
   border: none;
   color: #9ca3af;
   cursor: pointer;
-  padding: 4px;
-  border-radius: 6px;
-  transition: color 0.2s, background 0.2s;
+  padding: 6px;
+  border-radius: 8px;
+  transition: 0.2s ease;
 }
 
 .btn-delete-grupo:hover {
@@ -94,42 +121,38 @@
   color: #6b7280;
   font-size: 14px;
   margin-bottom: 16px;
+  line-height: 1.4;
 }
+
+/* =======================
+   INFORMAÇÕES DO GRUPO
+======================= */
 
 .grupo-info {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
-.membros {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #6b7280;
-  font-size: 14px;
-}
-
-.membros i {
-  color: #6366f1;
-}
-
-.membros-list {
-  color: #9ca3af;
-  font-size: 13px;
-}
-
+.membros,
 .proxima-sessao {
   display: flex;
   align-items: center;
   gap: 8px;
   color: #6b7280;
   font-size: 14px;
+  flex-wrap: wrap;
 }
 
+.membros i,
 .proxima-sessao i {
   color: #6366f1;
+}
+
+.membros-list {
+  color: #9ca3af;
+  font-size: 13px;
 }
 
 .proxima-sessao span {
@@ -141,17 +164,21 @@
   font-style: italic;
 }
 
+/* =======================
+   BOTÃO ADICIONAR MEMBRO
+======================= */
+
 .btn-add-membro {
   width: 100%;
   background: #f3f4f6;
   color: #374151;
   border: 1px solid #d1d5db;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 11px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
-  transition: background 0.2s, border-color 0.2s;
+  font-weight: 600;
+  transition: 0.2s ease;
 }
 
 .btn-add-membro:hover:not(:disabled) {
@@ -174,8 +201,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   padding: 60px 20px;
-  background: white;
+
+  background: #ffffff;
   border-radius: 16px;
   border: 2px dashed #e5e7eb;
 }
@@ -200,10 +229,12 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
+
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+
+  z-index: 9999;
 }
 
 .modal-overlay.active {
@@ -212,32 +243,37 @@
 
 .modal {
   width: 500px;
-  background: white;
-  border-radius: 16px;
-  padding: 25px;
+  max-width: 90%;
   max-height: 90vh;
   overflow-y: auto;
+
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 25px;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .modal-header h2 {
   font-size: 22px;
   color: #111827;
+  font-weight: 700;
 }
 
 .modal-header button {
   border: none;
-  background: none;
+  background: transparent;
   font-size: 24px;
   cursor: pointer;
   color: #9ca3af;
-  transition: color 0.2s;
+  transition: 0.2s ease;
 }
 
 .modal-header button:hover {
@@ -247,35 +283,44 @@
 .modal form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .modal label {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #374151;
 }
 
 .modal input,
 .modal textarea {
+  width: 100%;
   padding: 12px;
+
   border: 1px solid #d1d5db;
   border-radius: 10px;
+
   font-size: 14px;
   font-family: inherit;
+
+  outline: none;
+  background: #ffffff;
 }
 
 .modal input:focus,
 .modal textarea:focus {
-  outline: none;
   border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
 
 .modal textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 90px;
 }
+
+/* =======================
+   BOTÕES DO MODAL
+======================= */
 
 .modal-buttons {
   display: flex;
@@ -283,17 +328,23 @@
   margin-top: 20px;
 }
 
-.cancel-btn {
+.cancel-btn,
+.save-btn {
   flex: 1;
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: #e5e7eb;
+
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
   color: #374151;
-  transition: background 0.2s;
 }
 
 .cancel-btn:hover {
@@ -301,16 +352,8 @@
 }
 
 .save-btn {
-  flex: 1;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
   background: #6366f1;
   color: white;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background 0.2s;
 }
 
 .save-btn:hover {
@@ -318,13 +361,33 @@
 }
 
 /* =======================
-   RESPONSIVE
+   RESPONSIVO
 ======================= */
+
+@media (max-width: 1200px) {
+  .grupos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
 
 @media (max-width: 768px) {
   .grupos-container {
-    margin-left: 0;
+    margin-left: 80px;
     padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .btn-add {
+    width: 100%;
   }
 
   .grupos-grid {
@@ -334,5 +397,9 @@
   .modal {
     width: 90%;
     max-width: 500px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
   }
 }

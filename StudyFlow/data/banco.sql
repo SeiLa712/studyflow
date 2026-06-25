@@ -1,22 +1,34 @@
 CREATE DATABASE IF NOT EXISTS StudyFlow;
 USE StudyFlow;
+-- ===========================
+-- USUÁRIOS
+-- ===========================
 
-CREATE TABLE usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
-    perfil ENUM('estudante'),
+    perfil ENUM('estudante') DEFAULT 'estudante',
+    ativo BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE grupos (
+-- ===========================
+-- GRUPOS
+-- ===========================
+
+CREATE TABLE IF NOT EXISTS grupos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     disciplina VARCHAR(100) NOT NULL,
     descricao TEXT,
     prioridade ENUM('baixa', 'media', 'alta') DEFAULT 'media',
+
+    ativo BOOLEAN DEFAULT TRUE,
+
     id_usuario INT NOT NULL,
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (id_usuario)
@@ -24,16 +36,20 @@ CREATE TABLE grupos (
         ON DELETE CASCADE
 );
 
-CREATE TABLE grupo_membros (
+CREATE TABLE IF NOT EXISTS grupo_membros (
     id INT AUTO_INCREMENT PRIMARY KEY,
+
     id_grupo INT NOT NULL,
     id_usuario INT NOT NULL,
+
+    ativo BOOLEAN DEFAULT TRUE,
+
     data_entrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (id_grupo)
         REFERENCES grupos(id)
         ON DELETE CASCADE,
-    
+
     FOREIGN KEY (id_usuario)
         REFERENCES usuarios(id)
         ON DELETE CASCADE,
@@ -41,59 +57,11 @@ CREATE TABLE grupo_membros (
     UNIQUE KEY unique_membro (id_grupo, id_usuario)
 );
 
-CREATE TABLE grupo_sessoes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_grupo INT NOT NULL,
-    data_sessao DATE NOT NULL,
-    hora_sessao TIME NOT NULL,
-    descricao TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+-- ===========================
+-- POMODOROS
+-- ===========================
 
-    FOREIGN KEY (id_grupo)
-        REFERENCES grupos(id)
-        ON DELETE CASCADE
-);
-
-CREATE TABLE tarefas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao TEXT,
-    prioridade ENUM('baixa', 'media', 'alta') DEFAULT 'media',
-    data_vencimento DATE,
-    concluida BOOLEAN DEFAULT FALSE,
-
-    id_usuario INT NOT NULL,
-    id_grupo INT,
-
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (id_usuario)
-        REFERENCES usuarios(id)
-        ON DELETE CASCADE,
-
-    FOREIGN KEY (id_grupo)
-        REFERENCES grupos(id)
-        ON DELETE SET NULL
-);
-
-CREATE TABLE provas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao TEXT,
-    prioridade ENUM('baixa', 'media', 'alta') DEFAULT 'media',
-
-    data_prova DATE NOT NULL,
-
-    id_usuario INT NOT NULL,
-
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (id_usuario)
-        REFERENCES usuarios(id)
-        ON DELETE CASCADE
-);
-
-CREATE TABLE pomodoros (
+CREATE TABLE IF NOT EXISTS pomodoros (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
     nome VARCHAR(100) NOT NULL,
@@ -106,6 +74,8 @@ CREATE TABLE pomodoros (
 
     cor VARCHAR(20) DEFAULT '#6d5dfc',
 
+    ativo BOOLEAN DEFAULT TRUE,
+
     id_usuario INT NOT NULL,
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -115,11 +85,92 @@ CREATE TABLE pomodoros (
         ON DELETE CASCADE
 );
 
-INSERT INTO usuarios(nome, email, senha, perfil)
-VALUES(
-	'Admin joao', 
-    'adm@gmail.com', 
-    '$2a$10$7aVzLkUBw5Re8aEIZtzwUOetRamaAfSU.BLxfe0L90cQuc8aw.Lq6', 
-    'estudante'
+-- ===========================
+-- KANBANS
+-- ===========================
+
+CREATE TABLE IF NOT EXISTS kanbans (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+
+    cor VARCHAR(20) DEFAULT '#6d5dfc',
+
+    ativo BOOLEAN DEFAULT TRUE,
+
+    id_usuario INT NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id)
+        ON DELETE CASCADE
 );
 
+-- ===========================
+-- COLUNAS DO KANBAN
+-- ===========================
+
+CREATE TABLE IF NOT EXISTS kanban_colunas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    nome VARCHAR(50) NOT NULL,
+
+    ordem INT NOT NULL,
+
+    ativo BOOLEAN DEFAULT TRUE,
+
+    id_kanban INT NOT NULL,
+
+    FOREIGN KEY (id_kanban)
+        REFERENCES kanbans(id)
+        ON DELETE CASCADE
+);
+
+-- ===========================
+-- CARDS DO KANBAN
+-- ===========================
+
+CREATE TABLE IF NOT EXISTS kanban_cards (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT,
+
+    prioridade ENUM('baixa', 'media', 'alta')
+    DEFAULT 'media',
+
+    data_entrega DATE,
+
+    progresso INT DEFAULT 0,
+
+    ordem INT DEFAULT 0,
+
+    ativo BOOLEAN DEFAULT TRUE,
+
+    id_coluna INT NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (id_coluna)
+        REFERENCES kanban_colunas(id)
+        ON DELETE CASCADE
+);
+
+-- ===========================
+-- USUÁRIO PADRÃO
+-- ===========================
+
+INSERT INTO usuarios (
+    nome,
+    email,
+    senha,
+    perfil
+)
+VALUES (
+    'Admin joao',
+    'adm@gmail.com',
+    '$2a$10$7aVzLkUBw5Re8aEIZtzwUOetRamaAfSU.BLxfe0L90cQuc8aw.Lq6',
+    'estudante'
+);

@@ -1,11 +1,11 @@
 /* =======================
-   SIDEBAR
+   SIDEBAR - STUDYFLOW
 ======================= */
 
 .sidebar {
   width: 260px;
   height: 100vh;
-  background: #fff;
+  background: #ffffff;
   border-right: 1px solid #e5e7eb;
 
   display: flex;
@@ -13,9 +13,16 @@
   justify-content: space-between;
 
   position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 
-  transition: 0.3s;
+  transition: width 0.3s ease;
 }
+
+/* =======================
+   LOGO
+======================= */
 
 .logo-area {
   padding: 24px 20px;
@@ -24,16 +31,24 @@
 
 .logo-area h2 {
   font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 6px;
 }
 
 .logo-area span {
   color: #9ca3af;
+  font-size: 15px;
 }
+
+/* =======================
+   BOTÃO DE FECHAR / ABRIR
+======================= */
 
 .collapse-btn {
   position: absolute;
   right: -14px;
-  top: 20px;
+  top: 24px;
 
   width: 28px;
   height: 28px;
@@ -43,13 +58,31 @@
 
   background: #6366f1;
   color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
+  z-index: 1001;
+
+  transition: 0.3s ease;
 }
+
+.collapse-btn:hover {
+  background: #4f46e5;
+  transform: scale(1.08);
+}
+
+/* =======================
+   MENU
+======================= */
 
 .menu {
   display: flex;
   flex-direction: column;
   gap: 8px;
+
   padding: 16px;
 }
 
@@ -63,12 +96,37 @@
 
   padding: 14px;
   border-radius: 12px;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  transition: 0.2s ease;
+}
+
+.menu-item i {
+  width: 22px;
+  min-width: 22px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.menu-item:hover {
+  background: #f3f4f6;
+  color: #111827;
 }
 
 .menu-item.active {
   background: #6366f1;
   color: white;
 }
+
+.menu-item.active i {
+  color: white;
+}
+
+/* =======================
+   RODAPÉ
+======================= */
 
 .sidebar-footer {
   padding: 16px;
@@ -81,14 +139,44 @@
   margin-bottom: 16px;
 }
 
+.project-card strong {
+  display: block;
+  color: #111827;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.project-card p {
+  color: #6b7280;
+  font-size: 13px;
+}
+
 .logout {
   text-decoration: none;
   color: #6b7280;
 
   display: flex;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
+
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  font-size: 15px;
+  transition: 0.2s ease;
 }
+
+.logout i {
+  width: 22px;
+  min-width: 22px;
+  text-align: center;
+}
+
+.logout:hover {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
 /* ==========================
    SIDEBAR FECHADA
 ========================== */
@@ -97,17 +185,135 @@
   width: 80px;
 }
 
-.sidebar.collapsed h2,
-.sidebar.collapsed span,
+/* Esconde textos quando fechada */
+.sidebar.collapsed .logo-area h2,
+.sidebar.collapsed .logo-area span,
+.sidebar.collapsed .menu-item span,
+.sidebar.collapsed .logout span,
 .sidebar.collapsed .project-card {
   display: none;
 }
 
+/* Centraliza ícones quando fechada */
 .sidebar.collapsed .menu-item,
 .sidebar.collapsed .logout {
   justify-content: center;
+  padding: 14px 0;
 }
 
+.sidebar.collapsed .menu-item i,
+.sidebar.collapsed .logout i {
+  width: auto;
+  min-width: auto;
+  font-size: 20px;
+}
+
+/* Ajusta área da logo fechada */
+.sidebar.collapsed .logo-area {
+  padding: 24px 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Reposiciona botão quando fechada */
+.sidebar.collapsed .collapse-btn {
+  right: -14px;
+}
+
+/* ==========================
+   CONTEÚDOS DAS PÁGINAS
+   Quando sidebar fecha
+========================== */
+
+/* Página inicial */
 .sidebar.collapsed + .dashboard {
   margin-left: 80px;
+}
+
+/* Pomodoro */
+.sidebar.collapsed + .pomodoro-content {
+  margin-left: 80px;
+}
+
+/* Kanban */
+.sidebar.collapsed + .kanban-board-page {
+  margin-left: 80px;
+}
+
+/* Grupos */
+.sidebar.collapsed + .grupos-page {
+  margin-left: 80px;
+}
+
+/* Calendário */
+.sidebar.collapsed + .calendario-page {
+  margin-left: 80px;
+}
+
+/* Caso alguma página use .main-content-page */
+.sidebar.collapsed + .main-content-page {
+  margin-left: 80px;
+}
+
+/* ==========================
+   TRANSIÇÃO DO CONTEÚDO
+========================== */
+
+.dashboard,
+.pomodoro-content,
+.kanban-board-page,
+.grupos-page,
+.calendario-page,
+.main-content-page {
+  transition: margin-left 0.3s ease;
+}
+
+/* ==========================
+   RESPONSIVO
+========================== */
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 80px;
+  }
+
+  .sidebar .logo-area h2,
+  .sidebar .logo-area span,
+  .sidebar .menu-item span,
+  .sidebar .logout span,
+  .sidebar .project-card {
+    display: none;
+  }
+
+  .sidebar .menu-item,
+  .sidebar .logout {
+    justify-content: center;
+    padding: 14px 0;
+  }
+
+  .sidebar .menu-item i,
+  .sidebar .logout i {
+    width: auto;
+    min-width: auto;
+    font-size: 20px;
+  }
+
+  .logo-area {
+    padding: 24px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .collapse-btn {
+    display: none;
+  }
+
+  .dashboard,
+  .pomodoro-content,
+  .kanban-board-page,
+  .grupos-page,
+  .calendario-page,
+  .main-content-page {
+    margin-left: 80px;
+  }
 }
