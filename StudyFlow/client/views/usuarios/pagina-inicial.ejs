@@ -15,18 +15,41 @@
   </head>
 
   <body>
+    <% locals.pagina = "pagina-inicial"; %>
     <%- include('../partials/barra-lateral') %>
 
     <%
+      const listaFallback =
+        typeof atividades !== "undefined"
+          ? atividades
+          : [];
+
       const listaProximas =
         typeof atividadesProximas !== "undefined"
           ? atividadesProximas
-          : atividades || [];
+          : listaFallback;
 
       const listaCalendario =
         typeof atividadesCalendario !== "undefined"
           ? atividadesCalendario
-          : atividades || [];
+          : listaFallback;
+
+      function formatarDataISO(data) {
+        const dataObj = new Date(data);
+
+        const ano = dataObj.getUTCFullYear();
+        const mes = String(dataObj.getUTCMonth() + 1).padStart(2, "0");
+        const dia = String(dataObj.getUTCDate()).padStart(2, "0");
+
+        return `${ano}-${mes}-${dia}`;
+      }
+
+      function formatarDataBR(data) {
+        const dataISO = formatarDataISO(data);
+        const partes = dataISO.split("-");
+
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+      }
     %>
 
     <main class="dashboard">
@@ -62,25 +85,29 @@
             <% } %>
 
             <% listaProximas.forEach(atividade => { %>
+              <%
+                const dataAtividadeISO = formatarDataISO(atividade.data_vencimento);
+                const dataAtividadeBR = formatarDataBR(atividade.data_vencimento);
+              %>
+
               <div
                 class="task-card
                 <%= atividade.prioridade === 'alta'
-                ? 'urgent'
-                : atividade.prioridade === 'media'
-                ? 'medium'
-                : 'low' %>" 
+                  ? 'urgent'
+                  : atividade.prioridade === 'media'
+                  ? 'medium'
+                  : 'low' %>"
                 data-id="<%= atividade.id %>"
                 data-titulo="<%= atividade.nome %>"
                 data-descricao="<%= atividade.descricao || 'Sem descrição.' %>"
-                data-data="<%= new Date(atividade.data_vencimento).toISOString().split('T')[0] %>"
+                data-data="<%= dataAtividadeISO %>"
                 data-prioridade="<%= atividade.prioridade %>"
-                >
+              >
                 <div>
                   <h3><%= atividade.nome %></h3>
 
                   <p>
-                    <%= new Date(atividade.data_vencimento)
-                      .toLocaleDateString('pt-BR') %>
+                    <%= dataAtividadeBR %>
                   </p>
 
                   <% if (atividade.prioridade) { %>
@@ -94,9 +121,28 @@
                   <% } %>
                 </div>
 
-                <button class="btn-delete" title="Excluir atividade">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
+                <div class="task-actions">
+                  <button
+                    class="btn-edit"
+                    type="button"
+                    title="Editar atividade"
+                    data-id="<%= atividade.id %>"
+                    data-nome="<%= atividade.nome %>"
+                    data-descricao="<%= atividade.descricao || '' %>"
+                    data-data="<%= dataAtividadeISO %>"
+                    data-prioridade="<%= atividade.prioridade %>"
+                  >
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+
+                  <button
+                    class="btn-delete"
+                    type="button"
+                    title="Excluir atividade"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
               </div>
             <% }) %>
           </div>
@@ -128,7 +174,10 @@
       <div class="modal">
         <div class="modal-header">
           <h2>Adicionar Nova Atividade</h2>
-          <button id="closeModal" type="button">✕</button>
+
+          <button id="closeModal" type="button">
+            ✕
+          </button>
         </div>
 
         <form id="activityForm" action="/tarefas/criar" method="POST">
@@ -179,35 +228,105 @@
         </form>
       </div>
     </div>
-<!-- MODAL DETALHES DA ATIVIDADE -->
-<div class="modal-overlay" id="modalDetalhesOverlay">
-  <div class="modal">
-    <div class="modal-header">
-      <h2 id="detalheTitulo">Detalhes da Atividade</h2>
 
-      <button id="closeDetalhesModal" type="button">
-        ✕
-      </button>
+    <!-- MODAL DETALHES DA ATIVIDADE -->
+    <div class="modal-overlay" id="modalDetalhesOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 id="detalheTitulo">Detalhes da Atividade</h2>
+
+          <button id="closeDetalhesModal" type="button">
+            ✕
+          </button>
+        </div>
+
+        <div class="detalhes-atividade">
+          <p>
+            <strong>Descrição:</strong>
+            <span id="detalheDescricao"></span>
+          </p>
+
+          <p>
+            <strong>Data:</strong>
+            <span id="detalheData"></span>
+          </p>
+
+          <p>
+            <strong>Prioridade:</strong>
+            <span id="detalhePrioridade"></span>
+          </p>
+        </div>
+      </div>
     </div>
 
-    <div class="detalhes-atividade">
-      <p>
-        <strong>Descrição:</strong>
-        <span id="detalheDescricao"></span>
-      </p>
+    <!-- MODAL EDITAR ATIVIDADE -->
+    <div class="modal-overlay" id="modalEditarOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Editar Atividade</h2>
 
-      <p>
-        <strong>Data:</strong>
-        <span id="detalheData"></span>
-      </p>
+          <button id="closeEditModal" type="button">
+            ✕
+          </button>
+        </div>
 
-      <p>
-        <strong>Prioridade:</strong>
-        <span id="detalhePrioridade"></span>
-      </p>
+        <form id="editActivityForm" method="POST">
+          <input
+            type="hidden"
+            name="redirectTo"
+            value="/usuarios/pagina-inicial"
+          />
+
+          <label>Título</label>
+          <input
+            type="text"
+            id="editNome"
+            name="nome"
+            required
+          />
+
+          <label>Descrição</label>
+          <textarea
+            id="editDescricao"
+            name="descricao"
+          ></textarea>
+
+          <label>Data</label>
+          <input
+            type="date"
+            id="editData"
+            name="data_vencimento"
+            required
+          />
+
+          <label>Prioridade</label>
+          <select
+            id="editPrioridade"
+            name="prioridade"
+            required
+          >
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+          </select>
+
+          <div class="modal-buttons">
+            <button
+              type="button"
+              class="cancel-btn"
+              id="cancelEditModal"
+            >
+              Cancelar
+            </button>
+
+            <button type="submit" class="save-btn">
+              Salvar Alterações
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-</div>
+
     <script>
       window.atividades = <%- JSON.stringify(listaCalendario || []) %>;
     </script>

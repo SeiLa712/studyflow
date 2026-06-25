@@ -11,12 +11,18 @@ router.post(
   atividadeController.criarAtividade
 );
 
+// editar atividade
+router.post(
+  "/editar/:id",
+  verificarAutenticacao,
+  atividadeController.editarAtividade
+);
+
 // excluir atividade
 router.delete(
   "/:id",
   verificarAutenticacao,
   atividadeController.excluir
 );
-
 
 module.exports = router;

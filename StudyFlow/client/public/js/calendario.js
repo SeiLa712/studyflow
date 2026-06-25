@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputData = document.getElementById("data_vencimento");
 
   function abrirModalAdicionar(dataSelecionada = null) {
-    if (dataSelecionada && inputData) {
-      inputData.value = dataSelecionada;
+    if (inputData) {
+      inputData.value = dataSelecionada || "";
     }
 
     modalOverlay.classList.add("show");
@@ -35,61 +35,50 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // =========================
-  // MODAL DETALHES
+  // MODAL EDITAR ATIVIDADE
   // =========================
 
-  const modalDetalhesOverlay = document.getElementById("modalDetalhesOverlay");
-  const closeDetalhesModal = document.getElementById("closeDetalhesModal");
+  const modalEditarOverlay = document.getElementById("modalEditarOverlay");
+  const closeEditModal = document.getElementById("closeEditModal");
+  const cancelEditModal = document.getElementById("cancelEditModal");
+  const editActivityForm = document.getElementById("editActivityForm");
 
-  const detalheTitulo = document.getElementById("detalheTitulo");
-  const detalheDescricao = document.getElementById("detalheDescricao");
-  const detalheData = document.getElementById("detalheData");
-  const detalhePrioridade = document.getElementById("detalhePrioridade");
+  const editNome = document.getElementById("editNome");
+  const editDescricao = document.getElementById("editDescricao");
+  const editData = document.getElementById("editData");
+  const editPrioridade = document.getElementById("editPrioridade");
 
-  function formatarDataBR(dataISO) {
-    if (!dataISO) return "Sem data";
+  function abrirModalEditarAtividade(elemento) {
+    const id = elemento.dataset.id;
 
-    const [ano, mes, dia] = dataISO.split("-");
-    return `${dia}/${mes}/${ano}`;
+    editActivityForm.action = `/tarefas/editar/${id}`;
+
+    editNome.value = elemento.dataset.titulo || "";
+    editDescricao.value = elemento.dataset.descricao || "";
+    editData.value = elemento.dataset.data || "";
+    editPrioridade.value = elemento.dataset.prioridade || "baixa";
+
+    modalEditarOverlay.classList.add("show");
   }
 
-  function formatarPrioridade(prioridade) {
-    if (prioridade === "alta") return "Alta prioridade";
-    if (prioridade === "media") return "Média prioridade";
-    return "Baixa prioridade";
+  function fecharModalEditarAtividade() {
+    modalEditarOverlay.classList.remove("show");
   }
-
-  function abrirModalDetalhes(elemento) {
-    const titulo = elemento.dataset.titulo;
-    const descricao = elemento.dataset.descricao;
-    const data = elemento.dataset.data;
-    const prioridade = elemento.dataset.prioridade;
-
-    detalheTitulo.textContent = titulo || "Atividade";
-    detalheDescricao.textContent = descricao || "Sem descrição.";
-    detalheData.textContent = formatarDataBR(data);
-    detalhePrioridade.textContent = formatarPrioridade(prioridade);
-
-    modalDetalhesOverlay.classList.add("show");
-  }
-
-  function fecharModalDetalhes() {
-    modalDetalhesOverlay.classList.remove("show");
-  }
-
-  closeDetalhesModal?.addEventListener("click", fecharModalDetalhes);
-
-  modalDetalhesOverlay?.addEventListener("click", (e) => {
-    if (e.target === modalDetalhesOverlay) {
-      fecharModalDetalhes();
-    }
-  });
 
   document.querySelectorAll(".activity-tag").forEach((atividade) => {
     atividade.addEventListener("click", (e) => {
       e.stopPropagation();
-      abrirModalDetalhes(atividade);
+      abrirModalEditarAtividade(atividade);
     });
+  });
+
+  closeEditModal?.addEventListener("click", fecharModalEditarAtividade);
+  cancelEditModal?.addEventListener("click", fecharModalEditarAtividade);
+
+  modalEditarOverlay?.addEventListener("click", (e) => {
+    if (e.target === modalEditarOverlay) {
+      fecharModalEditarAtividade();
+    }
   });
 
   // =========================
@@ -99,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".calendar-day:not(.empty)").forEach((dia) => {
     dia.addEventListener("click", () => {
       const dataSelecionada = dia.dataset.date;
+
       abrirModalAdicionar(dataSelecionada);
     });
   });
@@ -124,7 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ano--;
     }
 
-    window.location.href = `/usuarios/calendario?mes=${mes}&ano=${ano}`;
+    window.location.href =
+      `/usuarios/calendario?mes=${mes}&ano=${ano}`;
   });
 
   nextMonth?.addEventListener("click", () => {
@@ -135,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ano++;
     }
 
-    window.location.href = `/usuarios/calendario?mes=${mes}&ano=${ano}`;
+    window.location.href =
+      `/usuarios/calendario?mes=${mes}&ano=${ano}`;
   });
 });

@@ -1,323 +1,334 @@
 <!doctype html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendário - StudyFlow</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendário - StudyFlow</title>
 
-  <link rel="stylesheet" href="/css/calendario.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  />
-</head>
+    <link rel="stylesheet" href="/css/barra-lateral.css" />
+    <link rel="stylesheet" href="/css/calendario.css" />
+  </head>
 
-<body>
+  <body>
+    <% locals.pagina = "calendario"; %>
+    <%- include('../partials/barra-lateral') %>
 
-  <%- include('../partials/barra-lateral') %>
+    <%
+      const anoAtual = ano;
+      const mesAtual = mes;
 
-  <%
-    const anoAtual = ano;
-    const mesAtual = mes;
+      const nomeMes = new Date(
+        anoAtual,
+        mesAtual
+      ).toLocaleDateString(
+        "pt-BR",
+        {
+          month: "long",
+          year: "numeric"
+        }
+      );
 
-    const nomeMes = new Date(
-      anoAtual,
-      mesAtual
-    ).toLocaleDateString(
-      "pt-BR",
-      {
-        month: "long",
-        year: "numeric"
+      const primeiroDia = new Date(
+        anoAtual,
+        mesAtual,
+        1
+      ).getDay();
+
+      const diasNoMes = new Date(
+        anoAtual,
+        mesAtual + 1,
+        0
+      ).getDate();
+
+      function formatarDataISO(data) {
+        const dataObj = new Date(data);
+
+        const ano = dataObj.getUTCFullYear();
+        const mes = String(dataObj.getUTCMonth() + 1).padStart(2, "0");
+        const dia = String(dataObj.getUTCDate()).padStart(2, "0");
+
+        return `${ano}-${mes}-${dia}`;
       }
-    );
+    %>
 
-    const primeiroDia = new Date(
-      anoAtual,
-      mesAtual,
-      1
-    ).getDay();
+    <div class="main-container">
+      <main class="calendar-section">
+        <header class="calendar-header">
+          <div class="title-group">
+            <h1>Calendário</h1>
 
-    const diasNoMes = new Date(
-      anoAtual,
-      mesAtual + 1,
-      0
-    ).getDate();
-  %>
-
-  <div class="main-container">
-
-    <main class="calendar-section">
-
-      <header class="calendar-header">
-
-        <div class="title-group">
-          <h1>Calendário</h1>
-          <p class="subtitle">
-            Visualize todas as suas atividades acadêmicas
-          </p>
-        </div>
-
-        <button
-          class="btn-nova-atividade"
-          id="openModal"
-        >
-          Adicionar Atividade
-        </button>
-
-      </header>
-
-      <div class="month-navigation">
-
-        <button
-          class="arrow-btn"
-          id="prevMonth"
-        >
-          <i class="fas fa-chevron-left"></i>
-        </button>
-
-        <h2
-          id="currentMonth"
-          data-mes="<%= mesAtual %>"
-          data-ano="<%= anoAtual %>"
-        >
-          <%= nomeMes %>
-        </h2>
-
-        <button
-          class="arrow-btn"
-          id="nextMonth"
-        >
-          <i class="fas fa-chevron-right"></i>
-        </button>
-
-      </div>
-
-      <div class="calendar-grid-container">
-
-        <div class="weekday-header">Dom</div>
-        <div class="weekday-header">Seg</div>
-        <div class="weekday-header">Ter</div>
-        <div class="weekday-header">Qua</div>
-        <div class="weekday-header">Qui</div>
-        <div class="weekday-header">Sex</div>
-        <div class="weekday-header">Sáb</div>
-
-        <% for(let i = 0; i < primeiroDia; i++) { %>
-          <div class="calendar-day empty"></div>
-        <% } %>
-
-        <% for(let dia = 1; dia <= diasNoMes; dia++) { %>
-
-          <div
-          class="calendar-day"
-          data-date="<%= anoAtual %>-<%= String(mesAtual + 1).padStart(2, '0') %>-<%= String(dia).padStart(2, '0') %>"
-          >
-
-            <span class="day-number">
-              <%= dia %>
-            </span>
-
-            <div class="activities-wrapper">
-
-              <% tarefas.forEach(tarefa => { %>
-
-                <%
-                  const dataTarefa =
-                    new Date(
-                      tarefa.data_vencimento
-                    );
-
-                  const diaTarefa =
-                    dataTarefa.getUTCDate();
-
-                  const mesTarefa =
-                    dataTarefa.getUTCMonth();
-
-                  const anoTarefa =
-                    dataTarefa.getUTCFullYear();
-
-                  let classeCor =
-                    "tag-estudo";
-
-                  if (
-                    tarefa.prioridade === "alta"
-                  ) {
-                    classeCor =
-                      "tag-prova";
-                  }
-                  else if (
-                    tarefa.prioridade === "media"
-                  ) {
-                    classeCor =
-                      "tag-trabalho";
-                  }
-                %>
-
-                <% if (
-                  diaTarefa === dia &&
-                  mesTarefa === mesAtual &&
-                  anoTarefa === anoAtual
-                ) { %>
-
-                  <div
-                  class="activity-tag <%= classeCor %>"
-                  title="<%= tarefa.nome %>"
-                  data-titulo="<%= tarefa.nome %>"
-                  data-descricao="<%= tarefa.descricao || 'Sem descrição.' %>"
-                  data-data="<%= new Date(tarefa.data_vencimento).toISOString().split('T')[0] %>"
-                  data-prioridade="<%= tarefa.prioridade %>"
-                  >
-                  <%= tarefa.nome %>
-                  </div>
-
-                <% } %>
-
-              <% }) %>
-
-            </div>
-
+            <p class="subtitle">
+              Visualize todas as suas atividades acadêmicas
+            </p>
           </div>
 
-        <% } %>
-
-      </div>
-
-    </main>
-
-  </div>
-
-  <!-- MODAL -->
-
-  <div
-    class="modal-overlay"
-    id="modalOverlay"
-  >
-
-    <div class="modal">
-
-      <div class="modal-header">
-
-        <h2>
-          Adicionar Nova Atividade
-        </h2>
-
-        <button
-          id="closeModal"
-          type="button"
-        >
-          ✕
-        </button>
-
-      </div>
-
-      <form
-        action="/tarefas/criar"
-        method="POST"
-      >
-
-        <input
-        type="hidden"
-        name="redirectTo"
-        value="/usuarios/calendario?mes=<%= mesAtual %>&ano=<%= anoAtual %>"
-        >
-
-        <label>Título</label>
-
-        <input
-          type="text"
-          name="nome"
-          required
-        >
-
-        <label>Descrição</label>
-
-        <textarea
-          name="descricao"
-        ></textarea>
-
-        <label>Data</label>
-
-        <input
-        type="date"
-        id="data_vencimento"
-        name="data_vencimento"
-        required
-        >
-
-        <label>Prioridade</label>
-
-        <select name="prioridade">
-
-          <option value="baixa">
-            Baixa
-          </option>
-
-          <option value="media">
-            Média
-          </option>
-
-          <option value="alta">
-            Alta
-          </option>
-
-        </select>
-
-        <div class="modal-buttons">
-
           <button
+            class="btn-nova-atividade"
+            id="openModal"
             type="button"
-            class="cancel-btn"
-            id="cancelModal"
           >
-            Cancelar
+            Adicionar Atividade
           </button>
+        </header>
+
+        <div class="month-navigation">
+          <button
+            class="arrow-btn"
+            id="prevMonth"
+            type="button"
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+
+          <h2
+            id="currentMonth"
+            data-mes="<%= mesAtual %>"
+            data-ano="<%= anoAtual %>"
+          >
+            <%= nomeMes %>
+          </h2>
 
           <button
-            type="submit"
-            class="save-btn"
+            class="arrow-btn"
+            id="nextMonth"
+            type="button"
           >
-            Adicionar
+            <i class="fas fa-chevron-right"></i>
           </button>
-
         </div>
 
-      </form>
+        <div class="calendar-grid-container">
+          <div class="weekday-header">Dom</div>
+          <div class="weekday-header">Seg</div>
+          <div class="weekday-header">Ter</div>
+          <div class="weekday-header">Qua</div>
+          <div class="weekday-header">Qui</div>
+          <div class="weekday-header">Sex</div>
+          <div class="weekday-header">Sáb</div>
 
+          <% for (let i = 0; i < primeiroDia; i++) { %>
+            <div class="calendar-day empty"></div>
+          <% } %>
+
+          <% for (let dia = 1; dia <= diasNoMes; dia++) { %>
+            <%
+              const dataDia = `${anoAtual}-${String(mesAtual + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
+            %>
+
+            <div
+              class="calendar-day"
+              data-date="<%= dataDia %>"
+            >
+              <span class="day-number">
+                <%= dia %>
+              </span>
+
+              <div class="activities-wrapper">
+                <% tarefas.forEach(tarefa => { %>
+                  <%
+                    const dataTarefa = new Date(tarefa.data_vencimento);
+
+                    const diaTarefa = dataTarefa.getUTCDate();
+                    const mesTarefa = dataTarefa.getUTCMonth();
+                    const anoTarefa = dataTarefa.getUTCFullYear();
+
+                    const dataTarefaISO = formatarDataISO(tarefa.data_vencimento);
+
+                    let classeCor = "tag-estudo";
+
+                    if (tarefa.prioridade === "alta") {
+                      classeCor = "tag-prova";
+                    } else if (tarefa.prioridade === "media") {
+                      classeCor = "tag-trabalho";
+                    }
+                  %>
+
+                  <% if (
+                    diaTarefa === dia &&
+                    mesTarefa === mesAtual &&
+                    anoTarefa === anoAtual
+                  ) { %>
+                    <div
+                      class="activity-tag <%= classeCor %>"
+                      title="<%= tarefa.nome %>"
+                      data-id="<%= tarefa.id %>"
+                      data-titulo="<%= tarefa.nome %>"
+                      data-descricao="<%= tarefa.descricao || '' %>"
+                      data-data="<%= dataTarefaISO %>"
+                      data-prioridade="<%= tarefa.prioridade %>"
+                    >
+                      <%= tarefa.nome %>
+                    </div>
+                  <% } %>
+                <% }) %>
+              </div>
+            </div>
+          <% } %>
+        </div>
+      </main>
     </div>
 
-  </div>
-<!-- MODAL DETALHES DA ATIVIDADE -->
-<div class="modal-overlay" id="modalDetalhesOverlay">
-  <div class="modal">
-    <div class="modal-header">
-      <h2 id="detalheTitulo">Detalhes da Atividade</h2>
+    <!-- MODAL ADICIONAR ATIVIDADE -->
+    <div
+      class="modal-overlay"
+      id="modalOverlay"
+    >
+      <div class="modal">
+        <div class="modal-header">
+          <h2>
+            Adicionar Nova Atividade
+          </h2>
 
-      <button id="closeDetalhesModal" type="button">
-        ✕
-      </button>
+          <button
+            id="closeModal"
+            type="button"
+          >
+            ✕
+          </button>
+        </div>
+
+        <form
+          action="/tarefas/criar"
+          method="POST"
+        >
+          <input
+            type="hidden"
+            name="redirectTo"
+            value="/usuarios/calendario?mes=<%= mesAtual %>&ano=<%= anoAtual %>"
+          />
+
+          <label>Título</label>
+
+          <input
+            type="text"
+            name="nome"
+            required
+          />
+
+          <label>Descrição</label>
+
+          <textarea
+            name="descricao"
+          ></textarea>
+
+          <label>Data</label>
+
+          <input
+            type="date"
+            id="data_vencimento"
+            name="data_vencimento"
+            required
+          />
+
+          <label>Prioridade</label>
+
+          <select name="prioridade" required>
+            <option value="baixa">
+              Baixa
+            </option>
+
+            <option value="media">
+              Média
+            </option>
+
+            <option value="alta">
+              Alta
+            </option>
+          </select>
+
+          <div class="modal-buttons">
+            <button
+              type="button"
+              class="cancel-btn"
+              id="cancelModal"
+            >
+              Cancelar
+            </button>
+
+            <button
+              type="submit"
+              class="save-btn"
+            >
+              Adicionar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
-    <div class="detalhes-atividade">
-      <p>
-        <strong>Descrição:</strong>
-        <span id="detalheDescricao"></span>
-      </p>
+    <!-- MODAL EDITAR ATIVIDADE -->
+    <div class="modal-overlay" id="modalEditarOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Editar Atividade</h2>
 
-      <p>
-        <strong>Data:</strong>
-        <span id="detalheData"></span>
-      </p>
+          <button id="closeEditModal" type="button">
+            ✕
+          </button>
+        </div>
 
-      <p>
-        <strong>Prioridade:</strong>
-        <span id="detalhePrioridade"></span>
-      </p>
+        <form id="editActivityForm" method="POST">
+          <input
+            type="hidden"
+            name="redirectTo"
+            value="/usuarios/calendario?mes=<%= mesAtual %>&ano=<%= anoAtual %>"
+          />
+
+          <label>Título</label>
+          <input
+            type="text"
+            id="editNome"
+            name="nome"
+            required
+          />
+
+          <label>Descrição</label>
+          <textarea
+            id="editDescricao"
+            name="descricao"
+          ></textarea>
+
+          <label>Data</label>
+          <input
+            type="date"
+            id="editData"
+            name="data_vencimento"
+            required
+          />
+
+          <label>Prioridade</label>
+          <select
+            id="editPrioridade"
+            name="prioridade"
+            required
+          >
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+          </select>
+
+          <div class="modal-buttons">
+            <button
+              type="button"
+              class="cancel-btn"
+              id="cancelEditModal"
+            >
+              Cancelar
+            </button>
+
+            <button type="submit" class="save-btn">
+              Salvar Alterações
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-</div>
 
-  <script src="/js/calendario.js"></script>
-
-</body>
+    <script src="/js/calendario.js"></script>
+  </body>
 </html>

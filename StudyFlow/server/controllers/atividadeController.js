@@ -65,3 +65,35 @@ exports.excluir = async (req, res) => {
     return res.sendStatus(500);
   }
 };
+exports.editarAtividade = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const {
+      nome,
+      descricao,
+      data_vencimento,
+      prioridade,
+      redirectTo
+    } = req.body;
+
+    await atividadeModel.atualizar(
+      id,
+      req.usuario.id,
+      {
+        nome,
+        descricao,
+        data_vencimento,
+        prioridade
+      }
+    );
+
+    return res.redirect(
+      redirectTo || "/usuarios/pagina-inicial"
+    );
+
+  } catch (erro) {
+    console.error("Erro ao editar atividade:", erro);
+    return res.status(500).send("Erro ao editar atividade");
+  }
+};

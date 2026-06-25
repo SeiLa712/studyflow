@@ -421,39 +421,83 @@ body {
 .events-container {
   padding: 8px;
 }
-
 /* =======================
-   EXCLUSÃO DE ATIVIDADES
+   AÇÕES DA ATIVIDADE
+   EDITAR E EXCLUIR SÓ NO HOVER
 ======================= */
+
 .task-card {
   position: relative;
+  padding-right: 110px;
+  cursor: pointer;
 }
 
-.btn-delete {
+/* container dos botões */
+.task-actions {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 16px;
+  right: 16px;
 
-  background: red;
-  color: white;
-  border: none;
-  border-radius: 6px;
-
-  padding: 5px 8px;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
   opacity: 0;
-  transition: 0.2s;
+  pointer-events: none;
+  transform: translateX(10px);
+
+  transition: 0.2s ease;
 }
 
-.task-card:hover .btn-delete {
+/* aparece quando passa o mouse no card */
+.task-card:hover .task-actions {
   opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
 }
 
-/* =======================
-   MODAL DE DETALHES
-======================= */
+/* botão editar e excluir */
+.btn-edit,
+.btn-delete {
+  position: static;
 
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* editar */
+.btn-edit {
+  background: #eef2ff;
+  color: #6366f1;
+}
+
+.btn-edit:hover {
+  background: #6366f1;
+  color: white;
+}
+
+/* excluir */
+.btn-delete {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.btn-delete:hover {
+  background: #ef4444;
+  color: white;
+}
+
+/* modal detalhes */
 .detalhes-atividade {
   display: flex;
   flex-direction: column;
@@ -468,10 +512,6 @@ body {
 
 .detalhes-atividade strong {
   color: #111827;
-}
-
-.task-card {
-  cursor: pointer;
 }
 
 .activity-tag {

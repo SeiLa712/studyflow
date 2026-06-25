@@ -138,3 +138,24 @@ exports.deletar = async (id) => {
 
   return db.query(sql, [id]);
 };
+exports.atualizar = async (id, idUsuario, atividade) => {
+  const sql = `
+    UPDATE tarefas
+    SET
+      nome = ?,
+      descricao = ?,
+      prioridade = ?,
+      data_vencimento = ?
+    WHERE id = ?
+      AND id_usuario = ?
+  `;
+
+  return db.query(sql, [
+    atividade.nome,
+    atividade.descricao,
+    atividade.prioridade,
+    atividade.data_vencimento,
+    id,
+    idUsuario
+  ]);
+};

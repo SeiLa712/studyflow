@@ -486,3 +486,49 @@ modalDetalhesOverlay?.addEventListener("click", (e) => {
     fecharDetalhesAtividade();
   }
 });
+// =======================
+// MODAL EDITAR ATIVIDADE
+// =======================
+
+const modalEditarOverlay = document.getElementById("modalEditarOverlay");
+const closeEditModal = document.getElementById("closeEditModal");
+const cancelEditModal = document.getElementById("cancelEditModal");
+const editActivityForm = document.getElementById("editActivityForm");
+
+const editNome = document.getElementById("editNome");
+const editDescricao = document.getElementById("editDescricao");
+const editData = document.getElementById("editData");
+const editPrioridade = document.getElementById("editPrioridade");
+
+function abrirModalEditarAtividade(botao) {
+  const id = botao.dataset.id;
+
+  editActivityForm.action = `/tarefas/editar/${id}`;
+
+  editNome.value = botao.dataset.nome || "";
+  editDescricao.value = botao.dataset.descricao || "";
+  editData.value = botao.dataset.data || "";
+  editPrioridade.value = botao.dataset.prioridade || "baixa";
+
+  modalEditarOverlay.classList.add("show");
+}
+
+function fecharModalEditarAtividade() {
+  modalEditarOverlay.classList.remove("show");
+}
+
+document.querySelectorAll(".btn-edit").forEach((botao) => {
+  botao.addEventListener("click", (e) => {
+    e.stopPropagation();
+    abrirModalEditarAtividade(botao);
+  });
+});
+
+closeEditModal?.addEventListener("click", fecharModalEditarAtividade);
+cancelEditModal?.addEventListener("click", fecharModalEditarAtividade);
+
+modalEditarOverlay?.addEventListener("click", (e) => {
+  if (e.target === modalEditarOverlay) {
+    fecharModalEditarAtividade();
+  }
+});

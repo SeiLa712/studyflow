@@ -315,3 +315,52 @@ body {
 .calendar-day:not(.empty) {
   cursor: pointer;
 }
+/* =======================
+   BOTÕES DE AÇÃO DA ATIVIDADE
+======================= */
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-edit {
+  background: #eef2ff;
+  color: #6366f1;
+}
+
+.btn-edit:hover {
+  background: #6366f1;
+  color: white;
+}
+
+.btn-delete {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.btn-delete:hover {
+  background: #ef4444;
+  color: white;
+}
+
+.activity-tag {
+  cursor: pointer;
+}
