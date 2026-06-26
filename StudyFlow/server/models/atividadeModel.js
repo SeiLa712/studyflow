@@ -42,6 +42,7 @@ exports.listarProximasPorUsuario = async (idUsuario) => {
     SELECT *
     FROM tarefas
     WHERE id_usuario = ?
+      AND concluida = FALSE
       AND data_vencimento >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
     ORDER BY
       ABS(DATEDIFF(data_vencimento, CURDATE())) ASC,
@@ -158,4 +159,17 @@ exports.atualizar = async (id, idUsuario, atividade) => {
     id,
     idUsuario
   ]);
+};
+
+exports.marcarComoConcluida = async (id, idUsuario) => {
+  const sql = `
+    UPDATE tarefas
+    SET
+      concluida = TRUE,
+      concluida_em = NOW()
+    WHERE id = ?
+      AND id_usuario = ?
+  `;
+
+  return db.query(sql, [id, idUsuario]);
 };

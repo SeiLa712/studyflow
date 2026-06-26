@@ -69,6 +69,9 @@ app.use("/usuarios", gruposRoutes);
 
 const kanbanRoutes = require('./routes/kanbanRoutes');
 app.use('/kanban', kanbanRoutes);
+
+const relatoriosRoutes = require("./routes/relatoriosRoutes");
+app.use("/relatorios", relatoriosRoutes);
 // //Função para subir o servidor
 // app.listen(port, () => {
 //   console.log(`Servidor ativo na porta: ${port}`);

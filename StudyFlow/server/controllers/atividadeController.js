@@ -97,3 +97,27 @@ exports.editarAtividade = async (req, res) => {
     return res.status(500).send("Erro ao editar atividade");
   }
 };
+
+exports.concluirAtividade = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await atividadeModel.marcarComoConcluida(
+      id,
+      req.usuario.id
+    );
+
+    return res.json({
+      sucesso: true,
+      mensagem: "Atividade concluída com sucesso"
+    });
+
+  } catch (erro) {
+    console.error("Erro ao concluir atividade:", erro);
+
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro ao concluir atividade"
+    });
+  }
+};

@@ -6,8 +6,31 @@ exports.calendario = async (req, res) => {
       req.usuario.id
     );
 
-    const mes = parseInt(req.query.mes) || new Date().getMonth();
-    const ano = parseInt(req.query.ano) || new Date().getFullYear();
+    const dataAtual = new Date();
+
+    let mes;
+
+    if (req.query.mes !== undefined) {
+      mes = parseInt(req.query.mes);
+    } else {
+      mes = dataAtual.getMonth();
+    }
+
+    let ano;
+
+    if (req.query.ano !== undefined) {
+      ano = parseInt(req.query.ano);
+    } else {
+      ano = dataAtual.getFullYear();
+    }
+
+    if (Number.isNaN(mes) || mes < 0 || mes > 11) {
+      mes = dataAtual.getMonth();
+    }
+
+    if (Number.isNaN(ano)) {
+      ano = dataAtual.getFullYear();
+    }
 
     res.render("usuarios/calendario", {
       tarefas,
