@@ -364,3 +364,115 @@ body {
 .activity-tag {
   cursor: pointer;
 }
+
+/* =======================
+   ATIVIDADE CONCLUÍDA
+======================= */
+
+.activity-tag.concluida {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+  text-decoration: line-through;
+  opacity: 0.85;
+}
+
+/* BOTÃO CONCLUIR NO MODAL */
+
+.complete-btn {
+  flex: 1;
+  padding: 12px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #dcfce7;
+  color: #16a34a;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.2s ease;
+}
+
+.complete-btn:hover {
+  background: #16a34a;
+  color: white;
+}
+/* =========================
+   NAVEGAÇÃO DO MÊS FIXA
+========================= */
+
+.month-navigation {
+  display: grid;
+  grid-template-columns: 48px 280px 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  margin: 25px 0;
+}
+
+.month-navigation h2 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  color: #111827;
+
+  white-space: nowrap;
+}
+
+.arrow-btn {
+  width: 48px;
+  height: 48px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: transparent;
+  color: #111827;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.arrow-btn:hover {
+  background: #eef2ff;
+  color: #6366f1;
+}
+/* =========================
+   INDICADOR DE MÊS ATUAL
+========================= */
+
+.month-title-box {
+  width: 280px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.current-month-label {
+  margin-top: 4px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #6366f1;
+  background: #eef2ff;
+
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  text-transform: lowercase;
+}

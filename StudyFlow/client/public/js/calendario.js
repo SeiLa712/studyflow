@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
       inputData.value = dataSelecionada || "";
     }
 
-    modalOverlay.classList.add("show");
+    modalOverlay?.classList.add("show");
   }
 
   function fecharModalAdicionar() {
-    modalOverlay.classList.remove("show");
+    modalOverlay?.classList.remove("show");
   }
 
   openModal?.addEventListener("click", () => {
@@ -48,8 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const editData = document.getElementById("editData");
   const editPrioridade = document.getElementById("editPrioridade");
 
+  const btnConcluirEdit = document.getElementById("btnConcluirEdit");
+
   function abrirModalEditarAtividade(elemento) {
     const id = elemento.dataset.id;
+    const concluida = elemento.dataset.concluida === "true";
+
+    if (!id) return;
 
     editActivityForm.action = `/tarefas/editar/${id}`;
 
@@ -58,11 +63,21 @@ document.addEventListener("DOMContentLoaded", () => {
     editData.value = elemento.dataset.data || "";
     editPrioridade.value = elemento.dataset.prioridade || "baixa";
 
-    modalEditarOverlay.classList.add("show");
+    if (btnConcluirEdit) {
+      btnConcluirEdit.dataset.id = id;
+
+      if (concluida) {
+        btnConcluirEdit.style.display = "none";
+      } else {
+        btnConcluirEdit.style.display = "inline-flex";
+      }
+    }
+
+    modalEditarOverlay?.classList.add("show");
   }
 
   function fecharModalEditarAtividade() {
-    modalEditarOverlay.classList.remove("show");
+    modalEditarOverlay?.classList.remove("show");
   }
 
   document.querySelectorAll(".activity-tag").forEach((atividade) => {
@@ -78,6 +93,38 @@ document.addEventListener("DOMContentLoaded", () => {
   modalEditarOverlay?.addEventListener("click", (e) => {
     if (e.target === modalEditarOverlay) {
       fecharModalEditarAtividade();
+    }
+  });
+
+  // =========================
+  // CONCLUIR ATIVIDADE PELO MODAL
+  // =========================
+
+  btnConcluirEdit?.addEventListener("click", async () => {
+    const id = btnConcluirEdit.dataset.id;
+
+    if (!id) return;
+
+    const confirmar = confirm(
+      "Deseja marcar esta atividade como concluída?"
+    );
+
+    if (!confirmar) return;
+
+    try {
+      const resposta = await fetch(`/tarefas/concluir/${id}`, {
+        method: "POST"
+      });
+
+      if (resposta.ok) {
+        location.reload();
+      } else {
+        alert("Erro ao concluir atividade.");
+      }
+
+    } catch (erro) {
+      console.error(erro);
+      alert("Erro ao conectar com o servidor.");
     }
   });
 
@@ -103,8 +150,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!titulo) return;
 
-  let mes = parseInt(titulo.dataset.mes);
-  let ano = parseInt(titulo.dataset.ano);
+  let mes = Number.parseInt(titulo.dataset.mes, 10);
+  let ano = Number.parseInt(titulo.dataset.ano, 10);
+
+  if (Number.isNaN(mes)) {
+    mes = new Date().getMonth();
+  }
+
+  if (Number.isNaN(ano)) {
+    ano = new Date().getFullYear();
+  }
 
   prevMonth?.addEventListener("click", () => {
     mes--;

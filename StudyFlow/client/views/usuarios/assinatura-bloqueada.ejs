@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Plano Premium - StudyFlow</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/css/barra-lateral.css" />
+    <link rel="stylesheet" href="/css/assinatura.css" />
+  </head>
+
+  <body>
+    <% locals.pagina = "relatorios"; %>
+
+    <%- include('../partials/barra-lateral') %>
+
+    <main class="assinatura-page">
+      <section class="premium-card">
+        <div class="premium-icon">
+          <i class="fa-solid fa-crown"></i>
+        </div>
+
+        <span class="badge-premium">
+          Recurso Premium
+        </span>
+
+        <h1>Relatórios Inteligentes bloqueados</h1>
+
+        <p>
+          <%= mensagem %>
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Análise semanal de produtividade</span>
+          </div>
+
+          <div class="feature-item">
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>Exportação de relatórios em PDF</span>
+          </div>
+
+          <div class="feature-item">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span>Sugestões inteligentes com Python</span>
+          </div>
+
+          <div class="feature-item">
+            <i class="fa-solid fa-stopwatch"></i>
+            <span>Resumo do tempo de foco</span>
+          </div>
+
+          <div class="feature-item">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>Riscos de atraso nas atividades</span>
+          </div>
+
+          <div class="feature-item">
+            <i class="fa-solid fa-table-columns"></i>
+            <span>Resumo inteligente do Kanban</span>
+          </div>
+        </div>
+
+        <div class="plan-box">
+          <div>
+            <h2>StudyFlow Premium</h2>
+            <p>Desbloqueie relatórios, PDF e análises inteligentes.</p>
+          </div>
+
+          <strong>R$ 9,90/mês</strong>
+        </div>
+
+        <div class="premium-actions">
+          <a href="/usuarios/pagina-inicial" class="btn-secondary">
+            Voltar para início
+          </a>
+
+          <button class="btn-primary" type="button">
+            Assinar Premium
+          </button>
+        </div>
+
+        <small>
+          Nesta fase, o botão de assinatura é apenas visual. Depois podemos integrar com Mercado Pago ou Stripe.
+        </small>
+      </section>
+    </main>
+  </body>
+</html>

@@ -117,6 +117,8 @@ function iniciarTimer() {
 
         if (modoAtual === "foco") {
 
+            salvarSessaoPomodoro(tempoFoco, "pomodoro");
+
             alert("Tempo de foco concluído! Hora da pausa.");
 
             modoAtual = "pausa";
@@ -246,3 +248,20 @@ window.onload = () => {
     setActiveTab("foco");
     setProgress(0);
 };
+
+async function salvarSessaoPomodoro(duracaoMin, origem = "pomodoro") {
+  try {
+    await fetch("/usuarios/pomodoro/sessoes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        duracao_min: duracaoMin,
+        origem
+      })
+    });
+  } catch (erro) {
+    console.error("Erro ao salvar sessão Pomodoro:", erro);
+  }
+}

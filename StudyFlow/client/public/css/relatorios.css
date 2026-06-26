@@ -1,0 +1,523 @@
+/* =======================
+   RESET
+======================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: #f5f6fb;
+  color: #111827;
+}
+
+/* =======================
+   PÁGINA
+======================= */
+
+.relatorios-page {
+  margin-left: 260px;
+  min-height: 100vh;
+  padding: 35px;
+}
+
+.relatorios-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  margin-bottom: 28px;
+}
+
+.relatorios-header h1 {
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.relatorios-header p {
+  color: #6b7280;
+}
+
+.relatorios-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.periodo-badge {
+  background: #eef2ff;
+  color: #6366f1;
+
+  padding: 10px 16px;
+  border-radius: 999px;
+
+  font-weight: 700;
+  font-size: 14px;
+
+  white-space: nowrap;
+}
+
+.btn-pdf {
+  text-decoration: none;
+  background: #6366f1;
+  color: white;
+
+  padding: 12px 18px;
+  border-radius: 12px;
+
+  font-weight: 700;
+  font-size: 14px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  transition: 0.2s ease;
+
+  white-space: nowrap;
+}
+
+.btn-pdf:hover {
+  background: #4f46e5;
+  transform: translateY(-1px);
+}
+
+/* =======================
+   SCORE
+======================= */
+
+.score-section {
+  margin-bottom: 24px;
+}
+
+.score-card {
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+
+  padding: 26px;
+
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.score-circle {
+  width: 120px;
+  height: 120px;
+
+  border: 8px solid #6366f1;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.score-circle span {
+  font-size: 28px;
+  font-weight: 800;
+  color: #6366f1;
+}
+
+.score-card h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.score-card strong {
+  display: inline-block;
+  margin-bottom: 6px;
+
+  color: #6366f1;
+  font-size: 18px;
+}
+
+.score-card p {
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* =======================
+   CARDS
+======================= */
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+
+  margin-bottom: 24px;
+}
+
+.metric-card {
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+.metric-card i {
+  width: 46px;
+  height: 46px;
+
+  background: #eef2ff;
+  color: #6366f1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+  font-size: 20px;
+
+  flex-shrink: 0;
+}
+
+.metric-card.focus i {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.metric-card.danger i {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.metric-card span {
+  display: block;
+
+  color: #6b7280;
+  font-size: 14px;
+
+  margin-bottom: 4px;
+}
+
+.metric-card strong {
+  font-size: 28px;
+  color: #111827;
+}
+
+/* =======================
+   GRID PRINCIPAL
+======================= */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+
+  margin-bottom: 24px;
+}
+
+.panel {
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+
+  padding: 22px;
+
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+.full-panel {
+  margin-bottom: 30px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 18px;
+}
+
+.panel-header h2 {
+  font-size: 20px;
+}
+
+.panel-header i {
+  color: #6366f1;
+}
+
+/* =======================
+   BARRAS DE PRIORIDADE
+======================= */
+
+.bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bar-item > div:first-child {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+}
+
+.bar-item span {
+  color: #374151;
+  font-weight: 600;
+}
+
+.bar-bg {
+  height: 10px;
+
+  background: #f3f4f6;
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.bar-fill.alta {
+  background: #ef4444;
+}
+
+.bar-fill.media {
+  background: #f59e0b;
+}
+
+.bar-fill.baixa {
+  background: #22c55e;
+}
+
+/* =======================
+   MELHOR DIA
+======================= */
+
+.highlight-box {
+  background: #f8f9ff;
+
+  border-radius: 14px;
+  padding: 22px;
+}
+
+.highlight-box strong {
+  display: block;
+
+  font-size: 26px;
+  color: #6366f1;
+
+  margin-bottom: 8px;
+}
+
+.highlight-box p {
+  color: #6b7280;
+}
+
+/* =======================
+   SUGESTÕES
+======================= */
+
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.suggestion-item {
+  display: flex;
+  gap: 12px;
+
+  background: #f8f9ff;
+
+  padding: 14px;
+  border-radius: 14px;
+}
+
+.suggestion-item i {
+  color: #6366f1;
+  margin-top: 3px;
+}
+
+.suggestion-item p {
+  color: #374151;
+  line-height: 1.5;
+}
+
+/* =======================
+   KANBAN E FOCO
+======================= */
+
+.kanban-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kanban-summary p {
+  color: #374151;
+}
+
+.kanban-summary strong {
+  color: #111827;
+}
+
+.kanban-summary span {
+  display: block;
+
+  margin-top: 8px;
+
+  background: #f8f9ff;
+
+  padding: 14px;
+  border-radius: 14px;
+
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+/* =======================
+   RISCOS
+======================= */
+
+.risk-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+
+  padding: 16px;
+  border-radius: 14px;
+
+  margin-bottom: 12px;
+
+  border-left: 5px solid #22c55e;
+
+  background: #f9fafb;
+}
+
+.risk-item.alto {
+  border-left-color: #ef4444;
+  background: #fef2f2;
+}
+
+.risk-item.medio {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.risk-item.baixo {
+  border-left-color: #22c55e;
+  background: #f0fdf4;
+}
+
+.risk-item strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.risk-item p {
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.risk-meta {
+  text-align: right;
+  min-width: 110px;
+}
+
+.risk-meta span {
+  display: block;
+
+  color: #6b7280;
+  font-size: 13px;
+
+  margin-bottom: 6px;
+}
+
+.risk-meta b {
+  font-size: 15px;
+}
+
+/* =======================
+   ESTADO VAZIO
+======================= */
+
+.empty-state {
+  padding: 30px;
+
+  text-align: center;
+  color: #6b7280;
+
+  background: #f9fafb;
+
+  border-radius: 14px;
+}
+
+/* =======================
+   RESPONSIVO
+======================= */
+
+@media (max-width: 1200px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1100px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .relatorios-page {
+    margin-left: 80px;
+    padding: 24px 18px;
+  }
+
+  .relatorios-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .relatorios-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .score-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .risk-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .risk-meta {
+    text-align: left;
+  }
+}
