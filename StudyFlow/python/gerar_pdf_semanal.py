@@ -3,8 +3,6 @@ import sys
 import json
 from datetime import datetime
 
-
-
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
@@ -45,6 +43,7 @@ def criar_pdf(dados, caminho_pdf):
     sugestoes = relatorio.get("sugestoes", [])
     riscos = relatorio.get("riscos", [])
     kanban = relatorio.get("kanban", {})
+    metas = relatorio.get("metas", {})
 
     doc = SimpleDocTemplate(
         caminho_pdf,
@@ -96,6 +95,14 @@ def criar_pdf(dados, caminho_pdf):
         ["Riscos altos", resumo.get("riscos_altos", 0)],
         ["Tempo de foco", f"{foco.get('total_minutos', 0)} min"],
         ["Sessões Pomodoro", foco.get("total_sessoes", 0)],
+        [
+            "Metas concluídas",
+            f"{resumo.get('metas_concluidas', 0)} / {resumo.get('total_metas', 0)}"
+        ],
+        [
+            "Progresso médio das metas",
+            f"{resumo.get('progresso_metas', 0)}%"
+        ]
     ]
 
     tabela = Table(tabela_resumo, colWidths=[260, 180])
@@ -123,11 +130,66 @@ def criar_pdf(dados, caminho_pdf):
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#111827")),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
         ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#e5e7eb")),
+        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
         ("PADDING", (0, 0), (-1, -1), 8),
     ]))
 
     elementos.append(Paragraph("Atividades por Prioridade", styles["Heading2"]))
     elementos.append(tabela_p)
+    elementos.append(Spacer(1, 18))
+
+    elementos.append(Paragraph("Progresso das Metas", styles["Heading2"]))
+
+    lista_metas = metas.get("lista", [])
+
+    if lista_metas:
+        resumo_metas = Paragraph(
+            f"<b>Metas concluídas:</b> {metas.get('metas_concluidas', 0)} de {metas.get('total_metas', 0)} | "
+            f"<b>Progresso médio:</b> {metas.get('progresso_medio', 0)}%",
+            styles["Normal"]
+        )
+
+        elementos.append(resumo_metas)
+        elementos.append(Spacer(1, 10))
+
+        tabela_metas = [
+            ["Meta", "Progresso", "Status"]
+        ]
+
+        for meta in lista_metas:
+            titulo_meta = meta.get("titulo", "Sem título")
+            valor_atual = meta.get("valor_atual", 0)
+            valor_meta = meta.get("valor_meta", 0)
+            unidade = meta.get("unidade", "")
+            porcentagem = meta.get("porcentagem", 0)
+            status = meta.get("status", "Sem status")
+
+            tabela_metas.append([
+                titulo_meta,
+                f"{valor_atual} / {valor_meta} {unidade}",
+                f"{porcentagem}% - {status}"
+            ])
+
+        tabela_m = Table(tabela_metas, colWidths=[190, 130, 160])
+        tabela_m.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#6366f1")),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+            ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#e5e7eb")),
+            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+            ("PADDING", (0, 0), (-1, -1), 8),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+        ]))
+
+        elementos.append(tabela_m)
+
+    else:
+        elementos.append(
+            Paragraph(
+                "Nenhuma meta cadastrada para esta semana.",
+                styles["Normal"]
+            )
+        )
+
     elementos.append(Spacer(1, 18))
 
     elementos.append(Paragraph("Sugestões Inteligentes", styles["Heading2"]))
@@ -146,18 +208,21 @@ def criar_pdf(dados, caminho_pdf):
     elementos.append(Spacer(1, 18))
 
     elementos.append(Paragraph("Resumo do Kanban", styles["Heading2"]))
+
     elementos.append(
         Paragraph(
             f"Total de cards: {kanban.get('total_cards', 0)}",
             styles["Normal"]
         )
     )
+
     elementos.append(
         Paragraph(
             f"Coluna com mais cards: {kanban.get('coluna_mais_cheia', 'Sem dados')}",
             styles["Normal"]
         )
     )
+
     elementos.append(
         Paragraph(
             kanban.get("sugestao", "Nenhuma sugestão para o Kanban."),
@@ -181,6 +246,7 @@ def criar_pdf(dados, caminho_pdf):
             elementos.append(
                 Paragraph(texto, styles["Normal"])
             )
+
             elementos.append(Spacer(1, 6))
     else:
         elementos.append(

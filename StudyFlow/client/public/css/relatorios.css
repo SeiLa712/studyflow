@@ -521,3 +521,377 @@ body {
     text-align: left;
   }
 }
+/* =========================
+   MINIMIZAR CARDS - AJUSTADO
+========================= */
+
+/* impede o grid de esticar cards minimizados */
+.dashboard-grid {
+  align-items: start;
+}
+
+/* estrutura do cabeçalho */
+.panel-header {
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel-actions > i {
+  color: #6366f1;
+}
+
+/* botão minimizar/expandir */
+.btn-minimize-panel {
+  width: 30px;
+  height: 30px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #eef2ff;
+  color: #4f46e5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  transition: 0.2s ease;
+}
+
+.btn-minimize-panel:hover {
+  background: #6366f1;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* card minimizado */
+.panel.collapsed {
+  min-height: unset !important;
+  height: auto !important;
+
+  padding: 18px 22px !important;
+
+  align-self: start !important;
+}
+
+/* esconde tudo menos o cabeçalho */
+.panel.collapsed > :not(.panel-header) {
+  display: none !important;
+}
+
+/* cabeçalho fica compacto */
+.panel.collapsed .panel-header {
+  margin-bottom: 0 !important;
+}
+
+/* garante alinhamento do título, ícone e botão */
+.panel.collapsed .panel-header h2 {
+  margin: 0 !important;
+}
+
+.panel.collapsed .panel-actions {
+  margin-left: auto;
+}
+/* =========================
+   NAVEGAÇÃO ENTRE SEMANAS
+========================= */
+
+.relatorios-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.week-navigation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-week {
+  text-decoration: none;
+
+  background: #eef2ff;
+  color: #4f46e5;
+
+  border: 1px solid #c7d2fe;
+  border-radius: 999px;
+
+  padding: 10px 14px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  transition: 0.2s ease;
+}
+
+.btn-week:hover {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.btn-week.disabled {
+  background: #f3f4f6;
+  color: #6b7280;
+
+  border-color: #e5e7eb;
+
+  cursor: default;
+}
+
+@media (max-width: 768px) {
+  .week-navigation {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-week {
+    justify-content: center;
+  }
+}
+/* =====================================================
+   METAS NO RELATÓRIO
+   cole no final do relatorios.css
+===================================================== */
+
+/* =========================
+   AJUSTE DOS CARDS RESUMO
+   agora são 6 cards
+========================= */
+
+.cards-grid {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.metric-card i.fa-bullseye {
+  background: #ecfdf5;
+  color: #16a34a;
+}
+
+/* =========================
+   LISTA DE METAS NO RELATÓRIO
+========================= */
+
+.relatorio-metas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.meta-geral {
+  background: #eef2ff;
+
+  border: 1px solid #c7d2fe;
+  border-radius: 16px;
+
+  padding: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.meta-geral strong {
+  color: #4f46e5;
+  font-size: 32px;
+  font-weight: 950;
+}
+
+.meta-geral span {
+  color: #3730a3;
+  font-size: 15px;
+  font-weight: 850;
+}
+
+/* =========================
+   CARD INDIVIDUAL DA META
+========================= */
+
+.relatorio-meta-item {
+  background: #f8faff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.relatorio-meta-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.relatorio-meta-top strong {
+  color: #111827;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.relatorio-meta-top span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.relatorio-meta-top b {
+  background: #eef2ff;
+  color: #4f46e5;
+
+  border-radius: 999px;
+
+  padding: 6px 10px;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+/* =========================
+   BARRA DE PROGRESSO DAS METAS
+========================= */
+
+.meta-progress-bg {
+  width: 100%;
+  height: 11px;
+
+  background: #e5e7eb;
+
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.meta-progress-fill {
+  height: 100%;
+
+  background: #6366f1;
+
+  border-radius: 999px;
+
+  transition: 0.3s ease;
+}
+
+.meta-progress-fill.tarefas {
+  background: #6366f1;
+}
+
+.meta-progress-fill.foco {
+  background: #0ea5e9;
+}
+
+.meta-progress-fill.atrasos {
+  background: #22c55e;
+}
+
+.relatorio-meta-item small {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* =========================
+   MODO ESCURO
+========================= */
+
+body.dark-mode .metric-card i.fa-bullseye {
+  background: rgba(34, 197, 94, 0.18) !important;
+  color: #86efac !important;
+}
+
+body.dark-mode .meta-geral {
+  background: rgba(99, 102, 241, 0.16) !important;
+
+  border-color: #6366f1 !important;
+}
+
+body.dark-mode .meta-geral strong {
+  color: #c7d2fe !important;
+}
+
+body.dark-mode .meta-geral span {
+  color: #e0e7ff !important;
+}
+
+body.dark-mode .relatorio-meta-item {
+  background: #0f172a !important;
+
+  border-color: #334155 !important;
+}
+
+body.dark-mode .relatorio-meta-top strong {
+  color: #ffffff !important;
+}
+
+body.dark-mode .relatorio-meta-top span,
+body.dark-mode .relatorio-meta-item small {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .relatorio-meta-top b {
+  background: rgba(99, 102, 241, 0.18) !important;
+  color: #c7d2fe !important;
+}
+
+body.dark-mode .meta-progress-bg {
+  background: #334155 !important;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 1350px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .relatorio-meta-top {
+    flex-direction: column;
+  }
+
+  .relatorio-meta-top b {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .meta-geral {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Configurações - StudyFlow</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/css/barra-lateral.css" />
+    <link rel="stylesheet" href="/css/configuracoes.css" />
+  </head>
+
+  <body>
+    <% locals.pagina = "configuracoes"; %>
+
+    <%- include('../partials/barra-lateral') %>
+
+    <%
+      const usuarioLogado = usuario || {};
+
+      const planoPremium =
+        usuarioLogado.plano === "premium";
+
+      const assinaturaAtiva =
+        usuarioLogado.assinatura_ativa === true ||
+        usuarioLogado.assinatura_ativa === 1;
+
+      const premiumAtivo =
+        planoPremium && assinaturaAtiva;
+
+      function formatarData(data) {
+        if (!data) return "Sem data";
+
+        const dataObj = new Date(data);
+
+        if (Number.isNaN(dataObj.getTime())) {
+          return "Sem data";
+        }
+
+        return dataObj.toLocaleDateString("pt-BR");
+      }
+    %>
+
+    <main class="configuracoes-page main-content-page">
+      <header class="configuracoes-header">
+        <div>
+          <h1>Configurações</h1>
+
+          <p>
+            Gerencie seu perfil, segurança e plano do StudyFlow.
+          </p>
+        </div>
+      </header>
+
+      <% if (mensagem) { %>
+        <div class="alert success">
+          <i class="fa-solid fa-circle-check"></i>
+          <span><%= mensagem %></span>
+        </div>
+      <% } %>
+
+      <% if (erro) { %>
+        <div class="alert error">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span><%= erro %></span>
+        </div>
+      <% } %>
+
+      <section class="config-grid">
+        <article class="config-card">
+          <div class="card-header">
+            <div>
+              <span class="card-icon">
+                <i class="fa-solid fa-user"></i>
+              </span>
+
+              <div>
+                <h2>Perfil</h2>
+                <p>Atualize seus dados principais.</p>
+              </div>
+            </div>
+          </div>
+
+          <form
+            action="/configuracoes/perfil"
+            method="POST"
+            class="config-form"
+          >
+            <label for="nome">
+              Nome
+            </label>
+
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              value="<%= usuarioLogado.nome || '' %>"
+              required
+            />
+
+            <label for="email">
+              Email
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value="<%= usuarioLogado.email || '' %>"
+              required
+            />
+
+            <button type="submit" class="btn-primary">
+              Salvar Perfil
+            </button>
+          </form>
+        </article>
+
+        <article class="config-card">
+          <div class="card-header">
+            <div>
+              <span class="card-icon">
+                <i class="fa-solid fa-lock"></i>
+              </span>
+
+              <div>
+                <h2>Segurança</h2>
+                <p>Altere sua senha de acesso.</p>
+              </div>
+            </div>
+          </div>
+
+          <form
+            action="/configuracoes/senha"
+            method="POST"
+            class="config-form"
+          >
+            <label for="senha_atual">
+              Senha atual
+            </label>
+
+            <input
+              type="password"
+              id="senha_atual"
+              name="senha_atual"
+              placeholder="Digite sua senha atual"
+              required
+            />
+
+            <label for="nova_senha">
+              Nova senha
+            </label>
+
+            <input
+              type="password"
+              id="nova_senha"
+              name="nova_senha"
+              placeholder="Digite a nova senha"
+              required
+            />
+
+            <label for="confirmar_senha">
+              Confirmar nova senha
+            </label>
+
+            <input
+              type="password"
+              id="confirmar_senha"
+              name="confirmar_senha"
+              placeholder="Confirme a nova senha"
+              required
+            />
+
+            <button type="submit" class="btn-primary">
+              Alterar Senha
+            </button>
+          </form>
+        </article>
+      </section>
+
+      <section class="premium-section">
+        <article class="premium-card">
+          <div class="premium-content">
+            <div class="premium-badge">
+              <i class="fa-solid fa-crown"></i>
+
+              <% if (premiumAtivo) { %>
+                Plano Premium Ativo
+              <% } else { %>
+                Plano Free
+              <% } %>
+            </div>
+
+            <h2>
+              StudyFlow Premium
+            </h2>
+
+            <p>
+              O plano Premium desbloqueia relatórios inteligentes,
+              exportação em PDF, histórico de produtividade,
+              metas semanais e sugestões personalizadas.
+            </p>
+
+            <div class="plans-grid">
+              <div class="plan-box free">
+                <h3>Free</h3>
+
+                <ul>
+                  <li>
+                    <i class="fa-solid fa-check"></i>
+                    Calendário acadêmico
+                  </li>
+
+                  <li>
+                    <i class="fa-solid fa-check"></i>
+                    Tarefas
+                  </li>
+
+                  <li>
+                    <i class="fa-solid fa-check"></i>
+                    Pomodoro básico
+                  </li>
+
+                  <li>
+                    <i class="fa-solid fa-check"></i>
+                    Kanban básico
+                  </li>
+                </ul>
+              </div>
+
+              <div class="plan-box premium">
+                <h3>Premium</h3>
+
+                <ul>
+                  <li>
+                    <i class="fa-solid fa-check"></i>
+                    Relatórios inteligentes
+                  </li>
+
+                  <li>
+                    <i class="fa-solid fa-check"></i>
+                    Exportação em PDF
+                  </li>
+
+                  <li>
+                    <i class="fa-solid fa-check"></i>
+                    Metas semanais
+                  </li>
+
+                  <li>
+                    <i class="fa-solid fa-check"></i>
+                    Sugestões personalizadas
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="premium-side">
+            <span class="plan-status <%= premiumAtivo ? 'active' : 'inactive' %>">
+              <% if (premiumAtivo) { %>
+                Assinatura ativa
+              <% } else { %>
+                Assinatura inativa
+              <% } %>
+            </span>
+
+            <% if (premiumAtivo) { %>
+              <p>
+                Expira em:
+                <strong>
+                  <%= formatarData(usuarioLogado.assinatura_expira_em) %>
+                </strong>
+              </p>
+
+              <form
+                action="/configuracoes/premium/cancelar"
+                method="POST"
+              >
+                <button type="submit" class="btn-danger">
+                  Cancelar Premium
+                </button>
+              </form>
+            <% } else { %>
+              <p>
+                Ative o Premium para liberar todos os recursos inteligentes do StudyFlow.
+              </p>
+
+              <form
+                action="/configuracoes/premium/assinar"
+                method="POST"
+              >
+                <button type="submit" class="btn-primary">
+                  Ativar Premium
+                </button>
+              </form>
+            <% } %>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

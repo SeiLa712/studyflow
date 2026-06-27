@@ -1,7 +1,7 @@
 const { spawn } = require("child_process");
 const path = require("path");
 
-function executarRelatorioSemanal(idUsuario) {
+function executarRelatorioSemanal(idUsuario, semanasAtras = 0) {
   return new Promise((resolve, reject) => {
     const pythonCommand = process.env.PYTHON_CMD || "python";
 
@@ -12,7 +12,11 @@ function executarRelatorioSemanal(idUsuario) {
 
     const processo = spawn(
       pythonCommand,
-      [scriptPath, String(idUsuario)],
+      [
+        scriptPath,
+        String(idUsuario),
+        String(semanasAtras)
+      ],
       {
         env: {
           ...process.env,

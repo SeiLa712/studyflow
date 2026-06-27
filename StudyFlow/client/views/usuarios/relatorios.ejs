@@ -48,6 +48,14 @@
       const riscos = dados.riscos || [];
       const kanban = dados.kanban || {};
 
+      const metas = dados.metas || {
+        total_metas: 0,
+        metas_concluidas: 0,
+        progresso_medio: 0,
+        lista: [],
+        sugestoes: []
+      };
+
       const melhorDia = dados.melhor_dia || {
         dia: "Sem dados",
         total: 0
@@ -57,6 +65,18 @@
         inicio: null,
         fim: null
       };
+
+      const semanaRelatorio =
+        typeof semanaSelecionada !== "undefined"
+          ? Number(semanaSelecionada)
+          : 0;
+
+      const semanaAnterior = semanaRelatorio + 1;
+
+      const proximaSemana =
+        semanaRelatorio > 0
+          ? semanaRelatorio - 1
+          : 0;
 
       function dataBR(data) {
         if (!data) return "Sem data";
@@ -89,11 +109,44 @@
         </div>
 
         <div class="relatorios-actions">
+          <div class="week-navigation">
+            <a
+              href="/relatorios?semana=<%= semanaAnterior %>"
+              class="btn-week"
+            >
+              <i class="fa-solid fa-chevron-left"></i>
+              Semana anterior
+            </a>
+
+            <% if (semanaRelatorio > 0) { %>
+              <a
+                href="/relatorios?semana=<%= proximaSemana %>"
+                class="btn-week"
+              >
+                Próxima semana
+                <i class="fa-solid fa-chevron-right"></i>
+              </a>
+            <% } else { %>
+              <span class="btn-week disabled">
+                Semana atual
+              </span>
+            <% } %>
+          </div>
+
           <span class="periodo-badge">
+            <% if (semanaRelatorio === 0) { %>
+              Semana atual:
+            <% } else { %>
+              <%= semanaRelatorio %> semana(s) atrás:
+            <% } %>
+
             <%= dataBR(periodo.inicio) %> até <%= dataBR(periodo.fim) %>
           </span>
 
-          <a href="/relatorios/pdf" class="btn-pdf">
+          <a
+            href="/relatorios/pdf?semana=<%= semanaRelatorio %>"
+            class="btn-pdf"
+          >
             <i class="fa-solid fa-file-pdf"></i>
             Baixar PDF
           </a>
@@ -145,6 +198,19 @@
           <div>
             <span>Tempo de foco</span>
             <strong><%= foco.total_minutos || 0 %> min</strong>
+          </div>
+        </article>
+
+        <article class="metric-card">
+          <i class="fa-solid fa-bullseye"></i>
+
+          <div>
+            <span>Metas concluídas</span>
+
+            <strong>
+              <%= metas.metas_concluidas || 0 %> /
+              <%= metas.total_metas || 0 %>
+            </strong>
           </div>
         </article>
 
@@ -217,6 +283,62 @@
               </div>
             </div>
           </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Progresso das Metas</h2>
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+
+          <% if (!metas.lista || metas.lista.length === 0) { %>
+            <div class="empty-state">
+              Nenhuma meta cadastrada para esta semana.
+            </div>
+          <% } else { %>
+            <div class="relatorio-metas-list">
+              <div class="meta-geral">
+                <strong>
+                  <%= metas.progresso_medio || 0 %>%
+                </strong>
+
+                <span>
+                  Progresso médio das metas
+                </span>
+              </div>
+
+              <% metas.lista.forEach(meta => { %>
+                <div class="relatorio-meta-item">
+                  <div class="relatorio-meta-top">
+                    <div>
+                      <strong><%= meta.titulo %></strong>
+
+                      <span>
+                        <%= meta.valor_atual %> /
+                        <%= meta.valor_meta %>
+                        <%= meta.unidade %>
+                      </span>
+                    </div>
+
+                    <b>
+                      <%= meta.status %>
+                    </b>
+                  </div>
+
+                  <div class="meta-progress-bg">
+                    <div
+                      class="meta-progress-fill <%= meta.tipo %>"
+                      style="width: <%= meta.porcentagem || 0 %>%"
+                    ></div>
+                  </div>
+
+                  <small>
+                    <%= meta.porcentagem || 0 %>% de progresso
+                  </small>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
         </article>
 
         <article class="panel">
@@ -342,5 +464,7 @@
         <% }) %>
       </section>
     </main>
+
+    <script src="/js/relatorios.js"></script>
   </body>
 </html>

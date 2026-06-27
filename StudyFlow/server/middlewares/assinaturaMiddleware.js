@@ -28,7 +28,8 @@ exports.verificarAssinatura = async (req, res, next) => {
 
     const usuario = rows[0];
 
-    const planoPremium = usuario.plano === "premium";
+    const planoPremium =
+      usuario.plano === "premium";
 
     const assinaturaAtiva =
       usuario.assinatura_ativa === true ||
@@ -53,7 +54,7 @@ exports.verificarAssinatura = async (req, res, next) => {
     return res.status(403).render("usuarios/assinatura-bloqueada", {
       usuario,
       mensagem:
-        "A área de relatórios está disponível apenas para assinantes Premium."
+        "Esta área está disponível apenas para usuários Premium."
     });
 
   } catch (erro) {

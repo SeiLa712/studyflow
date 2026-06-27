@@ -1,29 +1,50 @@
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
-//verifica se existe algum token
-function verificarAutenticacao (req,res,next){
-    const token = req.cookies?.token
-    //se nao tiver, ja redireciona o usuario para a tela de login
-    if(!token){
-        return res.redirect('/login')
-    }
-    try{
-        //verifica se o token é válido ou n
-        const dados = jwt.verify(token, process.env.JWT_SECRET)
-        //salva o usuário no backend, para todos terem acesso
-        req.usuario = dados
-        // variavel global para o EJS ter acesso aos dados do usuario
-        res.locals.usuario = dados
-        // deixa o usuário prosseguir
-        next()
-    }
-    catch(erro){
-        res.clearCookie('token') //apaga o token inválido
-        return res.redirect('/login') //vai para tela de login
-    }
+// Bloqueia cache das páginas privadas
+function bloquearCache(req, res, next) {
+  res.setHeader(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, private"
+  );
+
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+
+  next();
 }
 
+// Verifica se existe algum token
+function verificarAutenticacao(req, res, next) {
+  const token = req.cookies?.token;
 
-module.exports = { 
-    verificarAutenticacao
+  // Se não tiver token, manda para login
+  if (!token) {
+    return res.redirect("/login");
+  }
+
+  try {
+    // Verifica se o token é válido
+    const dados = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Salva o usuário no backend
+    req.usuario = dados;
+
+    // Variável global para o EJS
+    res.locals.usuario = dados;
+
+    return next();
+
+  } catch (erro) {
+    // Apaga token inválido
+    res.clearCookie("token", {
+      path: "/"
+    });
+
+    return res.redirect("/login");
+  }
 }
+
+module.exports = {
+  verificarAutenticacao,
+  bloquearCache
+};

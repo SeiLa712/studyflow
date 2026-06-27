@@ -1,33 +1,79 @@
-<!-- importa o header -->
 <%- include('../partials/header') %>
 
 <body>
   <h1 class="logo">StudyFlow</h1>
+
   <div class="container" id="container">
     <div class="form-container sign-up">
-      <form action="/usuarios/cadastrar" method="POST" enctype="multipart/form-data">
+      <form
+        action="/usuarios/cadastrar"
+        method="POST"
+        enctype="multipart/form-data"
+      >
         <h1>StudyFlow</h1>
 
         <h1>Criar Conta</h1>
-        <span>Ou crie usando o Seu E-mail e senha</span>
-        <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" required />
-        <input type="email" id="email" name="email" class="form-control" placeholder="Email" required />
-        <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required />
-        <button type="submit">Criar Conta</button>
+
+        <span>
+          Ou crie usando o seu e-mail e senha
+        </span>
+
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          class="form-control"
+          placeholder="Nome"
+          required
+        />
+
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          placeholder="Email"
+          required
+        />
+
+        <input
+          type="password"
+          id="senha"
+          name="senha"
+          class="form-control"
+          placeholder="Senha"
+          required
+        />
+
+        <button type="submit">
+          Criar Conta
+        </button>
       </form>
     </div>
+
     <div class="form-container sign-in">
-      <form action="/usuarios/login" method="post">
+      <form action="/usuarios/login" method="POST">
         <h1>Entrar</h1>
-        <span>Ou entre usando E-mail e Senha</span>
+
+        <span>
+          Ou entre usando e-mail e senha
+        </span>
+
+        <% if (typeof erro !== "undefined" && erro) { %>
+          <div class="login-error">
+            <%= erro %>
+          </div>
+        <% } %>
+
         <input
           type="email"
           id="email_login"
           name="email"
           class="form-control"
           placeholder="Email"
-          required  
+          required
         />
+
         <input
           type="password"
           id="senha_login"
@@ -36,29 +82,49 @@
           placeholder="Senha"
           required
         />
-        <link rel="stylesheet" href="style.css" />
-        <button>Entrar</button>
+
+        <button type="submit">
+          Entrar
+        </button>
       </form>
     </div>
+
     <div class="toggle-container">
       <div class="toggle">
         <div class="toggle-panel toggle-left">
           <h1>Bem-vindo de volta!</h1>
-          <p>Insira seus dados pessoais para usar todos os recursos do site</p>
-          <button class="hidden" id="login">Entrar</button>
+
+          <p>
+            Insira seus dados pessoais para usar todos os recursos do site
+          </p>
+
+          <button class="hidden" id="login">
+            Entrar
+          </button>
         </div>
+
         <div class="toggle-panel toggle-right">
           <h1>Crie sua conta!</h1>
+
           <p>
-            Registre-se com seus dados pessoais para usar todos os recursos do
-            site
+            Registre-se com seus dados pessoais para usar todos os recursos do site
           </p>
-          <button class="hidden" id="register">Criar Conta</button>
+
+          <button class="hidden" id="register">
+            Criar Conta
+          </button>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    window.addEventListener("pageshow", function (event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
+  </script>
 </body>
 
-<!-- importa o footer -->
 <%- include('../partials/footer') %>

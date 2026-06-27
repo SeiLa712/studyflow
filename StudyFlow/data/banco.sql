@@ -5,6 +5,7 @@ USE StudyFlow;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
+DROP TABLE IF EXISTS metas_semanais;
 DROP TABLE IF EXISTS pomodoro_sessoes;
 DROP TABLE IF EXISTS kanban_cards;
 DROP TABLE IF EXISTS kanban_colunas;
@@ -38,6 +39,33 @@ CREATE TABLE usuarios (
     assinatura_expira_em DATETIME NULL,
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ===========================
+-- METAS SEMANAIS
+-- ===========================
+
+CREATE TABLE metas_semanais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    id_usuario INT NOT NULL,
+
+    titulo VARCHAR(120) NOT NULL,
+    descricao TEXT NULL,
+
+    tipo ENUM('tarefas', 'foco', 'atrasos') NOT NULL DEFAULT 'tarefas',
+
+    valor_meta INT NOT NULL DEFAULT 1,
+    unidade VARCHAR(30) DEFAULT 'tarefas',
+
+    ativo BOOLEAN DEFAULT TRUE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id)
+        ON DELETE CASCADE
 );
 
 -- ===========================
@@ -92,7 +120,6 @@ CREATE TABLE grupo_membros (
 
 -- ===========================
 -- SESSÕES DOS GRUPOS
--- mantida por compatibilidade com o model
 -- ===========================
 
 CREATE TABLE grupo_sessoes (
@@ -286,7 +313,7 @@ CREATE TABLE kanban_cards (
 
 -- ===========================
 -- USUÁRIOS PADRÃO
--- senha dos dois: 123456
+-- senha dos três: 123456
 -- bcrypt fator 10
 -- ===========================
 
@@ -321,6 +348,103 @@ VALUES
     'free',
     FALSE,
     NULL
+),
+(
+    3,
+    'Usuário Premium sem nada',
+    'premium.novo@studyflow.com',
+    '$2b$10$6FG.Au0xR.hGjkXSLe/sCuLOBEE/lWDcQUlEmThMw2f5izAhv/UtC',
+    'estudante',
+    'premium',
+    TRUE,
+    DATE_ADD(NOW(), INTERVAL 30 DAY)
+);
+
+-- ===========================
+-- METAS PADRÃO DOS USUÁRIOS
+-- ===========================
+
+INSERT INTO metas_semanais
+(
+    id_usuario,
+    titulo,
+    descricao,
+    tipo,
+    valor_meta,
+    unidade
+)
+VALUES
+(
+    1,
+    'Concluir tarefas',
+    'Meta semanal para concluir atividades do StudyFlow.',
+    'tarefas',
+    5,
+    'tarefas'
+),
+(
+    1,
+    'Tempo de foco',
+    'Meta semanal de minutos estudando com Pomodoro.',
+    'foco',
+    120,
+    'minutos'
+),
+(
+    1,
+    'Controlar atrasos',
+    'Limite máximo de tarefas atrasadas na semana.',
+    'atrasos',
+    0,
+    'atrasos'
+),
+(
+    2,
+    'Concluir tarefas',
+    'Meta semanal para concluir atividades do StudyFlow.',
+    'tarefas',
+    3,
+    'tarefas'
+),
+(
+    2,
+    'Tempo de foco',
+    'Meta semanal de minutos estudando com Pomodoro.',
+    'foco',
+    90,
+    'minutos'
+),
+(
+    2,
+    'Controlar atrasos',
+    'Limite máximo de tarefas atrasadas na semana.',
+    'atrasos',
+    1,
+    'atrasos'
+),
+(
+    3,
+    'Concluir tarefas',
+    'Meta semanal para concluir atividades do StudyFlow.',
+    'tarefas',
+    5,
+    'tarefas'
+),
+(
+    3,
+    'Tempo de foco',
+    'Meta semanal de minutos estudando com Pomodoro.',
+    'foco',
+    120,
+    'minutos'
+),
+(
+    3,
+    'Controlar atrasos',
+    'Limite máximo de tarefas atrasadas na semana.',
+    'atrasos',
+    0,
+    'atrasos'
 );
 
 -- ===========================
@@ -722,34 +846,15 @@ VALUES
     5
 );
 
-INSERT INTO usuarios
-(
-    id,
-    nome,
-    email,
-    senha,
-    perfil,
-    plano,
-    assinatura_ativa,
-    assinatura_expira_em
-)
-VALUES
-(
-    3,
-    'Usuário Premium sem nada',
-    'premium.novo@studyflow.com',
-    '$2b$10$6FG.Au0xR.hGjkXSLe/sCuLOBEE/lWDcQUlEmThMw2f5izAhv/UtC',
-    'estudante',
-    'premium',
-    TRUE,
-    DATE_ADD(NOW(), INTERVAL 30 DAY)
-);
+-- ===========================
+-- LOGINS DE TESTE
+-- ===========================
 
 -- Premium:
 -- email: premium@studyflow.com
 -- senha: 123456
 
--- Premium com nada registrado:
+-- Premium sem nada registrado:
 -- email: premium.novo@studyflow.com
 -- senha: 123456
 

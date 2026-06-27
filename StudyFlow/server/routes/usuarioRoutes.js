@@ -1,32 +1,26 @@
-
-// Importação do módulo express
 const express = require("express");
 const router = express.Router();
 
-// Controllers
 const usuarioController = require("../controllers/usuarioController.js");
 const calendarioController = require("../controllers/calendarioController");
 
-// Models
 const atividadeModel = require("../models/atividadeModel");
 
-// Multer
 const upload = require("../config/multer.js");
 
-// Middleware de autenticação
-const { verificarAutenticacao } = require("../middlewares/authMiddleware.js");
+const {
+  verificarAutenticacao,
+  bloquearCache
+} = require("../middlewares/authMiddleware.js");
 
 /* =========================
    ROTAS PÚBLICAS
 ========================= */
 
-// Login
 router.post("/login", usuarioController.login);
 
-// Logout
 router.get("/logout", usuarioController.logout);
 
-// Cadastro de usuário
 router.post(
   "/cadastrar",
   upload.single("foto"),
@@ -38,6 +32,7 @@ router.post(
 ========================= */
 
 router.use(verificarAutenticacao);
+router.use(bloquearCache);
 
 /* =========================
    LISTAR USUÁRIOS
@@ -55,23 +50,15 @@ router.get("/pagina-inicial", async (req, res) => {
   try {
     const idUsuario = req.usuario.id;
 
-    console.log("USUÁRIO LOGADO:", req.usuario);
-    console.log("ID USUÁRIO:", idUsuario);
-
     const atividadesProximas =
       await atividadeModel.listarProximasPorUsuario(idUsuario);
 
     const atividadesCalendario =
       await atividadeModel.listarCalendarioPorUsuario(idUsuario);
 
-    console.log("ATIVIDADES PRÓXIMAS:", atividadesProximas);
-    console.log("ATIVIDADES CALENDÁRIO:", atividadesCalendario);
-
     return res.render("usuarios/pagina-inicial", {
       atividadesProximas,
       atividadesCalendario,
-
-      // Mantém compatibilidade com códigos antigos
       atividades: atividadesProximas
     });
 

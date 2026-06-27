@@ -1,0 +1,567 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: #f5f6fb;
+  color: #111827;
+}
+
+.metas-page {
+  margin-left: 260px;
+  min-height: 100vh;
+  padding: 36px;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+.metas-header {
+  margin-bottom: 26px;
+}
+
+.metas-header h1 {
+  font-size: 36px;
+  font-weight: 850;
+  margin-bottom: 6px;
+}
+
+.metas-header p {
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.alert {
+  padding: 14px 16px;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-weight: 700;
+
+  margin-bottom: 20px;
+}
+
+.alert.success {
+  background: #ecfdf5;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.alert.error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.create-meta-card,
+.meta-card,
+.empty-state {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+
+  padding: 24px;
+
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+}
+
+.create-meta-card {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  margin-bottom: 20px;
+}
+
+.section-title h2 {
+  font-size: 26px;
+  font-weight: 850;
+  margin-bottom: 5px;
+}
+
+.section-title p {
+  color: #6b7280;
+}
+
+.meta-form {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.form-full {
+  grid-column: 1 / -1;
+}
+
+.meta-form label,
+.edit-form label {
+  display: block;
+
+  color: #374151;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  margin-bottom: 7px;
+}
+
+.meta-form input,
+.meta-form select,
+.meta-form textarea,
+.edit-form input,
+.edit-form select,
+.edit-form textarea {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #111827;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  outline: none;
+}
+
+.meta-form textarea,
+.edit-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.btn-primary {
+  border: none;
+  border-radius: 12px;
+
+  padding: 13px 18px;
+
+  background: #4f46e5;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+.metas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 22px;
+}
+
+.meta-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.meta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.meta-header > div {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.meta-icon {
+  width: 46px;
+  height: 46px;
+
+  border-radius: 15px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-size: 18px;
+}
+
+.meta-icon.tarefas {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.meta-icon.foco {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.meta-icon.atrasos {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.meta-header h3 {
+  font-size: 20px;
+  font-weight: 850;
+  color: #111827;
+}
+
+.meta-type {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.btn-delete-meta {
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #fee2e2;
+  color: #dc2626;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.btn-delete-meta:hover {
+  background: #dc2626;
+  color: white;
+}
+
+.meta-description {
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.meta-numbers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 4px;
+}
+
+.meta-numbers strong {
+  color: #4f46e5;
+  font-size: 18px;
+}
+
+.meta-numbers span {
+  color: #374151;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.progress-bg {
+  width: 100%;
+  height: 12px;
+
+  background: #e5e7eb;
+
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+
+  background: #4f46e5;
+
+  border-radius: 999px;
+}
+
+.progress-fill.foco {
+  background: #0284c7;
+}
+
+.progress-fill.atrasos {
+  background: #22c55e;
+}
+
+.meta-card small {
+  color: #6b7280;
+  font-weight: 700;
+}
+
+.edit-meta {
+  margin-top: 8px;
+
+  border-top: 1px solid #e5e7eb;
+
+  padding-top: 14px;
+}
+
+.edit-meta summary {
+  color: #4f46e5;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  margin-top: 14px;
+}
+
+.empty-state {
+  text-align: center;
+  color: #6b7280;
+}
+
+.empty-state i {
+  font-size: 46px;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+}
+
+.empty-state h3 {
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+/* =========================
+   MODO ESCURO
+========================= */
+
+body.dark-mode .metas-page {
+  background: #0f172a !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .metas-header h1,
+body.dark-mode .section-title h2,
+body.dark-mode .meta-header h3,
+body.dark-mode .empty-state h3 {
+  color: #f8fafc !important;
+}
+
+body.dark-mode .metas-header p,
+body.dark-mode .section-title p,
+body.dark-mode .meta-description,
+body.dark-mode .meta-card small,
+body.dark-mode .meta-type {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .create-meta-card,
+body.dark-mode .meta-card,
+body.dark-mode .empty-state {
+  background: #111827 !important;
+  border-color: #334155 !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35) !important;
+}
+
+body.dark-mode .meta-form label,
+body.dark-mode .edit-form label {
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .meta-form input,
+body.dark-mode .meta-form select,
+body.dark-mode .meta-form textarea,
+body.dark-mode .edit-form input,
+body.dark-mode .edit-form select,
+body.dark-mode .edit-form textarea {
+  background: #020617 !important;
+  color: #f8fafc !important;
+  border-color: #475569 !important;
+}
+
+body.dark-mode .progress-bg {
+  background: #1e293b !important;
+}
+
+body.dark-mode .meta-numbers span {
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .edit-meta {
+  border-top-color: #334155 !important;
+}
+
+body.dark-mode .alert.success {
+  background: rgba(34, 197, 94, 0.16) !important;
+  color: #bbf7d0 !important;
+  border-color: rgba(74, 222, 128, 0.45) !important;
+}
+
+body.dark-mode .alert.error {
+  background: rgba(239, 68, 68, 0.16) !important;
+  color: #fecaca !important;
+  border-color: rgba(248, 113, 113, 0.45) !important;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 1000px) {
+  .meta-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .metas-page {
+    margin-left: 80px;
+    padding: 24px 18px;
+  }
+
+  .metas-header h1 {
+    font-size: 30px;
+  }
+
+  .metas-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* =====================================================
+   MINIMIZAR CARDS DE METAS
+===================================================== */
+
+/* evita os cards ficarem esticados */
+.metas-grid {
+  align-items: start;
+}
+
+/* card de criação com header alinhado */
+.create-meta-card .section-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ações no card da meta */
+.meta-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* botão minimizar */
+.btn-minimize-meta {
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #eef2ff;
+  color: #4f46e5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  transition: 0.2s ease;
+}
+
+.btn-minimize-meta:hover {
+  background: #4f46e5;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   CARD CRIAR META MINIMIZADO
+========================= */
+
+.create-meta-card.collapsed {
+  height: auto !important;
+  min-height: unset !important;
+  padding: 24px !important;
+}
+
+.create-meta-card.collapsed .section-title {
+  margin-bottom: 0 !important;
+}
+
+.create-meta-card.collapsed .meta-form {
+  display: none !important;
+}
+
+/* =========================
+   CARD DE META MINIMIZADO
+========================= */
+
+.meta-card.collapsed {
+  height: auto !important;
+  min-height: unset !important;
+  padding: 22px 24px !important;
+}
+
+.meta-card.collapsed > :not(.meta-header) {
+  display: none !important;
+}
+
+.meta-card.collapsed .meta-header {
+  margin-bottom: 0 !important;
+}
+
+.meta-card.collapsed .meta-header h3 {
+  margin: 0 !important;
+}
+
+/* mantém botão de lixeira e minimizar visíveis */
+.meta-card.collapsed .meta-card-actions {
+  display: flex !important;
+}
+
+/* =========================
+   MODO ESCURO
+========================= */
+
+body.dark-mode .btn-minimize-meta {
+  background: #1e293b !important;
+  color: #c7d2fe !important;
+  border: 1px solid #475569 !important;
+}
+
+body.dark-mode .btn-minimize-meta:hover {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+body:not(.dark-mode) .btn-minimize-meta {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+  border: 1px solid #c7d2fe !important;
+}
+
+body:not(.dark-mode) .btn-minimize-meta:hover {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+}

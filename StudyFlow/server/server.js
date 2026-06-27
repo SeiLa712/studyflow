@@ -41,7 +41,17 @@ app.get("/", (req, res) => {
 
 //Rota que retorna a página de login
 app.get("/login", (req, res) => {
-  res.render('auth/login');
+  res.setHeader(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, private"
+  );
+
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+
+  res.render("auth/login", {
+    erro: null
+  });
 });
 
 // Rota que retorna a página de cadastro de usuário
@@ -72,6 +82,15 @@ app.use('/kanban', kanbanRoutes);
 
 const relatoriosRoutes = require("./routes/relatoriosRoutes");
 app.use("/relatorios", relatoriosRoutes);
+
+const configuracoesRoutes = require("./routes/configuracoesRoutes");
+app.use("/configuracoes", configuracoesRoutes);
+
+const metasRoutes = require("./routes/metasRoutes");
+app.use("/metas", metasRoutes);
+
+const notificacoesRoutes = require("./routes/notificacoesRoutes");
+app.use("/notificacoes", notificacoesRoutes);
 // //Função para subir o servidor
 // app.listen(port, () => {
 //   console.log(`Servidor ativo na porta: ${port}`);
