@@ -1,186 +1,381 @@
-Indentificador: RF01
-Nome: Sistema Pomodoro
-Data de criação: 12/03/2026
-Autor: André Lucas 
-Descrição: O projeto contém sistema Pomodoro para ajudar no estudo diário.
-Prioridade: Desejável
+# Requisitos do Sistema — StudyFlow
 
-Indentificador:RF02
-Nome: Sistema de agenda
-Data de criação: 12/03/2026
-Autor: André Lucas 
-Descrição: Deve conter um sistema de agenda para melhor organizização.
-Prioridade: Importante 
+## Requisitos Funcionais
 
-Indentificador: RF03
-Nome: Calendário inteligente 
-Data de criação: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema contém um calendário inteligente mostrando as atividades mais importantes.
-Prioridade: Essencial
+### RF01 — Sistema Pomodoro
 
-Indentificador: RF04
-Nome: Área de upload para organização de arquivos
-Data de criação: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve conter uma área para upload para melhor organização na hora dos estudos.
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve disponibilizar um recurso de Pomodoro para auxiliar o estudante na organização do tempo de estudo, permitindo iniciar, pausar e reiniciar sessões de foco.
+**Prioridade:** Importante
 
-Indentificador: RF05
-Nome: Datas de trabalhos
-Data de criação: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema avisa quando a data de entrega está se aproximando.
+---
 
-Indentificador: RF06
-Nome: Organização de grupos
-Data de criação: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema permite criar grupos para ajudar nas horas de emtrega, e na organização
+### RF02 — Sistema de Agenda
 
-Indentificador: RF07
-Nome: Sistema de Prioridades
-Data de criação: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir que o usuário defina níveis de prioridade para tarefas (alta, média ou baixa).
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que o usuário organize suas atividades acadêmicas por datas, facilitando o planejamento da rotina de estudos.
+**Prioridade:** Importante
 
-Indentificador: RF08
-Nome: Criação de Tarefas
-Data de criação: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir que o usuário exclua tarefas do sistema.
+---
 
-Indentificador: RF09
-Nome: Cadastro de Usuário
-Data de criação: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir que o usuário realize seu cadastro informando dados como nome, e-mail e senha.
+### RF03 — Calendário Inteligente
 
-Indentificador: RF10
-Nome: Login no Sistema
-Data de criação: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir que usuários cadastrados realizem login utilizando e-mail e senha.
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve apresentar um calendário inteligente que permita visualizar atividades cadastradas, identificar datas importantes e acompanhar tarefas próximas do vencimento.
+**Prioridade:** Essencial
 
-Indentificador: RF11
-Nome: Organização de Arquivos por Matéria
-Data de criaçao: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve organizar os arquivos enviados de acordo com a matéria selecionada.
+---
 
-Indentificador: RF12
-Nome: Compartilhamento de Arquivos em Grupo
-Data de criaçao: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir o compartilhamento de arquivos entre membros de um grupo.
+### RF04 — Área de Upload para Organização de Arquivos
 
-Indentificador: RF13
-Nome: Calendário
-Data de criaçao: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve apresentar um calendário onde o usuário possa visualizar todas as tarefas e eventos cadastrados.
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que o usuário envie arquivos relacionados aos estudos, possibilitando melhor organização de materiais acadêmicos.
+**Prioridade:** Desejável
 
-Indentificador: RF14
-Nome: Recuperação de Senha
-Data de criaçao: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir que o usuário recupere sua senha por meio do e-mail cadastrado.
+---
 
-Indentificador: RF15
-Nome: Marcar Tarefas como Concluídas
-Data de criaçao: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir que o usuário marque tarefas como concluídas após finalizá-las.
-  
-Indentificador: RF16
-Nome: Visualização Semanal do Calendário
-Data de criaçao: 12/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir visualizar as atividades organizadas por semana.
+### RF05 — Aviso de Datas de Entrega
 
-Indentificador: RF17
-Nome: Download de Arquivos
-Data de criaçao: 13/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir que o usuário faça download de arquivos armazenados.
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve alertar o usuário quando a data de entrega de uma atividade estiver próxima, ajudando a evitar atrasos.
+**Prioridade:** Importante
 
-Indentificador: RF18
-Nome: Pesquisa de Tarefas
-Data de criaçao: 13/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir que o usuário pesquise tarefas pelo nome ou palavra-chave.
+---
 
-Indentificador: RF19
-Nome: Contagem de Tarefas Pendentes
-Data de criaçao: 13/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve exibir a quantidade de tarefas pendentes do usuário.
+### RF06 — Organização de Grupos
 
-Indentificador:RF20
-Nome: Criação de Eventos no Calendário
-Data de criaçao: 13/03/2026
-Autor: André Lucas 
-Descrição: O sistema deve permitir que o usuário crie eventos no calendário, como provas e apresentações.
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir a criação e organização de grupos de estudo, auxiliando na divisão de atividades e no acompanhamento de trabalhos em equipe.
+**Prioridade:** Importante
 
+---
 
+### RF07 — Sistema de Prioridades
 
-Nâo Funcionais
- 
-Indentificador:RNF01
-Nome: Segurança e preservação dos dados
-Data de criaçao: 13/03/2026
-Autor: Miguel
-Descrição: O sistema terá que garantir que tarefas, agendas e arquivos salvos não sejam perdidos, mantendo uma integridade das informações registradas.
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que o usuário defina níveis de prioridade para as tarefas, como alta, média ou baixa.
+**Prioridade:** Essencial
 
-Indentificador:RNF02
-Nome: Armazenamento de arquivos
-Data de criaçao: 13/03/2026
-Autor: Miguel 
-Descrição: O sistema deverá permitir o armazenamento e recuperação de arquivos enviados pelo usuário sem perda de dados.
+---
 
-Indentificador:RNF03
-Nome: Proteção de acesso às informações do usuário
-Data de criaçao: 13/03/2026
-Autor: Miguel 
-Descrição: O sistema tem que garantir que apenas usuários logados possam acessar suas informações pessoais, tarefas e arquivos.
+### RF08 — Gerenciamento de Tarefas
 
-Indentificador:RNF04
-Nome: Salvamento das informações cadastradas
-Data de criaçao: 13/03/2026
-Autor: Miguel 
-Descrição: O sistema deve garantir que tarefas ,horários e matérias cadastrados permaneçam salvos, evitando perda de dados.
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que o usuário crie, edite, visualize e exclua tarefas acadêmicas, informando título, descrição, prioridade e data de vencimento.
+**Prioridade:** Essencial
 
-Indentificador:RNF05
-Nome: Tempo de funcionalidade do sistema 
-Data de criaçao: 13/03/2026
-Autor: Miguel 
-Descrição: O sistema deverá estar disponível 24 horas por dia, permitindo que os usuários possam acessar as suas tarefas e sua agenda a qualquer momento.
+---
 
-Indentificador:RNF06
-Nome: Limite de tamanho para envio de arquivos
-Data de criaçao: 13/03/2026
-Autor: Miguel 
-Descrição: O sistema devera permitir o envio de arquivos de estudo com tamanho máximo de 20 por arquivo.
+### RF09 — Cadastro de Usuário
 
-Indentificador:RNF07
-Nome: Autenticação obrigatória de usuário
-Data de criaçao: 13/03/2026
-Autor: Miguel
-Descrição: O sistema devera exigir login com autentificação de usuário e senha para acesso as informações pessoais.
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que novos usuários realizem cadastro informando nome, e-mail e senha.
+**Prioridade:** Essencial
 
-Indentificador:RNF08
-Nome: Proteção contra perda de dados em falhas
-Data de criaçao: 13/03/2026
-Autor: Miguel 
-Descrição: O sistema devera garantir que nenhuma tarefa ou evento seja perdido durante falhas de conexão ou atualização da aplicação.
+---
 
-Indentificador:RNF09
-Nome: Organização da interface
-Data de criaçao: 13/03/2026
-Autor: Miguel 
-Descrição: A interface deverá apresentar tarefas, matérias e eventos organizados de forma clara, permitindo rápida identificação das atividades do usuário.
+### RF10 — Login no Sistema
 
-Indentificador:RNF10
-Nome: Suporte a vários usuários simultaneamente
-Data de criaçao: 13/03/2026
-Autor: Miguel
-Descrição: O sistema deverá suportar múltiplos usuários utilizando agenda, tarefas e sistema de estudo simultaneamente sem comprometer o desempenho
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que usuários cadastrados realizem login utilizando e-mail e senha.
+**Prioridade:** Essencial
+
+---
+
+### RF11 — Organização de Arquivos por Matéria
+
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que os arquivos enviados sejam organizados de acordo com a matéria ou disciplina selecionada pelo usuário.
+**Prioridade:** Desejável
+
+---
+
+### RF12 — Compartilhamento de Arquivos em Grupo
+
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir o compartilhamento de arquivos entre membros de um grupo de estudo.
+**Prioridade:** Desejável
+
+---
+
+### RF13 — Visualização Geral do Calendário
+
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve apresentar um calendário onde o usuário possa visualizar todas as tarefas e eventos cadastrados em seus respectivos dias.
+**Prioridade:** Essencial
+
+---
+
+### RF14 — Recuperação de Senha
+
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que o usuário recupere sua senha por meio do e-mail cadastrado.
+**Prioridade:** Desejável
+
+---
+
+### RF15 — Marcar Tarefas como Concluídas
+
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que o usuário marque tarefas como concluídas após finalizá-las, registrando essa informação para acompanhamento de produtividade.
+**Prioridade:** Essencial
+
+---
+
+### RF16 — Visualização Semanal do Calendário
+
+**Data de criação:** 12/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que o usuário visualize suas atividades organizadas por semana.
+**Prioridade:** Importante
+
+---
+
+### RF17 — Download de Arquivos
+
+**Data de criação:** 13/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que o usuário faça download dos arquivos armazenados na plataforma.
+**Prioridade:** Desejável
+
+---
+
+### RF18 — Pesquisa de Tarefas
+
+**Data de criação:** 13/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que o usuário pesquise tarefas pelo nome, descrição ou palavra-chave.
+**Prioridade:** Importante
+
+---
+
+### RF19 — Contagem de Tarefas Pendentes
+
+**Data de criação:** 13/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve exibir a quantidade de tarefas pendentes do usuário, facilitando o acompanhamento das atividades ainda não concluídas.
+**Prioridade:** Importante
+
+---
+
+### RF20 — Criação de Eventos no Calendário
+
+**Data de criação:** 13/03/2026
+**Autor:** André Lucas
+**Descrição:** O sistema deve permitir que o usuário crie eventos no calendário, como provas, apresentações, entregas e compromissos acadêmicos.
+**Prioridade:** Importante
+
+---
+
+### RF21 — Kanban de Atividades
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve disponibilizar um quadro Kanban para que o usuário organize suas atividades em colunas, como “A Fazer”, “Em Andamento”, “Revisão” e “Concluído”.
+**Prioridade:** Importante
+
+---
+
+### RF22 — Metas Semanais
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve permitir que o usuário crie metas semanais relacionadas a tarefas concluídas, tempo de foco e controle de atrasos.
+**Prioridade:** Importante
+
+---
+
+### RF23 — Relatórios Inteligentes
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve gerar relatórios inteligentes com informações sobre produtividade, tarefas concluídas, tarefas pendentes, tempo de foco, metas e desempenho semanal.
+**Prioridade:** Essencial
+
+---
+
+### RF24 — Exportação de Relatórios em PDF
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve permitir que o usuário exporte seus relatórios semanais em formato PDF.
+**Prioridade:** Importante
+
+---
+
+### RF25 — Notificações Internas
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve exibir notificações internas sobre tarefas atrasadas, tarefas próximas do vencimento, metas pendentes e informações importantes da rotina acadêmica.
+**Prioridade:** Importante
+
+---
+
+### RF26 — Plano Premium
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve possuir uma lógica de plano Free e Premium, permitindo restringir funcionalidades avançadas, como relatórios inteligentes e exportação em PDF, para usuários Premium.
+**Prioridade:** Desejável
+
+---
+
+### RF27 — Modo Claro e Modo Escuro
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve permitir que o usuário alterne entre modo claro e modo escuro, oferecendo melhor conforto visual durante o uso.
+**Prioridade:** Desejável
+
+---
+
+## Requisitos Não Funcionais
+
+### RNF01 — Segurança e Preservação dos Dados
+
+**Data de criação:** 13/03/2026
+**Autor:** Miguel
+**Descrição:** O sistema deve garantir a segurança e a integridade das informações cadastradas, evitando perda de dados relacionados a tarefas, agenda, grupos e arquivos.
+**Prioridade:** Essencial
+
+---
+
+### RNF02 — Armazenamento de Arquivos
+
+**Data de criação:** 13/03/2026
+**Autor:** Miguel
+**Descrição:** O sistema deve permitir o armazenamento e a recuperação de arquivos enviados pelo usuário de forma segura e organizada.
+**Prioridade:** Importante
+
+---
+
+### RNF03 — Proteção de Acesso às Informações do Usuário
+
+**Data de criação:** 13/03/2026
+**Autor:** Miguel
+**Descrição:** O sistema deve garantir que apenas usuários autenticados possam acessar suas informações pessoais, tarefas, calendário, grupos e arquivos.
+**Prioridade:** Essencial
+
+---
+
+### RNF04 — Salvamento das Informações Cadastradas
+
+**Data de criação:** 13/03/2026
+**Autor:** Miguel
+**Descrição:** O sistema deve garantir que tarefas, horários, matérias, grupos e eventos cadastrados permaneçam salvos no banco de dados.
+**Prioridade:** Essencial
+
+---
+
+### RNF05 — Disponibilidade do Sistema
+
+**Data de criação:** 13/03/2026
+**Autor:** Miguel
+**Descrição:** O sistema deve estar disponível para acesso sempre que o usuário precisar consultar suas tarefas, agenda e informações acadêmicas.
+**Prioridade:** Importante
+
+---
+
+### RNF06 — Limite de Tamanho para Envio de Arquivos
+
+**Data de criação:** 13/03/2026
+**Autor:** Miguel
+**Descrição:** O sistema deve limitar o tamanho dos arquivos enviados pelo usuário, permitindo no máximo 20 MB por arquivo.
+**Prioridade:** Desejável
+
+---
+
+### RNF07 — Autenticação Obrigatória
+
+**Data de criação:** 13/03/2026
+**Autor:** Miguel
+**Descrição:** O sistema deve exigir autenticação por e-mail e senha para acesso às áreas privadas da aplicação.
+**Prioridade:** Essencial
+
+---
+
+### RNF08 — Proteção Contra Perda de Dados em Falhas
+
+**Data de criação:** 13/03/2026
+**Autor:** Miguel
+**Descrição:** O sistema deve evitar a perda de tarefas, eventos e informações importantes em casos de falha de conexão, erro de atualização ou reinicialização da aplicação.
+**Prioridade:** Importante
+
+---
+
+### RNF09 — Organização da Interface
+
+**Data de criação:** 13/03/2026
+**Autor:** Miguel
+**Descrição:** A interface deve apresentar tarefas, matérias, eventos e recursos do sistema de forma clara, organizada e de fácil compreensão para o usuário.
+**Prioridade:** Importante
+
+---
+
+### RNF10 — Suporte a Vários Usuários Simultaneamente
+
+**Data de criação:** 13/03/2026
+**Autor:** Miguel
+**Descrição:** O sistema deve permitir que múltiplos usuários utilizem a aplicação simultaneamente sem comprometer o desempenho.
+**Prioridade:** Importante
+
+---
+
+### RNF11 — Desempenho da Aplicação
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve carregar páginas, tarefas, calendários e relatórios em tempo adequado, evitando lentidão durante o uso normal da aplicação.
+**Prioridade:** Importante
+
+---
+
+### RNF12 — Usabilidade
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve possuir uma interface simples e intuitiva, permitindo que o usuário encontre facilmente as funcionalidades principais.
+**Prioridade:** Essencial
+
+---
+
+### RNF13 — Responsividade
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve se adaptar a diferentes tamanhos de tela, permitindo uso em computadores, notebooks e dispositivos móveis.
+**Prioridade:** Importante
+
+---
+
+### RNF14 — Manutenibilidade
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O código do sistema deve ser organizado em camadas, separando rotas, controllers, models, views e arquivos públicos para facilitar futuras manutenções.
+**Prioridade:** Importante
+
+---
+
+### RNF15 — Compatibilidade
+
+**Data de criação:** 13/03/2026
+**Autor:** João Pedro
+**Descrição:** O sistema deve funcionar corretamente nos principais navegadores modernos, como Google Chrome, Microsoft Edge e Mozilla Firefox.
+**Prioridade:** Importante
