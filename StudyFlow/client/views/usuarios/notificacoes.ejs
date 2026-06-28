@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Notificações - StudyFlow</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/css/barra-lateral.css" />
+    <link rel="stylesheet" href="/css/notificacoes.css" />
+  </head>
+
+  <body>
+    <% locals.pagina = "notificacoes"; %>
+
+    <%- include('../partials/barra-lateral') %>
+
+    <main class="notificacoes-page main-content-page">
+      <header class="notificacoes-header">
+        <div>
+          <h1>Notificações</h1>
+
+          <p>
+            Alertas importantes sobre suas tarefas, foco e metas.
+          </p>
+        </div>
+
+        <div class="notificacoes-actions">
+          <div class="notificacoes-count">
+            <i class="fa-solid fa-bell"></i>
+
+            <span id="contadorPaginaNotificacoes">
+              <%= notificacoes.length %> aviso(s)
+            </span>
+          </div>
+
+          <% if (notificacoes && notificacoes.length > 0) { %>
+            <button
+              type="button"
+              class="btn-marcar-lidas"
+              id="marcarLidasBtn"
+              data-total="<%= notificacoes.length %>"
+            >
+              <i class="fa-solid fa-check"></i>
+              Marcar como lido
+            </button>
+          <% } %>
+        </div>
+      </header>
+
+      <% if (!notificacoes || notificacoes.length === 0) { %>
+        <section class="empty-notifications">
+          <i class="fa-solid fa-circle-check"></i>
+
+          <h2>Tudo certo por aqui</h2>
+
+          <p>
+            Você não possui notificações importantes no momento.
+          </p>
+        </section>
+      <% } else { %>
+        <section class="notificacoes-list">
+          <% notificacoes.forEach(notificacao => { %>
+            <article class="notification-card <%= notificacao.prioridade %>">
+              <div class="notification-icon">
+                <i class="fa-solid <%= notificacao.icone %>"></i>
+              </div>
+
+              <div class="notification-content">
+                <div class="notification-top">
+                  <h2>
+                    <%= notificacao.titulo %>
+                  </h2>
+
+                  <span class="priority-badge <%= notificacao.prioridade %>">
+                    <%= notificacao.prioridade %>
+                  </span>
+                </div>
+
+                <p>
+                  <%= notificacao.descricao %>
+                </p>
+
+                <a href="<%= notificacao.link %>">
+                  Ver detalhe
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+              </div>
+            </article>
+          <% }) %>
+        </section>
+      <% } %>
+    </main>
+  </body>
+</html>

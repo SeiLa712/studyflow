@@ -18,6 +18,13 @@ router.post(
   atividadeController.editarAtividade
 );
 
+// concluir atividade
+router.post(
+  "/concluir/:id",
+  verificarAutenticacao,
+  atividadeController.concluirAtividade
+);
+
 // excluir atividade
 router.delete(
   "/:id",

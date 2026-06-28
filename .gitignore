@@ -1,0 +1,6 @@
+StudyFlow/client/public/relatorios/*.pdf
+
+node_modules/
+StudyFlow/node_modules/
+
+.env

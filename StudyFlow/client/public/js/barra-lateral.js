@@ -2,31 +2,48 @@
 // SIDEBAR
 // =======================
 
-// Seleciona a barra lateral
-const sidebar = document.querySelector(".sidebar");
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.querySelector(".sidebar");
+  const collapseBtn = document.querySelector(".collapse-btn");
 
-// Seleciona o botão responsável por recolher/expandir a sidebar
-const collapseBtn = document.querySelector(".collapse-btn");
+  if (!sidebar || !collapseBtn) return;
 
+  const sidebarSalva = localStorage.getItem("studyflow-sidebar");
 
-// Ao clicar no botão, adiciona ou remove a classe "collapsed"
-collapseBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("collapsed");
-});
+  if (sidebarSalva === "fechada") {
+    sidebar.classList.add("collapsed");
+    document.body.classList.add("sidebar-collapsed");
+    collapseBtn.textContent = "▶";
+  } else {
+    sidebar.classList.remove("collapsed");
+    document.body.classList.remove("sidebar-collapsed");
+    collapseBtn.textContent = "◀";
+  }
 
-// Busca todos os itens do menu
-const menuItems = document.querySelectorAll(".menu-item");
+  collapseBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+    document.body.classList.toggle("sidebar-collapsed");
 
-// Percorre todos os links do menu
-menuItems.forEach((item) => {
-  // Quando um item for clicado...
-  item.addEventListener("click", () => {
-    // Remove a classe "active" de todos os itens
-    menuItems.forEach((link) => {
-      link.classList.remove("active");
+    const sidebarFechada = sidebar.classList.contains("collapsed");
+
+    if (sidebarFechada) {
+      localStorage.setItem("studyflow-sidebar", "fechada");
+      collapseBtn.textContent = "▶";
+    } else {
+      localStorage.setItem("studyflow-sidebar", "aberta");
+      collapseBtn.textContent = "◀";
+    }
+  });
+
+  const menuItems = document.querySelectorAll(".menu-item");
+
+  menuItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      menuItems.forEach((link) => {
+        link.classList.remove("active");
+      });
+
+      item.classList.add("active");
     });
-
-    // Adiciona "active" apenas no item clicado
-    item.classList.add("active");
   });
 });

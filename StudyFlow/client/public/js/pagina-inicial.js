@@ -1,73 +1,152 @@
 const atividades = window.atividades || [];
 
 // =======================
-// POMODORO
+// HELPERS
 // =======================
 
-// Elemento onde o tempo será exibido
+function normalizarDataISO(data) {
+  if (!data) return "";
+
+  if (typeof data === "string" && data.length >= 10) {
+    return data.substring(0, 10);
+  }
+
+  const dataObj = new Date(data);
+
+  const ano = dataObj.getFullYear();
+  const mes = String(dataObj.getMonth() + 1).padStart(2, "0");
+  const dia = String(dataObj.getDate()).padStart(2, "0");
+
+  return `${ano}-${mes}-${dia}`;
+}
+
+function formatarDataBR(dataISO) {
+  if (!dataISO) return "Sem data";
+
+  const data = normalizarDataISO(dataISO);
+  const partes = data.split("-");
+
+  if (partes.length !== 3) return dataISO;
+
+  return `${partes[2]}/${partes[1]}/${partes[0]}`;
+}
+
+function formatarPrioridade(prioridade) {
+  if (prioridade === "alta") return "Alta prioridade";
+  if (prioridade === "media") return "Média prioridade";
+  return "Baixa prioridade";
+}
+
+// =======================
+// MODAL ADICIONAR ATIVIDADE
+// =======================
+
+const modalOverlay = document.getElementById("modalOverlay");
+const openModal = document.getElementById("openModal");
+const closeModal = document.getElementById("closeModal");
+const cancelModal = document.getElementById("cancelModal");
+
+function abrirModalAdicionar(dataSelecionada = "") {
+  const inputData = document.querySelector('input[name="data_vencimento"]');
+
+  if (inputData) {
+    inputData.value = dataSelecionada;
+  }
+
+  modalOverlay?.classList.add("show");
+}
+
+function fecharModalAdicionar() {
+  modalOverlay?.classList.remove("show");
+}
+
+openModal?.addEventListener("click", () => {
+  abrirModalAdicionar();
+});
+
+closeModal?.addEventListener("click", fecharModalAdicionar);
+cancelModal?.addEventListener("click", fecharModalAdicionar);
+
+modalOverlay?.addEventListener("click", (e) => {
+  if (e.target === modalOverlay) {
+    fecharModalAdicionar();
+  }
+});
+
+// =======================
+// POMODORO RÁPIDO
+// =======================
+
 const timerDisplay = document.querySelector(".timer-circle");
-
-// Botão iniciar/pausar
 const playBtn = document.querySelector(".play-btn");
+const resetBtn = document.querySelector(".reset-btn");
 
-// Tempo inicial do pomodoro (25 minutos em segundos)
 let tempo = 25 * 60;
-
-// Guarda o intervalo do setInterval
 let intervalo = null;
-
-// Controla se o timer está rodando ou não
 let rodando = false;
 
-// Atualiza o texto exibido no cronômetro
 function atualizarTimer() {
-  // Calcula minutos restantes
-  const minutos = Math.floor(tempo / 60);
+  if (!timerDisplay) return;
 
-  // Calcula segundos restantes
+  const minutos = Math.floor(tempo / 60);
   const segundos = tempo % 60;
 
-  // Formata para 00:00
-  timerDisplay.textContent = `${String(minutos).padStart(2, "0")}:${String(segundos).padStart(2, "0")}`;
+  timerDisplay.textContent =
+    `${String(minutos).padStart(2, "0")}:${String(segundos).padStart(2, "0")}`;
 }
-// Responsável por iniciar a contagem regressiva
+
+async function salvarSessaoPomodoroRapido(duracaoMin) {
+  try {
+    await fetch("/usuarios/pomodoro/sessoes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        duracao_min: duracaoMin,
+        origem: "timer-rapido"
+      })
+    });
+  } catch (erro) {
+    console.error("Erro ao salvar Pomodoro rápido:", erro);
+  }
+}
+
 function iniciarTimer() {
-  intervalo = setInterval(() => {
-    // Diminui 1 segundo
+  intervalo = setInterval(async () => {
     tempo--;
 
-    // Atualiza a tela
     atualizarTimer();
 
-    // Verifica se chegou ao fim
     if (tempo <= 0) {
-      // Para o intervalo
       clearInterval(intervalo);
+
+      await salvarSessaoPomodoroRapido(25);
 
       rodando = false;
 
-      playBtn.textContent = "▶ Iniciar";
+      if (playBtn) {
+        playBtn.textContent = "Iniciar";
+      }
 
-      alert("Pomodoro concluído!");
+      alert("Pomodoro concluído! Tempo de foco salvo no relatório.");
     }
   }, 1000);
 }
 
-playBtn.addEventListener("click", () => {
+playBtn?.addEventListener("click", () => {
   if (!rodando) {
     iniciarTimer();
     rodando = true;
-    playBtn.textContent = "⏸ Pausar";
+    playBtn.textContent = "Pausar";
   } else {
     clearInterval(intervalo);
     rodando = false;
-    playBtn.textContent = "▶ Continuar";
+    playBtn.textContent = "Continuar";
   }
 });
 
-const resetBtn = document.querySelector(".reset-btn");
-
-resetBtn.addEventListener("click", () => {
+resetBtn?.addEventListener("click", () => {
   clearInterval(intervalo);
 
   tempo = 25 * 60;
@@ -75,360 +154,13 @@ resetBtn.addEventListener("click", () => {
 
   atualizarTimer();
 
-  playBtn.textContent = "▶ Iniciar";
+  if (playBtn) {
+    playBtn.textContent = "Iniciar";
+  }
 });
 
 atualizarTimer();
-// =======================
-// CALENDÁRIO SEMANAL
-// =======================
 
-// Seleciona o container onde os dias da semana serão criados
-const calendarGrid = document.getElementById("calendarGrid");
-
-// Seleciona o elemento que exibirá o período da semana
-const weekRange = document.getElementById("weekRange");
-
-// Função responsável por gerar dinamicamente a semana atual
-function gerarSemanaAtual() {
-
-  // Limpa o calendário antes de gerar novamente
-  calendarGrid.innerHTML = "";
-
-  // Obtém a data atual
-  const hoje = new Date();
-
-  // Retorna o dia da semana atual
-  // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
-  const diaSemana = hoje.getDay();
-
-  // Cria uma cópia da data atual
-  const segunda = new Date(hoje);
-
-  // Calcula a data da segunda-feira da semana atual
-  // Caso hoje seja domingo, volta 6 dias
-  segunda.setDate(
-    hoje.getDate() - (diaSemana === 0 ? 6 : diaSemana - 1)
-  );
-
-  // Nomes abreviados dos dias da semana
-  const diasSemana = [
-    "Seg",
-    "Ter",
-    "Qua",
-    "Qui",
-    "Sex",
-    "Sáb",
-    "Dom"
-  ];
-
-  // Cria as 7 colunas da semana
-  for (let i = 0; i < 7; i++) {
-
-    // Cria uma nova data baseada na segunda-feira
-    const data = new Date(segunda);
-
-    // Adiciona os dias seguintes
-    data.setDate(segunda.getDate() + i);
-
-    // Cria a coluna do dia
-    const coluna = document.createElement("div");
-
-    // Adiciona a classe padrão da coluna
-    coluna.classList.add("day-column");
-
-    const dataISO = data.toISOString().split("T")[0];
-    coluna.dataset.date = dataISO;
-    
-    coluna.addEventListener("click", () => {
-      const inputData = document.querySelector('input[name="data_vencimento"]');
-      
-      if (inputData) {
-        inputData.value = dataISO;
-      }
-      
-      modalOverlay.classList.add("show");
-    });
-
-    // Verifica se a data gerada corresponde ao dia atual
-    const ehHoje =
-      data.getDate() === hoje.getDate() &&
-      data.getMonth() === hoje.getMonth() &&
-      data.getFullYear() === hoje.getFullYear();
-
-    // Destaca visualmente o dia atual
-    if (ehHoje) {
-      coluna.classList.add("active-day");
-    }
-
-    // Estrutura HTML da coluna
-    // day-header = cabeçalho do dia
-    // events-container = local onde eventos serão inseridos
-    coluna.innerHTML = `
-      <div class="day-header">
-          <span>${diasSemana[i]}</span>
-          <strong>${data.getDate()}</strong>
-      </div>
-
-      <div class="events-container"></div>
-    `;
-
-    // Adiciona a coluna ao calendário
-    calendarGrid.appendChild(coluna);
-  }
-
-  // Calcula a data do domingo da mesma semana
-  const domingo = new Date(segunda);
-  domingo.setDate(segunda.getDate() + 6);
-
-  // Vetor utilizado para converter número do mês em texto
-  const meses = [
-    "jan",
-    "fev",
-    "mar",
-    "abr",
-    "mai",
-    "jun",
-    "jul",
-    "ago",
-    "set",
-    "out",
-    "nov",
-    "dez",
-  ];
-
-  // Exibe o intervalo da semana no topo do calendário
-  // Exemplo:
-  // 09 de jun - 15 de jun de 2026
-  weekRange.textContent =
-    `${segunda.getDate()} de ${meses[segunda.getMonth()]} - ` +
-    `${domingo.getDate()} de ${meses[domingo.getMonth()]} de ${domingo.getFullYear()}`;
-}
-
-// Executa a função assim que a página carrega
-gerarSemanaAtual();
-
-
-// Agora adiciona as atividades vindas do banco
-if (typeof atividades !== "undefined") {
-
-  atividades.forEach((atividade) => {
-
-    adicionarEventoCalendario(
-      atividade.id,
-      atividade.nome,
-      atividade.data_vencimento,
-      atividade.prioridade
-    );
-
-  });
-
-}
-
-console.log("Atividades:", atividades);
-
-// =======================
-// MODAL
-// =======================
-
-// Seleciona o fundo escuro que contém o modal
-const modalOverlay = document.getElementById("modalOverlay");
-
-// Botão "+ Adicionar" que abre o modal
-const openModal = document.getElementById("openModal");
-
-// Botão "X" localizado no canto superior do modal
-const closeModal = document.getElementById("closeModal");
-
-// Botão "Cancelar" do formulário
-const cancelModal = document.getElementById("cancelModal");
-
-// Exibe o modal ao clicar em "+ Adicionar"
-openModal.addEventListener("click", () => {
-  modalOverlay.classList.add("show");
-});
-
-// Fecha o modal ao clicar no botão X
-closeModal.addEventListener("click", () => {
-  modalOverlay.classList.remove("show");
-});
-
-// Fecha o modal ao clicar em Cancelar
-cancelModal.addEventListener("click", () => {
-  modalOverlay.classList.remove("show");
-});
-
-
-// =======================
-// EVENTOS DO CALENDÁRIO
-// =======================
-
-// Adiciona um evento visual no dia correspondente do calendário
-function adicionarEventoCalendario(taskId, titulo, data, urgencia) {
-
-  // Converte a data recebida para objeto Date
-  const dataEvento = new Date(data);
-
-  // Busca todas as colunas do calendário semanal
-  const colunas = document.querySelectorAll(".day-column");
-
-  colunas.forEach((coluna) => {
-
-    // Recupera o número do dia exibido na coluna
-    const dia =
-      parseInt(
-        coluna.querySelector("strong").textContent
-      );
-
-    // Verifica se a atividade pertence a este dia
-    if (dia === dataEvento.getDate()) {
-
-      // Cria o elemento visual do evento
-      const evento =
-        document.createElement("div");
-
-      // Salva o ID da atividade para facilitar exclusões futuras
-      evento.dataset.taskId = taskId;
-
-      // Adiciona a classe CSS padrão
-      evento.classList.add("event");
-
-      // Define cores diferentes conforme o nível de urgência
-      if (urgencia === "alta") {
-        evento.classList.add("urgent");
-      } else if (urgencia === "media") {
-        evento.classList.add("medium");
-      } else {
-        evento.classList.add("low");
-      }
-
-      // Define o texto exibido no calendário
-      evento.textContent = titulo;
-
-      evento.addEventListener("click", (e) => {
-      e.stopPropagation();
-
-      const atividade = atividades.find((item) => item.id === taskId);
-
-      if (!atividade) return;
-
-      const fakeElement = {
-        dataset: {
-        titulo: atividade.nome,
-        descricao: atividade.descricao || "Sem descrição.",
-        data: atividade.data_vencimento.split("T")[0],
-        prioridade: atividade.prioridade
-      }
-    };
-    
-    abrirDetalhesAtividade(fakeElement);
-  });
-
-      // Insere o evento dentro do dia correspondente
-      coluna
-        .querySelector(".events-container")
-        .appendChild(evento);
-    }
-  });
-}
-
-
-// =======================
-// NOVA ATIVIDADE
-// =======================
-
-// Formulário de cadastro de atividades
-const activityForm =
-  document.getElementById("activityForm");
-
-// Container onde os cards de atividades serão exibidos
-const tasksContainer =
-  document.getElementById("tasksContainer");
-
-// Executa quando o usuário envia o formulário
-activityForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const nome =
-    document.getElementById("nome").value;
-
-  const descricao =
-    document.querySelector(
-      'textarea[name="descricao"]'
-    ).value;
-
-  const data_vencimento =
-    document.querySelector(
-      'input[name="data_vencimento"]'
-    ).value;
-
-  const prioridade =
-    document.querySelector(
-      'select[name="prioridade"]'
-    ).value;
-
-  try {
-    const resposta = await fetch(
-      "/tarefas/criar",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          nome,
-          descricao,
-          data_vencimento,
-          prioridade
-        })
-      }
-    );
-
-    if (resposta.ok) {
-      activityForm.reset();
-      modalOverlay.classList.remove("show");
-
-      alert("Tarefa criada com sucesso!");
-
-      location.reload();
-    } else {
-      alert("Erro ao criar tarefa.");
-    }
-  } catch (erro) {
-    console.error(erro);
-    alert("Erro ao conectar ao servidor.");
-  }
-});
-
-document.querySelectorAll(".btn-delete").forEach((btn) => {
-  btn.addEventListener("click", async (e) => {
-
-    const card = e.target.closest(".task-card"); // 🔥 AQUI o card existe
-
-    const id = card.dataset.id;
-
-    console.log("ID da tarefa:", id);
-
-    const confirmDelete = confirm("Deseja excluir esta tarefa?");
-    if (!confirmDelete) return;
-
-    try {
-      const response = await fetch(`/tarefas/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        card.remove();
-      } else {
-        alert("Erro ao excluir tarefa");
-      }
-
-    } catch (err) {
-      console.error(err);
-      alert("Erro no servidor");
-    }
-  });
-});
 // =======================
 // MODAL DETALHES DA ATIVIDADE
 // =======================
@@ -441,20 +173,9 @@ const detalheDescricao = document.getElementById("detalheDescricao");
 const detalheData = document.getElementById("detalheData");
 const detalhePrioridade = document.getElementById("detalhePrioridade");
 
-function formatarDataBR(dataISO) {
-  if (!dataISO) return "Sem data";
-
-  const [ano, mes, dia] = dataISO.split("-");
-  return `${dia}/${mes}/${ano}`;
-}
-
-function formatarPrioridade(prioridade) {
-  if (prioridade === "alta") return "Alta prioridade";
-  if (prioridade === "media") return "Média prioridade";
-  return "Baixa prioridade";
-}
-
 function abrirDetalhesAtividade(elemento) {
+  if (!modalDetalhesOverlay) return;
+
   detalheTitulo.textContent = elemento.dataset.titulo || "Atividade";
   detalheDescricao.textContent = elemento.dataset.descricao || "Sem descrição.";
   detalheData.textContent = formatarDataBR(elemento.dataset.data);
@@ -464,18 +185,12 @@ function abrirDetalhesAtividade(elemento) {
 }
 
 function fecharDetalhesAtividade() {
-  modalDetalhesOverlay.classList.remove("show");
+  modalDetalhesOverlay?.classList.remove("show");
 }
 
 document.querySelectorAll(".task-card").forEach((card) => {
   card.addEventListener("click", () => {
     abrirDetalhesAtividade(card);
-  });
-});
-
-document.querySelectorAll(".btn-delete").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
   });
 });
 
@@ -486,6 +201,7 @@ modalDetalhesOverlay?.addEventListener("click", (e) => {
     fecharDetalhesAtividade();
   }
 });
+
 // =======================
 // MODAL EDITAR ATIVIDADE
 // =======================
@@ -532,3 +248,276 @@ modalEditarOverlay?.addEventListener("click", (e) => {
     fecharModalEditarAtividade();
   }
 });
+
+// =======================
+// CONCLUIR ATIVIDADE
+// =======================
+
+document.querySelectorAll(".btn-complete").forEach((btn) => {
+  btn.addEventListener("click", async (e) => {
+    e.stopPropagation();
+
+    const card = e.target.closest(".task-card");
+    const id = card.dataset.id;
+
+    const confirmar = confirm("Deseja marcar esta atividade como concluída?");
+
+    if (!confirmar) return;
+
+    try {
+      const resposta = await fetch(`/tarefas/concluir/${id}`, {
+        method: "POST"
+      });
+
+      if (resposta.ok) {
+        card.classList.add("completed");
+
+        setTimeout(() => {
+          card.remove();
+        }, 250);
+      } else {
+        alert("Erro ao concluir atividade.");
+      }
+
+    } catch (erro) {
+      console.error(erro);
+      alert("Erro ao conectar com o servidor.");
+    }
+  });
+});
+
+// =======================
+// EXCLUIR ATIVIDADE
+// =======================
+
+document.querySelectorAll(".btn-delete").forEach((btn) => {
+  btn.addEventListener("click", async (e) => {
+    e.stopPropagation();
+
+    const card = e.target.closest(".task-card");
+    const id = card.dataset.id;
+
+    const confirmDelete = confirm("Deseja excluir esta tarefa?");
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`/tarefas/${id}`, {
+        method: "DELETE"
+      });
+
+      if (response.ok) {
+        card.remove();
+      } else {
+        alert("Erro ao excluir tarefa");
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert("Erro no servidor");
+    }
+  });
+});
+
+// =======================
+// CADASTRAR NOVA ATIVIDADE
+// =======================
+
+const activityForm = document.getElementById("activityForm");
+
+activityForm?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const nome = document.getElementById("nome").value;
+
+  const descricao = document.querySelector(
+    'textarea[name="descricao"]'
+  ).value;
+
+  const data_vencimento = document.querySelector(
+    'input[name="data_vencimento"]'
+  ).value;
+
+  const prioridade = document.querySelector(
+    'select[name="prioridade"]'
+  ).value;
+
+  try {
+    const resposta = await fetch("/tarefas/criar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        nome,
+        descricao,
+        data_vencimento,
+        prioridade
+      })
+    });
+
+    if (resposta.ok) {
+      activityForm.reset();
+      fecharModalAdicionar();
+
+      alert("Tarefa criada com sucesso!");
+
+      location.reload();
+    } else {
+      alert("Erro ao criar tarefa.");
+    }
+  } catch (erro) {
+    console.error(erro);
+    alert("Erro ao conectar ao servidor.");
+  }
+});
+
+// =======================
+// CALENDÁRIO SEMANAL
+// =======================
+
+const calendarGrid = document.getElementById("calendarGrid");
+const weekRange = document.getElementById("weekRange");
+
+function gerarSemanaAtual() {
+  if (!calendarGrid || !weekRange) return;
+
+  calendarGrid.innerHTML = "";
+
+  const hoje = new Date();
+  const diaSemana = hoje.getDay();
+
+  const segunda = new Date(hoje);
+
+  segunda.setDate(
+    hoje.getDate() - (diaSemana === 0 ? 6 : diaSemana - 1)
+  );
+
+  const diasSemana = [
+    "Seg",
+    "Ter",
+    "Qua",
+    "Qui",
+    "Sex",
+    "Sáb",
+    "Dom"
+  ];
+
+  for (let i = 0; i < 7; i++) {
+    const data = new Date(segunda);
+    data.setDate(segunda.getDate() + i);
+
+    const dataISO = normalizarDataISO(data);
+
+    const coluna = document.createElement("div");
+    coluna.classList.add("day-column");
+    coluna.dataset.date = dataISO;
+
+    coluna.addEventListener("click", () => {
+      abrirModalAdicionar(dataISO);
+    });
+
+    const ehHoje =
+      data.getDate() === hoje.getDate() &&
+      data.getMonth() === hoje.getMonth() &&
+      data.getFullYear() === hoje.getFullYear();
+
+    if (ehHoje) {
+      coluna.classList.add("active-day");
+    }
+
+    coluna.innerHTML = `
+      <div class="day-header">
+        <span>${diasSemana[i]}</span>
+        <strong>${data.getDate()}</strong>
+      </div>
+
+      <div class="events-container"></div>
+    `;
+
+    calendarGrid.appendChild(coluna);
+  }
+
+  const domingo = new Date(segunda);
+  domingo.setDate(segunda.getDate() + 6);
+
+  const meses = [
+    "jan",
+    "fev",
+    "mar",
+    "abr",
+    "mai",
+    "jun",
+    "jul",
+    "ago",
+    "set",
+    "out",
+    "nov",
+    "dez"
+  ];
+
+  weekRange.textContent =
+    `${segunda.getDate()} de ${meses[segunda.getMonth()]} - ` +
+    `${domingo.getDate()} de ${meses[domingo.getMonth()]} de ${domingo.getFullYear()}`;
+}
+
+function adicionarEventoCalendario(atividade) {
+  const dataEventoISO = normalizarDataISO(atividade.data_vencimento);
+
+  const coluna = document.querySelector(
+    `.day-column[data-date="${dataEventoISO}"]`
+  );
+
+  if (!coluna) return;
+
+  const evento = document.createElement("div");
+
+  evento.dataset.taskId = atividade.id;
+  evento.dataset.titulo = atividade.nome;
+  evento.dataset.descricao = atividade.descricao || "Sem descrição.";
+  evento.dataset.data = dataEventoISO;
+  evento.dataset.prioridade = atividade.prioridade;
+
+  evento.classList.add("event");
+
+  if (atividade.prioridade === "alta") {
+    evento.classList.add("urgent");
+  } else if (atividade.prioridade === "media") {
+    evento.classList.add("medium");
+  } else {
+    evento.classList.add("low");
+  }
+
+  if (atividade.concluida) {
+    evento.classList.add("completed");
+    evento.textContent = `✓ ${atividade.nome}`;
+  } else {
+    evento.textContent = atividade.nome;
+  }
+
+  evento.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const fakeElement = {
+      dataset: {
+        titulo: atividade.nome,
+        descricao: atividade.descricao || "Sem descrição.",
+        data: dataEventoISO,
+        prioridade: atividade.prioridade
+      }
+    };
+
+    abrirDetalhesAtividade(fakeElement);
+  });
+
+  coluna
+    .querySelector(".events-container")
+    .appendChild(evento);
+}
+
+gerarSemanaAtual();
+
+atividades.forEach((atividade) => {
+  adicionarEventoCalendario(atividade);
+});
+
+console.log("Atividades:", atividades);

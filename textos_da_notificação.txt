@@ -1,0 +1,22 @@
+Tarefa atrasada
+"Estudar Node.js" está atrasada. Priorize essa atividade.
+
+
+Tarefa vence hoje
+"Finalizar relatório do StudyFlow" vence hoje. Tente concluir ainda neste dia.
+
+
+Tarefa vence amanhã
+"Revisar apresentação" vence amanhã. Vale se preparar antes.
+
+
+Nenhum foco registrado hoje
+Você ainda não concluiu nenhuma sessão Pomodoro hoje.
+
+
+Bom ritmo de foco
+Você já acumulou 50 minutos de foco hoje.
+
+
+Nenhuma meta cadastrada
+Crie metas semanais para acompanhar melhor sua evolução.

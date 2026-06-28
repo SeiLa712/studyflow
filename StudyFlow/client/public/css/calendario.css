@@ -364,3 +364,209 @@ body {
 .activity-tag {
   cursor: pointer;
 }
+
+/* =======================
+   ATIVIDADE CONCLUÍDA
+======================= */
+
+.activity-tag.concluida {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+  text-decoration: line-through;
+  opacity: 0.85;
+}
+
+/* BOTÃO CONCLUIR NO MODAL */
+
+.complete-btn {
+  flex: 1;
+  padding: 12px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #dcfce7;
+  color: #16a34a;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.2s ease;
+}
+
+.complete-btn:hover {
+  background: #16a34a;
+  color: white;
+}
+/* =========================
+   NAVEGAÇÃO DO MÊS FIXA
+========================= */
+
+.month-navigation {
+  display: grid;
+  grid-template-columns: 48px 280px 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  margin: 25px 0;
+}
+
+.month-navigation h2 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  color: #111827;
+
+  white-space: nowrap;
+}
+
+.arrow-btn {
+  width: 48px;
+  height: 48px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: transparent;
+  color: #111827;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.arrow-btn:hover {
+  background: #eef2ff;
+  color: #6366f1;
+}
+/* =========================
+   INDICADOR DE MÊS ATUAL
+========================= */
+
+.month-title-box {
+  width: 280px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.current-month-label {
+  margin-top: 4px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #6366f1;
+  background: #eef2ff;
+
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  text-transform: lowercase;
+}
+/* =========================
+   CORREÇÃO DO ESPAÇO DA SIDEBAR
+========================= */
+
+.calendar-section {
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* sidebar aberta */
+body:not(.sidebar-collapsed) .calendar-section {
+  margin-left: 260px !important;
+  width: calc(100% - 260px) !important;
+}
+
+/* sidebar fechada */
+body.sidebar-collapsed .calendar-section {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+/* remove centralização exagerada */
+.calendar-container,
+.calendar-wrapper,
+.calendar-content {
+  margin-left: 0 !important;
+}
+
+/* deixa o calendário ocupar melhor a tela */
+.calendar-section {
+  margin-left: 0 !important;
+  padding: 30px;
+  width: 100% !important;
+}
+
+/* responsivo */
+@media (max-width: 768px) {
+  .calendar-section {
+    margin-left: 80px !important;
+    width: calc(100% - 80px) !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+}
+/* =========================
+   CORREÇÃO DEFINITIVA DO ESPAÇO
+   CALENDÁRIO + SIDEBAR
+========================= */
+
+/* quem deve empurrar o conteúdo é o main-container */
+.main-container {
+  min-height: 100vh;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* calendar-section NÃO pode ter margin-left */
+.main-container > .calendar-section {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+/* sidebar aberta */
+body:not(.sidebar-collapsed) .main-container {
+  margin-left: 260px !important;
+  width: calc(100% - 260px) !important;
+}
+
+/* sidebar fechada */
+body.sidebar-collapsed .main-container {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+/* caso a classe esteja na própria sidebar */
+.sidebar.collapsed ~ .main-container {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+.sidebar:not(.collapsed) ~ .main-container {
+  margin-left: 260px !important;
+  width: calc(100% - 260px) !important;
+}
+
+/* garante que nada interno fique centralizado com margem extra */
+.calendar-header,
+.month-navigation,
+.calendar-grid-container {
+  margin-left: 0 !important;
+}
+
+/* calendário ocupa toda a área útil */
+.calendar-grid-container {
+  width: 100% !important;
+}

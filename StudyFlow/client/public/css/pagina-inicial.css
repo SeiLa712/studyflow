@@ -166,7 +166,7 @@ body {
 
   cursor: pointer;
 
-  background: #e5e7eb;
+  background: #ffffff;
 } 
 
 /* ==========================
@@ -520,4 +520,42 @@ body {
 
 .calendar-day:not(.empty) {
   cursor: pointer;
+}
+
+/* =======================
+   BOTÃO CONCLUIR
+======================= */
+
+.task-card {
+  padding-right: 155px;
+}
+
+.btn-complete {
+  position: static;
+
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.btn-complete:hover {
+  background: #16a34a;
+  color: white;
+}
+
+.task-card.completed {
+  opacity: 0.5;
+  transform: scale(0.98);
 }

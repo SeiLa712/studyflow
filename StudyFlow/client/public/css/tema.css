@@ -1,0 +1,2333 @@
+/* =========================
+   BOTÃO DE TEMA
+========================= */
+
+.theme-toggle {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+  color: #6b7280;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.theme-toggle i {
+  width: 22px;
+  min-width: 22px;
+  text-align: center;
+}
+
+.theme-toggle:hover {
+  background: #eef2ff;
+  color: #6366f1;
+}
+
+/* Quando a sidebar estiver fechada */
+.sidebar.collapsed .theme-toggle span {
+  display: none;
+}
+
+.sidebar.collapsed .theme-toggle {
+  justify-content: center;
+  padding: 14px 0;
+}
+
+.sidebar.collapsed .theme-toggle i {
+  width: auto;
+  min-width: auto;
+  font-size: 20px;
+}
+
+/* =========================
+   MODO ESCURO GLOBAL
+========================= */
+
+body.dark-mode {
+  background: #0f172a !important;
+  color: #e5e7eb !important;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+body.dark-mode .sidebar {
+  background: #111827 !important;
+  border-right-color: #1f2937 !important;
+}
+
+body.dark-mode .logo-area h2 {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .logo-area span {
+  color: #9ca3af !important;
+}
+
+body.dark-mode .menu-item {
+  color: #d1d5db !important;
+}
+
+body.dark-mode .menu-item:hover {
+  background: #1f2937 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .menu-item.active {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .theme-toggle {
+  color: #d1d5db !important;
+}
+
+body.dark-mode .theme-toggle:hover {
+  background: #1f2937 !important;
+  color: #818cf8 !important;
+}
+
+body.dark-mode .logout {
+  color: #d1d5db !important;
+}
+
+body.dark-mode .logout:hover {
+  background: #3f1d1d !important;
+  color: #f87171 !important;
+}
+
+/* =========================
+   FUNDOS PRINCIPAIS DAS PÁGINAS
+========================= */
+
+body.dark-mode .dashboard,
+body.dark-mode .main-content,
+body.dark-mode .main-container,
+body.dark-mode .calendar-section,
+body.dark-mode .pomodoro-content,
+body.dark-mode .grupos-page,
+body.dark-mode .kanban-board-page,
+body.dark-mode .assinatura-page,
+body.dark-mode .relatorios-page,
+body.dark-mode .main-content-page {
+  background: #0f172a !important;
+  color: #e5e7eb !important;
+}
+
+/* =========================
+   TEXTOS
+========================= */
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode strong,
+body.dark-mode label {
+  color: #f9fafb !important;
+}
+
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode small,
+body.dark-mode .subtitle {
+  color: #cbd5e1 !important;
+}
+
+/* =========================
+   CARDS / CAIXAS
+========================= */
+
+body.dark-mode .card,
+body.dark-mode .task-card,
+body.dark-mode .atividade-card,
+body.dark-mode .calendar-day,
+body.dark-mode .pomodoro-card,
+body.dark-mode .grupo-card,
+body.dark-mode .kanban-card,
+body.dark-mode .kanban-column,
+body.dark-mode .premium-card,
+body.dark-mode .report-card,
+body.dark-mode .metric-card,
+body.dark-mode .suggestion-card,
+body.dark-mode .risk-card,
+body.dark-mode .feature-item,
+body.dark-mode .plan-box,
+body.dark-mode .section-card,
+body.dark-mode .content-card {
+  background: #111827 !important;
+  color: #e5e7eb !important;
+  border-color: #1f2937 !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* =========================
+   CALENDÁRIO
+========================= */
+
+body.dark-mode .calendar-grid-container {
+  background: #0f172a !important;
+}
+
+body.dark-mode .weekday-header {
+  background: #1f2937 !important;
+  color: #e5e7eb !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .calendar-day {
+  background: #111827 !important;
+  border-color: #1f2937 !important;
+}
+
+body.dark-mode .calendar-day:hover {
+  background: #1e293b !important;
+}
+
+body.dark-mode .calendar-day.empty {
+  background: #0f172a !important;
+}
+
+body.dark-mode .day-number {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .month-navigation {
+  background: #0f172a !important;
+}
+
+body.dark-mode .arrow-btn {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .arrow-btn:hover {
+  background: #1f2937 !important;
+  color: #818cf8 !important;
+}
+
+body.dark-mode .current-month-label {
+  background: #312e81 !important;
+  color: #c7d2fe !important;
+}
+
+/* =========================
+   MODAIS
+========================= */
+
+body.dark-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.65) !important;
+}
+
+body.dark-mode .modal {
+  background: #111827 !important;
+  color: #e5e7eb !important;
+  border: 1px solid #1f2937 !important;
+}
+
+body.dark-mode .modal-header {
+  border-color: #1f2937 !important;
+}
+
+body.dark-mode .modal-header button {
+  color: #f9fafb !important;
+}
+
+/* =========================
+   FORMULÁRIOS
+========================= */
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background: #020617 !important;
+  color: #f9fafb !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #64748b !important;
+}
+
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+}
+
+/* =========================
+   BOTÕES
+========================= */
+
+body.dark-mode button,
+body.dark-mode .btn,
+body.dark-mode .btn-primary,
+body.dark-mode .save-btn,
+body.dark-mode .btn-nova-atividade {
+  border-color: transparent;
+}
+
+body.dark-mode .cancel-btn,
+body.dark-mode .btn-secondary {
+  background: #1f2937 !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .cancel-btn:hover,
+body.dark-mode .btn-secondary:hover {
+  background: #334155 !important;
+}
+
+/* =========================
+   KANBAN
+========================= */
+
+body.dark-mode .kanban-column-header,
+body.dark-mode .column-header {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .kanban-card {
+  background: #020617 !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .kanban-card:hover {
+  background: #111827 !important;
+}
+
+/* =========================
+   POMODORO
+========================= */
+
+body.dark-mode .timer-circle,
+body.dark-mode .timer-display {
+  background: #020617 !important;
+  color: #f9fafb !important;
+  border-color: #334155 !important;
+}
+
+/* =========================
+   RELATÓRIOS
+========================= */
+
+body.dark-mode .progress-bar,
+body.dark-mode .bar-bg {
+  background: #1f2937 !important;
+}
+
+body.dark-mode .table,
+body.dark-mode table {
+  background: #111827 !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode th {
+  background: #1f2937 !important;
+  color: #f9fafb !important;
+}
+
+body.dark-mode td {
+  border-color: #334155 !important;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+body.dark-mode ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 999px;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+/* =====================================================
+   CORREÇÃO GERAL DO MODO ESCURO - STUDYFLOW
+   cole no final do tema.css
+===================================================== */
+
+/* Fundo das páginas que não estavam pegando */
+body.dark-mode .dashboard,
+body.dark-mode .main-content,
+body.dark-mode .grupos-container,
+body.dark-mode .pomodoro-content,
+body.dark-mode .relatorios-page,
+body.dark-mode .main-container {
+  background: #0f172a !important;
+  color: #e5e7eb !important;
+}
+
+/* Corrige textos muito apagados */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode label,
+body.dark-mode strong {
+  color: #f9fafb !important;
+}
+
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode small {
+  color: #cbd5e1 !important;
+}
+
+/* Não deixa textos de botões ficarem apagados */
+body.dark-mode button span,
+body.dark-mode .btn-add,
+body.dark-mode .btn-add span,
+body.dark-mode .btn-pdf,
+body.dark-mode .btn-pdf span,
+body.dark-mode .save-btn,
+body.dark-mode .save-btn span,
+body.dark-mode .novaSessao,
+body.dark-mode .novaSessao span,
+body.dark-mode .btn-nova-atividade,
+body.dark-mode .btn-nova-atividade span {
+  color: #ffffff !important;
+}
+
+/* =====================================================
+   PÁGINA INICIAL - CALENDÁRIO SEMANAL
+===================================================== */
+
+body.dark-mode .weekly-calendar {
+  background: #111827 !important;
+  border-color: #263244 !important;
+}
+
+body.dark-mode .weekly-calendar .calendar-header {
+  background: #111827 !important;
+  border-bottom-color: #263244 !important;
+}
+
+body.dark-mode .weekly-calendar .calendar-header h2 {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .weekly-calendar .calendar-header span {
+  color: #94a3b8 !important;
+}
+
+body.dark-mode .calendar-grid {
+  background: #111827 !important;
+}
+
+body.dark-mode .day-column {
+  background: #111827 !important;
+  border-right-color: #263244 !important;
+}
+
+body.dark-mode .day-header {
+  background: #111827 !important;
+  border-bottom-color: #263244 !important;
+}
+
+body.dark-mode .day-header span {
+  color: #94a3b8 !important;
+}
+
+body.dark-mode .day-header strong {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .active-day {
+  background: #1e293b !important;
+}
+
+body.dark-mode .active-day strong {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+/* Eventos do calendário semanal */
+body.dark-mode .event.urgent,
+body.dark-mode .prova {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #fca5a5 !important;
+}
+
+body.dark-mode .event.medium,
+body.dark-mode .trabalho {
+  background: rgba(245, 158, 11, 0.18) !important;
+  color: #fcd34d !important;
+}
+
+body.dark-mode .event.low,
+body.dark-mode .estudo {
+  background: rgba(34, 197, 94, 0.18) !important;
+  color: #86efac !important;
+}
+
+/* =====================================================
+   PÁGINA INICIAL - CARDS
+===================================================== */
+
+body.dark-mode .task-card,
+body.dark-mode .pomodoro-card {
+  background: #111827 !important;
+  border-color: #263244 !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .task-card p {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .timer-circle {
+  background: #020617 !important;
+  color: #f9fafb !important;
+}
+
+/* =====================================================
+   POMODORO
+===================================================== */
+
+body.dark-mode .timer-card,
+body.dark-mode .sessions-card {
+  background: #111827 !important;
+  border-color: #263244 !important;
+  color: #e5e7eb !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35) !important;
+}
+
+body.dark-mode .timer-card .timer-circle {
+  background: #111827 !important;
+}
+
+body.dark-mode .timer-circle h1 {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .ring-bg {
+  stroke: #334155 !important;
+}
+
+body.dark-mode .ring-fill {
+  stroke: #818cf8 !important;
+}
+
+body.dark-mode .timer-text {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .tab {
+  background: #1f2937 !important;
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .tab:hover {
+  background: #334155 !important;
+}
+
+body.dark-mode .tab.active {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode #btnReset {
+  background: #1f2937 !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode #btnReset:hover {
+  background: #334155 !important;
+}
+
+body.dark-mode .sessao-card {
+  background: #0f172a !important;
+  border-color: #263244 !important;
+}
+
+body.dark-mode .sessao-topo h3 {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .sessao-info,
+body.dark-mode .sessao-info span {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .formulario {
+  background: #0f172a !important;
+  border-color: #263244 !important;
+}
+
+/* =====================================================
+   GRUPOS
+===================================================== */
+
+body.dark-mode .grupos-section,
+body.dark-mode .section-title {
+  background: transparent !important;
+}
+
+body.dark-mode .section-title h2,
+body.dark-mode .grupos-container .header h1 {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .section-title p,
+body.dark-mode .grupos-container .header p {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .grupo-card,
+body.dark-mode .empty-state {
+  background: #111827 !important;
+  border-color: #263244 !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .empty-state {
+  border-style: dashed !important;
+}
+
+body.dark-mode .empty-state i {
+  color: #64748b !important;
+}
+
+body.dark-mode .empty-state p {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .grupo-header h3 {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .disciplina,
+body.dark-mode .membros,
+body.dark-mode .proxima-sessao,
+body.dark-mode .membros-list,
+body.dark-mode .sem-sessao {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .proxima-sessao span {
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .btn-add-membro {
+  background: #1f2937 !important;
+  color: #e5e7eb !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .btn-add-membro:hover:not(:disabled) {
+  background: #334155 !important;
+}
+
+body.dark-mode .arquivo-item,
+body.dark-mode .empty-arquivos {
+  background: #0f172a !important;
+  border-color: #263244 !important;
+}
+
+body.dark-mode .arquivo-info strong {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .arquivo-info span,
+body.dark-mode .empty-arquivos p {
+  color: #cbd5e1 !important;
+}
+
+/* =====================================================
+   RELATÓRIOS
+===================================================== */
+
+body.dark-mode .score-card,
+body.dark-mode .metric-card,
+body.dark-mode .panel {
+  background: #111827 !important;
+  border-color: #263244 !important;
+  color: #e5e7eb !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35) !important;
+}
+
+body.dark-mode .score-card h2,
+body.dark-mode .panel-header h2,
+body.dark-mode .metric-card strong {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .score-card p,
+body.dark-mode .metric-card span {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .score-card strong,
+body.dark-mode .score-circle span {
+  color: #818cf8 !important;
+}
+
+body.dark-mode .score-circle {
+  border-color: #818cf8 !important;
+}
+
+body.dark-mode .periodo-badge {
+  background: #312e81 !important;
+  color: #c7d2fe !important;
+}
+
+body.dark-mode .highlight-box,
+body.dark-mode .suggestion-item,
+body.dark-mode .kanban-summary span {
+  background: #0f172a !important;
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .highlight-box strong {
+  color: #818cf8 !important;
+}
+
+body.dark-mode .highlight-box p,
+body.dark-mode .suggestion-item p,
+body.dark-mode .kanban-summary p,
+body.dark-mode .kanban-summary span {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .bar-item span {
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .bar-bg {
+  background: #1f2937 !important;
+}
+
+/* Riscos */
+body.dark-mode .risk-item {
+  background: #111827 !important;
+  border-color: #22c55e !important;
+}
+
+body.dark-mode .risk-item.alto {
+  background: rgba(239, 68, 68, 0.14) !important;
+  border-left-color: #ef4444 !important;
+}
+
+body.dark-mode .risk-item.medio {
+  background: rgba(245, 158, 11, 0.14) !important;
+  border-left-color: #f59e0b !important;
+}
+
+body.dark-mode .risk-item.baixo {
+  background: rgba(34, 197, 94, 0.14) !important;
+  border-left-color: #22c55e !important;
+}
+
+body.dark-mode .risk-item strong {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .risk-item p,
+body.dark-mode .risk-meta span {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .risk-meta b {
+  color: #f9fafb !important;
+}
+
+/* =====================================================
+   MODAIS / INPUTS
+===================================================== */
+
+body.dark-mode .modal {
+  background: #111827 !important;
+  border: 1px solid #263244 !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .modal-header h2 {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .modal-header button {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background: #020617 !important;
+  color: #f9fafb !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #64748b !important;
+}
+
+body.dark-mode .cancel-btn {
+  background: #1f2937 !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .cancel-btn:hover {
+  background: #334155 !important;
+}
+
+/* =====================================================
+   EVITA QUE ÍCONES E BADGES SUMAM
+===================================================== */
+
+body.dark-mode .metric-card i,
+body.dark-mode .arquivo-info i {
+  background: #312e81 !important;
+  color: #c7d2fe !important;
+}
+
+body.dark-mode .metric-card.danger i {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #fca5a5 !important;
+}
+
+body.dark-mode .badge-participando {
+  background: #312e81 !important;
+  color: #c7d2fe !important;
+}
+/* =====================================================
+   AJUSTE DE LEGIBILIDADE NO MODO ESCURO
+   cole no final do tema.css
+===================================================== */
+
+/* =========================
+   BOTÕES SECUNDÁRIOS
+   Ex: Reiniciar, Cancelar, Adicionar card
+========================= */
+
+body.dark-mode .reset-btn,
+body.dark-mode #btnReset,
+body.dark-mode .cancel-btn,
+body.dark-mode .btn-add-card,
+body.dark-mode .btn-secondary,
+body.dark-mode .btn-add-membro {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+
+  border: 1px solid #334155 !important;
+
+  font-weight: 800 !important;
+}
+
+body.dark-mode .reset-btn:hover,
+body.dark-mode #btnReset:hover,
+body.dark-mode .cancel-btn:hover,
+body.dark-mode .btn-add-card:hover,
+body.dark-mode .btn-secondary:hover,
+body.dark-mode .btn-add-membro:hover {
+  background: #334155 !important;
+  color: #ffffff !important;
+}
+
+/* Garante que o texto dentro dos botões também fique visível */
+body.dark-mode .reset-btn *,
+body.dark-mode #btnReset *,
+body.dark-mode .cancel-btn *,
+body.dark-mode .btn-add-card *,
+body.dark-mode .btn-secondary *,
+body.dark-mode .btn-add-membro * {
+  color: #f8fafc !important;
+}
+
+/* =========================
+   BOTÕES PRINCIPAIS
+========================= */
+
+body.dark-mode .play-btn,
+body.dark-mode #btnToggle,
+body.dark-mode .btn-primary,
+body.dark-mode .btn-add-column,
+body.dark-mode .btn-add,
+body.dark-mode .save-btn,
+body.dark-mode .novaSessao,
+body.dark-mode .btn-nova-atividade,
+body.dark-mode .btn-pdf {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+
+  font-weight: 800 !important;
+}
+
+body.dark-mode .play-btn:hover,
+body.dark-mode #btnToggle:hover,
+body.dark-mode .btn-primary:hover,
+body.dark-mode .btn-add-column:hover,
+body.dark-mode .btn-add:hover,
+body.dark-mode .save-btn:hover,
+body.dark-mode .novaSessao:hover,
+body.dark-mode .btn-nova-atividade:hover,
+body.dark-mode .btn-pdf:hover {
+  background: #818cf8 !important;
+  color: #ffffff !important;
+}
+
+/* =========================
+   KANBAN - TEXTOS MAIS VISÍVEIS
+========================= */
+
+body.dark-mode .kanban-board-page {
+  background: #0f172a !important;
+  color: #e5e7eb !important;
+}
+
+body.dark-mode .kanban-header h1 {
+  color: #f8fafc !important;
+}
+
+body.dark-mode .kanban-header p {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .kanban-column {
+  background: #111827 !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .column-header h2 {
+  color: #f8fafc !important;
+}
+
+body.dark-mode .column-count {
+  background: #e2e8f0 !important;
+  color: #1e293b !important;
+
+  font-weight: 900 !important;
+}
+
+body.dark-mode .kanban-card {
+  background: #020617 !important;
+  border-color: #475569 !important;
+  border-left-color: #818cf8 !important;
+
+  color: #f8fafc !important;
+}
+
+body.dark-mode .kanban-card:hover {
+  background: #0f172a !important;
+  border-color: #64748b !important;
+}
+
+body.dark-mode .card-header h3 {
+  color: #ffffff !important;
+}
+
+body.dark-mode .kanban-card p {
+  color: #dbeafe !important;
+}
+
+body.dark-mode .empty-column {
+  color: #cbd5e1 !important;
+  border-color: #94a3b8 !important;
+  background: rgba(15, 23, 42, 0.35) !important;
+}
+
+/* =========================
+   POMODORO DA TELA INICIAL
+========================= */
+
+body.dark-mode .pomodoro-card {
+  background: #111827 !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .pomodoro-card h2 {
+  color: #f8fafc !important;
+}
+
+body.dark-mode .pomodoro-card .timer-circle {
+  background: #020617 !important;
+  color: #ffffff !important;
+  border-color: #818cf8 !important;
+}
+
+body.dark-mode .play-btn {
+  box-shadow: 0 8px 22px rgba(99, 102, 241, 0.35) !important;
+}
+
+/* botão reiniciar da tela inicial */
+body.dark-mode .reset-btn {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+body.dark-mode .reset-btn:hover {
+  background: #334155 !important;
+  color: #ffffff !important;
+}
+
+/* =========================
+   TEXTO DE CARDS EM GERAL
+========================= */
+
+body.dark-mode .task-card h3,
+body.dark-mode .task-card h4,
+body.dark-mode .grupo-card h3,
+body.dark-mode .sessao-card h3,
+body.dark-mode .metric-card strong,
+body.dark-mode .panel strong {
+  color: #ffffff !important;
+}
+
+body.dark-mode .task-card p,
+body.dark-mode .grupo-card p,
+body.dark-mode .sessao-card p,
+body.dark-mode .metric-card span,
+body.dark-mode .panel p {
+  color: #cbd5e1 !important;
+}
+
+/* =========================
+   EVENTOS / TAGS
+========================= */
+
+body.dark-mode .event.urgent,
+body.dark-mode .tag-prova,
+body.dark-mode .risk-item.alto {
+  background: rgba(239, 68, 68, 0.22) !important;
+  color: #fecaca !important;
+}
+
+body.dark-mode .event.medium,
+body.dark-mode .tag-trabalho,
+body.dark-mode .risk-item.medio {
+  background: rgba(245, 158, 11, 0.22) !important;
+  color: #fde68a !important;
+}
+
+body.dark-mode .event.low,
+body.dark-mode .tag-estudo,
+body.dark-mode .risk-item.baixo {
+  background: rgba(34, 197, 94, 0.22) !important;
+  color: #bbf7d0 !important;
+}
+
+/* Garante que o texto dentro das tags apareça */
+body.dark-mode .event *,
+body.dark-mode .activity-tag *,
+body.dark-mode .risk-item * {
+  color: inherit !important;
+}
+
+/* =========================
+   INPUTS E PLACEHOLDERS
+========================= */
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background: #020617 !important;
+  color: #f8fafc !important;
+  border-color: #475569 !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* =========================
+   ÍCONES DE AÇÃO
+========================= */
+
+body.dark-mode .btn-delete-card,
+body.dark-mode .btn-delete-column,
+body.dark-mode .btn-delete,
+body.dark-mode .btn-excluir {
+  color: #f87171 !important;
+}
+
+body.dark-mode .btn-edit,
+body.dark-mode .btn-iniciar {
+  color: #a5b4fc !important;
+}
+/* =====================================================
+   AJUSTE DE LEGIBILIDADE NO MODO CLARO - STUDYFLOW
+   cole no final do tema.css
+===================================================== */
+
+/* =========================
+   TEXTOS GERAIS
+========================= */
+
+body:not(.dark-mode) {
+  background: #f3f4f8 !important;
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) h1,
+body:not(.dark-mode) h2,
+body:not(.dark-mode) h3,
+body:not(.dark-mode) h4,
+body:not(.dark-mode) label,
+body:not(.dark-mode) strong {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) p,
+body:not(.dark-mode) span,
+body:not(.dark-mode) small {
+  color: #4b5563 !important;
+}
+
+/* Evita que textos de botões principais fiquem escuros */
+body:not(.dark-mode) .btn-primary,
+body:not(.dark-mode) .btn-primary span,
+body:not(.dark-mode) .btn-add,
+body:not(.dark-mode) .btn-add span,
+body:not(.dark-mode) .btn-add-column,
+body:not(.dark-mode) .btn-add-column span,
+body:not(.dark-mode) .save-btn,
+body:not(.dark-mode) .save-btn span,
+body:not(.dark-mode) .play-btn,
+body:not(.dark-mode) .play-btn span,
+body:not(.dark-mode) .novaSessao,
+body:not(.dark-mode) .novaSessao span,
+body:not(.dark-mode) .btn-nova-atividade,
+body:not(.dark-mode) .btn-nova-atividade span,
+body:not(.dark-mode) .btn-pdf,
+body:not(.dark-mode) .btn-pdf span {
+  color: #ffffff !important;
+}
+
+/* =========================
+   BOTÕES PRINCIPAIS
+========================= */
+
+body:not(.dark-mode) .btn-primary,
+body:not(.dark-mode) .btn-add,
+body:not(.dark-mode) .btn-add-column,
+body:not(.dark-mode) .save-btn,
+body:not(.dark-mode) .play-btn,
+body:not(.dark-mode) #btnToggle,
+body:not(.dark-mode) .novaSessao,
+body:not(.dark-mode) .btn-nova-atividade,
+body:not(.dark-mode) .btn-pdf {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+
+  font-weight: 800 !important;
+
+  border: none !important;
+  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.22) !important;
+}
+
+body:not(.dark-mode) .btn-primary:hover,
+body:not(.dark-mode) .btn-add:hover,
+body:not(.dark-mode) .btn-add-column:hover,
+body:not(.dark-mode) .save-btn:hover,
+body:not(.dark-mode) .play-btn:hover,
+body:not(.dark-mode) #btnToggle:hover,
+body:not(.dark-mode) .novaSessao:hover,
+body:not(.dark-mode) .btn-nova-atividade:hover,
+body:not(.dark-mode) .btn-pdf:hover {
+  background: #4338ca !important;
+  color: #ffffff !important;
+}
+
+/* =========================
+   BOTÕES SECUNDÁRIOS
+   Ex: Reiniciar, Cancelar, Adicionar card
+========================= */
+
+body:not(.dark-mode) .reset-btn,
+body:not(.dark-mode) #btnReset,
+body:not(.dark-mode) .cancel-btn,
+body:not(.dark-mode) .btn-add-card,
+body:not(.dark-mode) .btn-secondary,
+body:not(.dark-mode) .btn-add-membro {
+  background: #e0e7ff !important;
+  color: #3730a3 !important;
+
+  border: 1px solid #c7d2fe !important;
+
+  font-weight: 800 !important;
+}
+
+body:not(.dark-mode) .reset-btn:hover,
+body:not(.dark-mode) #btnReset:hover,
+body:not(.dark-mode) .cancel-btn:hover,
+body:not(.dark-mode) .btn-add-card:hover,
+body:not(.dark-mode) .btn-secondary:hover,
+body:not(.dark-mode) .btn-add-membro:hover {
+  background: #c7d2fe !important;
+  color: #312e81 !important;
+}
+
+/* Garante texto visível dentro dos botões secundários */
+body:not(.dark-mode) .reset-btn *,
+body:not(.dark-mode) #btnReset *,
+body:not(.dark-mode) .cancel-btn *,
+body:not(.dark-mode) .btn-add-card *,
+body:not(.dark-mode) .btn-secondary *,
+body:not(.dark-mode) .btn-add-membro * {
+  color: #3730a3 !important;
+}
+
+/* =========================
+   CARDS GERAIS
+========================= */
+
+body:not(.dark-mode) .task-card,
+body:not(.dark-mode) .pomodoro-card,
+body:not(.dark-mode) .timer-card,
+body:not(.dark-mode) .sessions-card,
+body:not(.dark-mode) .grupo-card,
+body:not(.dark-mode) .kanban-column,
+body:not(.dark-mode) .kanban-card,
+body:not(.dark-mode) .score-card,
+body:not(.dark-mode) .metric-card,
+body:not(.dark-mode) .panel,
+body:not(.dark-mode) .weekly-calendar,
+body:not(.dark-mode) .empty-state {
+  background: #ffffff !important;
+
+  border-color: #d1d5db !important;
+
+  color: #111827 !important;
+
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07) !important;
+}
+
+body:not(.dark-mode) .task-card:hover,
+body:not(.dark-mode) .grupo-card:hover,
+body:not(.dark-mode) .kanban-card:hover,
+body:not(.dark-mode) .sessao-card:hover {
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.11) !important;
+}
+
+/* =========================
+   KANBAN CLARO MAIS LEGÍVEL
+========================= */
+
+body:not(.dark-mode) .kanban-board-page {
+  background: #f3f4f8 !important;
+}
+
+body:not(.dark-mode) .kanban-header h1 {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .kanban-header p {
+  color: #374151 !important;
+}
+
+body:not(.dark-mode) .kanban-column {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+}
+
+body:not(.dark-mode) .column-header h2 {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .column-count {
+  background: #eef2ff !important;
+  color: #3730a3 !important;
+
+  font-weight: 900 !important;
+}
+
+body:not(.dark-mode) .kanban-card {
+  background: #f8fafc !important;
+
+  border: 1px solid #cbd5e1 !important;
+  border-left: 5px solid #4f46e5 !important;
+
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .card-header h3 {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .kanban-card p {
+  color: #374151 !important;
+}
+
+body:not(.dark-mode) .empty-column {
+  background: #f8fafc !important;
+
+  color: #475569 !important;
+  border-color: #94a3b8 !important;
+
+  font-weight: 600 !important;
+}
+
+/* =========================
+   POMODORO CLARO
+========================= */
+
+body:not(.dark-mode) .pomodoro-card,
+body:not(.dark-mode) .timer-card,
+body:not(.dark-mode) .sessions-card {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+}
+
+body:not(.dark-mode) .pomodoro-card h2,
+body:not(.dark-mode) .timer-card h2,
+body:not(.dark-mode) .sessions-card h2 {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .timer-circle {
+  background: #f8fafc !important;
+
+  color: #111827 !important;
+  border-color: #4f46e5 !important;
+}
+
+body:not(.dark-mode) .timer-circle h1 {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .ring-bg {
+  stroke: #cbd5e1 !important;
+}
+
+body:not(.dark-mode) .ring-fill {
+  stroke: #4f46e5 !important;
+}
+
+body:not(.dark-mode) .timer-text {
+  color: #374151 !important;
+  font-weight: 600 !important;
+}
+
+body:not(.dark-mode) .tab {
+  background: #e5e7eb !important;
+  color: #374151 !important;
+
+  font-weight: 700 !important;
+}
+
+body:not(.dark-mode) .tab.active {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+/* =========================
+   TELA INICIAL - CALENDÁRIO SEMANAL
+========================= */
+
+body:not(.dark-mode) .weekly-calendar {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+}
+
+body:not(.dark-mode) .weekly-calendar .calendar-header {
+  background: #ffffff !important;
+  border-bottom-color: #d1d5db !important;
+}
+
+body:not(.dark-mode) .weekly-calendar .calendar-header h2 {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .weekly-calendar .calendar-header span {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+body:not(.dark-mode) .day-column {
+  background: #ffffff !important;
+  border-right-color: #d1d5db !important;
+}
+
+body:not(.dark-mode) .day-header {
+  border-bottom-color: #d1d5db !important;
+}
+
+body:not(.dark-mode) .day-header span {
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+body:not(.dark-mode) .day-header strong {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .active-day {
+  background: #eef2ff !important;
+}
+
+body:not(.dark-mode) .active-day strong {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+/* =========================
+   EVENTOS E TAGS
+========================= */
+
+body:not(.dark-mode) .event.urgent,
+body:not(.dark-mode) .tag-prova,
+body:not(.dark-mode) .risk-item.alto {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+
+  font-weight: 700 !important;
+}
+
+body:not(.dark-mode) .event.medium,
+body:not(.dark-mode) .tag-trabalho,
+body:not(.dark-mode) .risk-item.medio {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+
+  font-weight: 700 !important;
+}
+
+body:not(.dark-mode) .event.low,
+body:not(.dark-mode) .tag-estudo,
+body:not(.dark-mode) .risk-item.baixo {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+
+  font-weight: 700 !important;
+}
+
+body:not(.dark-mode) .event *,
+body:not(.dark-mode) .activity-tag *,
+body:not(.dark-mode) .risk-item * {
+  color: inherit !important;
+}
+
+/* =========================
+   RELATÓRIOS
+========================= */
+
+body:not(.dark-mode) .relatorios-page {
+  background: #f3f4f8 !important;
+}
+
+body:not(.dark-mode) .score-card,
+body:not(.dark-mode) .metric-card,
+body:not(.dark-mode) .panel {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+}
+
+body:not(.dark-mode) .score-card h2,
+body:not(.dark-mode) .panel-header h2,
+body:not(.dark-mode) .metric-card strong {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .score-card p,
+body:not(.dark-mode) .metric-card span,
+body:not(.dark-mode) .panel p {
+  color: #374151 !important;
+}
+
+body:not(.dark-mode) .score-card strong,
+body:not(.dark-mode) .score-circle span {
+  color: #4f46e5 !important;
+}
+
+body:not(.dark-mode) .score-circle {
+  border-color: #4f46e5 !important;
+}
+
+body:not(.dark-mode) .periodo-badge {
+  background: #eef2ff !important;
+  color: #3730a3 !important;
+
+  font-weight: 800 !important;
+}
+
+body:not(.dark-mode) .highlight-box,
+body:not(.dark-mode) .suggestion-item,
+body:not(.dark-mode) .kanban-summary span {
+  background: #f8fafc !important;
+  color: #374151 !important;
+
+  border: 1px solid #e5e7eb !important;
+}
+
+body:not(.dark-mode) .highlight-box strong {
+  color: #4f46e5 !important;
+}
+
+body:not(.dark-mode) .bar-bg {
+  background: #e5e7eb !important;
+}
+
+body:not(.dark-mode) .bar-item span {
+  color: #374151 !important;
+  font-weight: 700 !important;
+}
+
+/* =========================
+   GRUPOS
+========================= */
+
+body:not(.dark-mode) .grupos-container {
+  background: #f3f4f8 !important;
+}
+
+body:not(.dark-mode) .grupo-header h3,
+body:not(.dark-mode) .section-title h2 {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .disciplina,
+body:not(.dark-mode) .membros,
+body:not(.dark-mode) .proxima-sessao,
+body:not(.dark-mode) .membros-list,
+body:not(.dark-mode) .sem-sessao,
+body:not(.dark-mode) .section-title p {
+  color: #374151 !important;
+}
+
+body:not(.dark-mode) .empty-state {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+body:not(.dark-mode) .empty-state i {
+  color: #94a3b8 !important;
+}
+
+body:not(.dark-mode) .empty-state p {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+/* =========================
+   MODAIS E FORMULÁRIOS
+========================= */
+
+body:not(.dark-mode) .modal {
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+}
+
+body:not(.dark-mode) .modal-header h2 {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .modal-header button {
+  color: #374151 !important;
+}
+
+body:not(.dark-mode) input,
+body:not(.dark-mode) textarea,
+body:not(.dark-mode) select {
+  background: #ffffff !important;
+
+  color: #111827 !important;
+  border-color: #cbd5e1 !important;
+
+  font-weight: 600 !important;
+}
+
+body:not(.dark-mode) input::placeholder,
+body:not(.dark-mode) textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+body:not(.dark-mode) input:focus,
+body:not(.dark-mode) textarea:focus,
+body:not(.dark-mode) select:focus {
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.18) !important;
+}
+
+/* =========================
+   ÍCONES E AÇÕES
+========================= */
+
+body:not(.dark-mode) .metric-card i,
+body:not(.dark-mode) .arquivo-info i {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+}
+
+body:not(.dark-mode) .metric-card.danger i {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+}
+
+body:not(.dark-mode) .btn-delete-card,
+body:not(.dark-mode) .btn-delete-column,
+body:not(.dark-mode) .btn-delete,
+body:not(.dark-mode) .btn-excluir {
+  color: #dc2626 !important;
+}
+
+body:not(.dark-mode) .btn-edit,
+body:not(.dark-mode) .btn-iniciar {
+  color: #4f46e5 !important;
+}
+
+/* =========================
+   SIDEBAR CLARA
+========================= */
+
+body:not(.dark-mode) .sidebar {
+  background: #ffffff !important;
+  border-right-color: #d1d5db !important;
+}
+
+body:not(.dark-mode) .logo-area h2 {
+  color: #111827 !important;
+}
+
+body:not(.dark-mode) .logo-area span {
+  color: #64748b !important;
+}
+
+body:not(.dark-mode) .menu-item {
+  color: #374151 !important;
+  font-weight: 700 !important;
+}
+
+body:not(.dark-mode) .menu-item:hover {
+  background: #eef2ff !important;
+  color: #3730a3 !important;
+}
+
+body:not(.dark-mode) .menu-item.active {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+body:not(.dark-mode) .menu-item.active span,
+body:not(.dark-mode) .menu-item.active i {
+  color: #ffffff !important;
+}
+
+body:not(.dark-mode) .theme-toggle {
+  color: #374151 !important;
+  font-weight: 700 !important;
+}
+
+body:not(.dark-mode) .theme-toggle:hover {
+  background: #eef2ff !important;
+  color: #3730a3 !important;
+}
+
+body:not(.dark-mode) .logout {
+  color: #374151 !important;
+  font-weight: 700 !important;
+}
+
+body:not(.dark-mode) .logout:hover {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+}
+/* =====================================================
+   CORREÇÃO DO TIMER E PRIORIDADES - MODO CLARO
+   cole no final do tema.css
+===================================================== */
+
+/* =========================
+   TIMER DA TELA INICIAL
+   remove o quadrado estranho atrás
+========================= */
+
+body:not(.dark-mode) .pomodoro-card .timer-circle {
+  background: transparent !important;
+
+  width: 200px !important;
+  height: 200px !important;
+
+  border: 6px solid #4f46e5 !important;
+  border-radius: 50% !important;
+
+  color: #111827 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin: 20px auto !important;
+
+  font-size: 36px !important;
+  font-weight: 800 !important;
+
+  box-shadow: none !important;
+}
+
+/* deixa o card do pomodoro limpo */
+body:not(.dark-mode) .pomodoro-card {
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+}
+
+/* =========================
+   PRÓXIMAS ATIVIDADES
+   volta as cores por prioridade
+========================= */
+
+body:not(.dark-mode) .task-card.urgent {
+  background: #fff5f5 !important;
+  border: 1px solid #fecaca !important;
+  border-left: 5px solid #ef4444 !important;
+}
+
+body:not(.dark-mode) .task-card.urgent h3,
+body:not(.dark-mode) .task-card.urgent strong {
+  color: #991b1b !important;
+}
+
+body:not(.dark-mode) .task-card.urgent p,
+body:not(.dark-mode) .task-card.urgent span {
+  color: #7f1d1d !important;
+}
+
+body:not(.dark-mode) .task-card.medium {
+  background: #fffbeb !important;
+  border: 1px solid #fde68a !important;
+  border-left: 5px solid #f59e0b !important;
+}
+
+body:not(.dark-mode) .task-card.medium h3,
+body:not(.dark-mode) .task-card.medium strong {
+  color: #92400e !important;
+}
+
+body:not(.dark-mode) .task-card.medium p,
+body:not(.dark-mode) .task-card.medium span {
+  color: #78350f !important;
+}
+
+body:not(.dark-mode) .task-card.low {
+  background: #f0fdf4 !important;
+  border: 1px solid #bbf7d0 !important;
+  border-left: 5px solid #22c55e !important;
+}
+
+body:not(.dark-mode) .task-card.low h3,
+body:not(.dark-mode) .task-card.low strong {
+  color: #166534 !important;
+}
+
+body:not(.dark-mode) .task-card.low p,
+body:not(.dark-mode) .task-card.low span {
+  color: #14532d !important;
+}
+
+/* =========================
+   TEXTO DAS ATIVIDADES
+========================= */
+
+body:not(.dark-mode) .task-card h3 {
+  font-weight: 800 !important;
+}
+
+body:not(.dark-mode) .task-card p {
+  font-weight: 600 !important;
+}
+/* =====================================================
+   CORREÇÃO FINAL - TIMER POMODORO E PRIORIDADES
+   cole no final do tema.css
+===================================================== */
+
+/* =========================
+   TIMER GRANDE DA PÁGINA POMODORO
+   remove o quadrado cinza
+========================= */
+
+body:not(.dark-mode) .timer-card .timer-circle,
+body.dark-mode .timer-card .timer-circle {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+body:not(.dark-mode) .timer-card .timer-circle h1 {
+  color: #111827 !important;
+}
+
+body.dark-mode .timer-card .timer-circle h1 {
+  color: #f8fafc !important;
+}
+
+body:not(.dark-mode) .timer-card .ring-bg {
+  stroke: #cbd5e1 !important;
+}
+
+body.dark-mode .timer-card .ring-bg {
+  stroke: #334155 !important;
+}
+
+body:not(.dark-mode) .timer-card .ring-fill {
+  stroke: #4f46e5 !important;
+}
+
+body.dark-mode .timer-card .ring-fill {
+  stroke: #818cf8 !important;
+}
+
+/* =========================
+   TIMER PEQUENO DA TELA INICIAL
+   mantém o círculo visual correto
+========================= */
+
+body:not(.dark-mode) .pomodoro-card .timer-circle {
+  background: transparent !important;
+
+  border: 6px solid #4f46e5 !important;
+  border-radius: 50% !important;
+
+  color: #111827 !important;
+
+  box-shadow: none !important;
+}
+
+body.dark-mode .pomodoro-card .timer-circle {
+  background: transparent !important;
+
+  border: 6px solid #818cf8 !important;
+  border-radius: 50% !important;
+
+  color: #f8fafc !important;
+
+  box-shadow: none !important;
+}
+
+/* =========================
+   PRÓXIMAS ATIVIDADES - MODO ESCURO
+   volta as cores por prioridade
+========================= */
+
+/* Alta prioridade */
+body.dark-mode .dashboard .task-card.urgent,
+body.dark-mode .dashboard .task-card.alta,
+body.dark-mode .task-card.urgent,
+body.dark-mode .task-card.alta {
+  background: rgba(239, 68, 68, 0.16) !important;
+
+  border: 1px solid rgba(248, 113, 113, 0.45) !important;
+  border-left: 6px solid #ef4444 !important;
+
+  color: #fecaca !important;
+}
+
+body.dark-mode .dashboard .task-card.urgent h3,
+body.dark-mode .dashboard .task-card.urgent h4,
+body.dark-mode .dashboard .task-card.urgent strong,
+body.dark-mode .dashboard .task-card.alta h3,
+body.dark-mode .dashboard .task-card.alta h4,
+body.dark-mode .dashboard .task-card.alta strong,
+body.dark-mode .task-card.urgent h3,
+body.dark-mode .task-card.urgent h4,
+body.dark-mode .task-card.urgent strong,
+body.dark-mode .task-card.alta h3,
+body.dark-mode .task-card.alta h4,
+body.dark-mode .task-card.alta strong {
+  color: #fee2e2 !important;
+}
+
+body.dark-mode .dashboard .task-card.urgent p,
+body.dark-mode .dashboard .task-card.urgent span,
+body.dark-mode .dashboard .task-card.alta p,
+body.dark-mode .dashboard .task-card.alta span,
+body.dark-mode .task-card.urgent p,
+body.dark-mode .task-card.urgent span,
+body.dark-mode .task-card.alta p,
+body.dark-mode .task-card.alta span {
+  color: #fecaca !important;
+}
+
+/* Média prioridade */
+body.dark-mode .dashboard .task-card.medium,
+body.dark-mode .dashboard .task-card.media,
+body.dark-mode .task-card.medium,
+body.dark-mode .task-card.media {
+  background: rgba(245, 158, 11, 0.16) !important;
+
+  border: 1px solid rgba(251, 191, 36, 0.45) !important;
+  border-left: 6px solid #f59e0b !important;
+
+  color: #fde68a !important;
+}
+
+body.dark-mode .dashboard .task-card.medium h3,
+body.dark-mode .dashboard .task-card.medium h4,
+body.dark-mode .dashboard .task-card.medium strong,
+body.dark-mode .dashboard .task-card.media h3,
+body.dark-mode .dashboard .task-card.media h4,
+body.dark-mode .dashboard .task-card.media strong,
+body.dark-mode .task-card.medium h3,
+body.dark-mode .task-card.medium h4,
+body.dark-mode .task-card.medium strong,
+body.dark-mode .task-card.media h3,
+body.dark-mode .task-card.media h4,
+body.dark-mode .task-card.media strong {
+  color: #fef3c7 !important;
+}
+
+body.dark-mode .dashboard .task-card.medium p,
+body.dark-mode .dashboard .task-card.medium span,
+body.dark-mode .dashboard .task-card.media p,
+body.dark-mode .dashboard .task-card.media span,
+body.dark-mode .task-card.medium p,
+body.dark-mode .task-card.medium span,
+body.dark-mode .task-card.media p,
+body.dark-mode .task-card.media span {
+  color: #fde68a !important;
+}
+
+/* Baixa prioridade */
+body.dark-mode .dashboard .task-card.low,
+body.dark-mode .dashboard .task-card.baixa,
+body.dark-mode .task-card.low,
+body.dark-mode .task-card.baixa {
+  background: rgba(34, 197, 94, 0.16) !important;
+
+  border: 1px solid rgba(74, 222, 128, 0.45) !important;
+  border-left: 6px solid #22c55e !important;
+
+  color: #bbf7d0 !important;
+}
+
+body.dark-mode .dashboard .task-card.low h3,
+body.dark-mode .dashboard .task-card.low h4,
+body.dark-mode .dashboard .task-card.low strong,
+body.dark-mode .dashboard .task-card.baixa h3,
+body.dark-mode .dashboard .task-card.baixa h4,
+body.dark-mode .dashboard .task-card.baixa strong,
+body.dark-mode .task-card.low h3,
+body.dark-mode .task-card.low h4,
+body.dark-mode .task-card.low strong,
+body.dark-mode .task-card.baixa h3,
+body.dark-mode .task-card.baixa h4,
+body.dark-mode .task-card.baixa strong {
+  color: #dcfce7 !important;
+}
+
+body.dark-mode .dashboard .task-card.low p,
+body.dark-mode .dashboard .task-card.low span,
+body.dark-mode .dashboard .task-card.baixa p,
+body.dark-mode .dashboard .task-card.baixa span,
+body.dark-mode .task-card.low p,
+body.dark-mode .task-card.low span,
+body.dark-mode .task-card.baixa p,
+body.dark-mode .task-card.baixa span {
+  color: #bbf7d0 !important;
+}
+
+/* =========================
+   PRÓXIMAS ATIVIDADES - MODO CLARO
+========================= */
+
+body:not(.dark-mode) .dashboard .task-card.urgent,
+body:not(.dark-mode) .dashboard .task-card.alta,
+body:not(.dark-mode) .task-card.urgent,
+body:not(.dark-mode) .task-card.alta {
+  background: #fff5f5 !important;
+
+  border: 1px solid #fecaca !important;
+  border-left: 6px solid #ef4444 !important;
+}
+
+body:not(.dark-mode) .dashboard .task-card.medium,
+body:not(.dark-mode) .dashboard .task-card.media,
+body:not(.dark-mode) .task-card.medium,
+body:not(.dark-mode) .task-card.media {
+  background: #fffbeb !important;
+
+  border: 1px solid #fde68a !important;
+  border-left: 6px solid #f59e0b !important;
+}
+
+body:not(.dark-mode) .dashboard .task-card.low,
+body:not(.dark-mode) .dashboard .task-card.baixa,
+body:not(.dark-mode) .task-card.low,
+body:not(.dark-mode) .task-card.baixa {
+  background: #f0fdf4 !important;
+
+  border: 1px solid #bbf7d0 !important;
+  border-left: 6px solid #22c55e !important;
+}
+/* =========================
+   BOTÃO MINIMIZAR RELATÓRIOS
+========================= */
+
+body.dark-mode .btn-minimize-panel {
+  background: #1e293b !important;
+  color: #c7d2fe !important;
+  border: 1px solid #334155 !important;
+}
+
+body.dark-mode .btn-minimize-panel:hover {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .panel-actions > i {
+  color: #818cf8 !important;
+}
+
+body:not(.dark-mode) .btn-minimize-panel {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+  border: 1px solid #c7d2fe !important;
+}
+
+body:not(.dark-mode) .btn-minimize-panel:hover {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+body:not(.dark-mode) .panel-actions > i {
+  color: #4f46e5 !important;
+}
+/* =========================
+   NAVEGAÇÃO DE SEMANAS - RELATÓRIOS
+========================= */
+
+body.dark-mode .btn-week {
+  background: #1e293b !important;
+  color: #c7d2fe !important;
+
+  border-color: #334155 !important;
+}
+
+body.dark-mode .btn-week:hover {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .btn-week.disabled {
+  background: #111827 !important;
+  color: #94a3b8 !important;
+
+  border-color: #334155 !important;
+}
+
+body:not(.dark-mode) .btn-week {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+
+  border-color: #c7d2fe !important;
+}
+
+body:not(.dark-mode) .btn-week:hover {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+body:not(.dark-mode) .btn-week.disabled {
+  background: #f3f4f6 !important;
+  color: #6b7280 !important;
+
+  border-color: #d1d5db !important;
+}
+/* =====================================================
+   MELHORIA DE LEGIBILIDADE - CONFIGURAÇÕES E METAS
+   cole no final do tema.css
+===================================================== */
+
+/* =========================
+   TEXTOS PRINCIPAIS
+========================= */
+
+body.dark-mode .configuracoes-page h1,
+body.dark-mode .configuracoes-page h2,
+body.dark-mode .configuracoes-page h3,
+body.dark-mode .configuracoes-page strong,
+body.dark-mode .metas-page h1,
+body.dark-mode .metas-page h2,
+body.dark-mode .metas-page h3,
+body.dark-mode .metas-page strong {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  text-shadow: none !important;
+}
+
+body.dark-mode .configuracoes-page p,
+body.dark-mode .configuracoes-page span,
+body.dark-mode .configuracoes-page label,
+body.dark-mode .configuracoes-page li,
+body.dark-mode .metas-page p,
+body.dark-mode .metas-page span,
+body.dark-mode .metas-page label,
+body.dark-mode .metas-page small {
+  color: #e5e7eb !important;
+  font-weight: 650 !important;
+}
+
+/* =========================
+   CARDS MAIS VISÍVEIS
+========================= */
+
+body.dark-mode .config-card,
+body.dark-mode .premium-card,
+body.dark-mode .meta-card,
+body.dark-mode .create-meta-card,
+body.dark-mode .empty-state {
+  background: #111827 !important;
+  border: 1px solid #475569 !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+body.dark-mode .plan-box {
+  background: #0f172a !important;
+  border: 1px solid #475569 !important;
+}
+
+body.dark-mode .plan-box.premium {
+  background: #312e81 !important;
+  border: 1px solid #818cf8 !important;
+}
+
+/* =========================
+   ÍCONES DOS CARDS
+========================= */
+
+body.dark-mode .card-icon,
+body.dark-mode .meta-icon {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+  border: 2px solid #c7d2fe !important;
+}
+
+body.dark-mode .card-icon i,
+body.dark-mode .meta-icon i {
+  color: #4f46e5 !important;
+  opacity: 1 !important;
+  font-size: 20px !important;
+}
+
+/* Ícone de tarefas */
+body.dark-mode .meta-icon.tarefas {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+  border-color: #c7d2fe !important;
+}
+
+body.dark-mode .meta-icon.tarefas i {
+  color: #4f46e5 !important;
+}
+
+/* Ícone de foco */
+body.dark-mode .meta-icon.foco {
+  background: #e0f2fe !important;
+  color: #0284c7 !important;
+  border-color: #7dd3fc !important;
+}
+
+body.dark-mode .meta-icon.foco i {
+  color: #0284c7 !important;
+}
+
+/* Ícone de atrasos */
+body.dark-mode .meta-icon.atrasos {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+  border-color: #fca5a5 !important;
+}
+
+body.dark-mode .meta-icon.atrasos i {
+  color: #dc2626 !important;
+}
+
+/* =========================
+   TÍTULOS DAS METAS
+========================= */
+
+body.dark-mode .meta-header h3 {
+  color: #ffffff !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+}
+
+body.dark-mode .meta-type {
+  color: #c7d2fe !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+}
+
+body.dark-mode .meta-description {
+  color: #f1f5f9 !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+/* =========================
+   NÚMEROS DAS METAS
+========================= */
+
+body.dark-mode .meta-numbers strong {
+  color: #ffffff !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+}
+
+body.dark-mode .meta-numbers span {
+  color: #c7d2fe !important;
+  font-weight: 900 !important;
+}
+
+body.dark-mode .meta-card small {
+  color: #cbd5e1 !important;
+  font-weight: 800 !important;
+}
+
+/* =========================
+   INPUTS MAIS LEGÍVEIS
+========================= */
+
+body.dark-mode .config-form input,
+body.dark-mode .meta-form input,
+body.dark-mode .meta-form select,
+body.dark-mode .meta-form textarea,
+body.dark-mode .edit-form input,
+body.dark-mode .edit-form select,
+body.dark-mode .edit-form textarea {
+  background: #020617 !important;
+  color: #ffffff !important;
+  border: 1px solid #64748b !important;
+  font-weight: 700 !important;
+}
+
+body.dark-mode .config-form input::placeholder,
+body.dark-mode .meta-form input::placeholder,
+body.dark-mode .meta-form textarea::placeholder,
+body.dark-mode .edit-form input::placeholder,
+body.dark-mode .edit-form textarea::placeholder {
+  color: #cbd5e1 !important;
+  opacity: 1 !important;
+}
+
+/* =========================
+   BOTÕES
+========================= */
+
+body.dark-mode .btn-primary {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+body.dark-mode .btn-primary:hover {
+  background: #818cf8 !important;
+  color: #020617 !important;
+}
+
+body.dark-mode .btn-danger,
+body.dark-mode .btn-delete-meta {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+  font-weight: 900 !important;
+  border: 1px solid #fca5a5 !important;
+}
+
+body.dark-mode .btn-danger:hover,
+body.dark-mode .btn-delete-meta:hover {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+/* =========================
+   PREMIUM
+========================= */
+
+body.dark-mode .premium-badge {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+  font-weight: 900 !important;
+}
+
+body.dark-mode .premium-badge i {
+  color: #4f46e5 !important;
+}
+
+body.dark-mode .premium-side {
+  background: #020617 !important;
+  border: 1px solid #475569 !important;
+}
+
+body.dark-mode .plan-status.active {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+  font-weight: 900 !important;
+}
+
+body.dark-mode .plan-status.inactive {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+  font-weight: 900 !important;
+}
+
+body.dark-mode .plan-box li,
+body.dark-mode .plan-box li i {
+  color: #ffffff !important;
+}
+
+body.dark-mode .plan-box li i {
+  color: #22c55e !important;
+}
+
+/* =========================
+   BARRAS DE PROGRESSO
+========================= */
+
+body.dark-mode .progress-bg {
+  background: #334155 !important;
+}
+
+body.dark-mode .progress-fill {
+  background: #818cf8 !important;
+}
+
+body.dark-mode .progress-fill.foco {
+  background: #38bdf8 !important;
+}
+
+body.dark-mode .progress-fill.atrasos {
+  background: #22c55e !important;
+}
+
+/* =========================
+   EDITAR META
+========================= */
+
+body.dark-mode .edit-meta {
+  border-top: 1px solid #475569 !important;
+}
+
+body.dark-mode .edit-meta summary {
+  color: #c7d2fe !important;
+  font-weight: 900 !important;
+}
+
+body.dark-mode .edit-meta summary i {
+  color: #c7d2fe !important;
+}

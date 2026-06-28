@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/barra-lateral.css" />
+<link rel="stylesheet" href="/css/tema.css" />
 
 <aside class="sidebar">
   <div>
@@ -28,18 +29,60 @@
         <i class="fa-solid fa-users"></i>
         <span>Grupos</span>
       </a>
+
       <a href="/kanban" class="menu-item <%= locals.pagina === 'kanban' ? 'active' : '' %>">
         <i class="fa-solid fa-tasks"></i>
-        <span>kanban</span>
+        <span>Kanban</span>
       </a>
+
+      <a href="/notificacoes" class="menu-item notification-link <%= locals.pagina === 'notificacoes' ? 'active' : '' %>">
+        <i class="fa-solid fa-bell"></i>
+        <span>Notificações</span>
+
+        <b
+        class="notification-badge"
+        id="notificationBadge"
+        hidden
+        >
+          0
+        </b>
+      </a>
+      
+      <a href="/metas" class="menu-item <%= locals.pagina === 'metas' ? 'active' : '' %>">
+        <i class="fa-solid fa-bullseye"></i>
+        <span>Metas</span>
+      </a>
+
+      <a href="/relatorios" class="menu-item <%= locals.pagina === 'relatorios' ? 'active' : '' %>">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Relatórios</span>
+      </a>
+      
     </nav>
   </div>
 
   <div class="sidebar-footer">
+    <a href="/configuracoes" class="footer-link <%= locals.pagina === 'configuracoes' ? 'active' : '' %>">
+      <i class="fa-solid fa-gear"></i>
+      <span>Configurações</span>
+    </a>
+
+    <button
+      type="button"
+      class="theme-toggle"
+      id="themeToggle"
+    >
+      <i class="fa-solid fa-moon"></i>
+      <span>Modo escuro</span>
+    </button>
+
     <a href="/usuarios/logout" class="logout">
-      <i class="fa-solid fa-sign-out-alt"></i> <span>Deslogar</span>
+      <i class="fa-solid fa-sign-out-alt"></i>
+      <span>Deslogar</span>
     </a>
   </div>
 </aside>
 
 <script src="/js/barra-lateral.js"></script>
+<script src="/js/tema.js"></script>
+<script src="/js/notificacoes.js"></script>

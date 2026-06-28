@@ -206,3 +206,20 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.login-error {
+  width: 100%;
+
+  background: #fee2e2;
+  color: #991b1b;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  padding: 10px 12px;
+  margin: 10px 0;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-align: center;
+}

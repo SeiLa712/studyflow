@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Metas - StudyFlow</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/css/barra-lateral.css" />
+    <link rel="stylesheet" href="/css/metas.css" />
+  </head>
+
+  <body>
+    <% locals.pagina = "metas"; %>
+
+    <%- include('../partials/barra-lateral') %>
+
+    <main class="metas-page main-content-page">
+      <header class="metas-header">
+        <div>
+          <h1>Metas Semanais</h1>
+
+          <p>
+            Crie, personalize e acompanhe seus objetivos de estudo.
+          </p>
+        </div>
+      </header>
+
+      <% if (mensagem) { %>
+        <div class="alert success">
+          <i class="fa-solid fa-circle-check"></i>
+          <span><%= mensagem %></span>
+        </div>
+      <% } %>
+
+      <% if (erro) { %>
+        <div class="alert error">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span><%= erro %></span>
+        </div>
+      <% } %>
+
+      <section class="create-meta-card">
+        <div class="section-title">
+          <h2>Criar nova meta</h2>
+
+          <p>
+            Escolha o tipo da meta e defina o objetivo da semana.
+          </p>
+        </div>
+
+        <form
+          action="/metas/criar"
+          method="POST"
+          class="meta-form"
+        >
+          <div>
+            <label>Título</label>
+
+            <input
+              type="text"
+              name="titulo"
+              placeholder="Ex: Estudar mais tempo"
+              required
+            />
+          </div>
+
+          <div>
+            <label>Tipo</label>
+
+            <select name="tipo" required>
+              <option value="tarefas">
+                Tarefas concluídas
+              </option>
+
+              <option value="foco">
+                Tempo de foco
+              </option>
+
+              <option value="atrasos">
+                Limite de atrasos
+              </option>
+            </select>
+          </div>
+
+          <div>
+            <label>Valor da meta</label>
+
+            <input
+              type="number"
+              name="valor_meta"
+              min="0"
+              placeholder="Ex: 5"
+              required
+            />
+          </div>
+
+          <div class="form-full">
+            <label>Descrição</label>
+
+            <textarea
+              name="descricao"
+              placeholder="Descreva sua meta..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            Criar Meta
+          </button>
+        </form>
+      </section>
+
+      <section class="metas-list-section">
+        <div class="section-title">
+          <h2>Minhas metas</h2>
+
+          <p>
+            Acompanhe o progresso e personalize metas existentes.
+          </p>
+        </div>
+
+        <% if (!metas || metas.length === 0) { %>
+          <div class="empty-state">
+            <i class="fa-solid fa-bullseye"></i>
+
+            <h3>Nenhuma meta cadastrada</h3>
+
+            <p>
+              Crie sua primeira meta semanal para acompanhar seu progresso.
+            </p>
+          </div>
+        <% } %>
+
+        <div class="metas-grid">
+          <% metas.forEach(meta => { %>
+            <article class="meta-card">
+              <div class="meta-header">
+                <div>
+                  <span class="meta-icon <%= meta.tipo %>">
+                    <% if (meta.tipo === "tarefas") { %>
+                      <i class="fa-solid fa-list-check"></i>
+                    <% } else if (meta.tipo === "foco") { %>
+                      <i class="fa-solid fa-stopwatch"></i>
+                    <% } else { %>
+                      <i class="fa-solid fa-triangle-exclamation"></i>
+                    <% } %>
+                  </span>
+
+                  <div>
+                    <h3><%= meta.titulo %></h3>
+
+                    <span class="meta-type">
+                      <% if (meta.tipo === "tarefas") { %>
+                        Tarefas concluídas
+                      <% } else if (meta.tipo === "foco") { %>
+                        Tempo de foco
+                      <% } else { %>
+                        Limite de atrasos
+                      <% } %>
+                    </span>
+                  </div>
+                </div>
+
+                <form
+                  action="/metas/excluir/<%= meta.id %>"
+                  method="POST"
+                  onsubmit="return confirm('Deseja excluir esta meta?')"
+                >
+                  <button type="submit" class="btn-delete-meta">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </form>
+              </div>
+
+              <% if (meta.descricao) { %>
+                <p class="meta-description">
+                  <%= meta.descricao %>
+                </p>
+              <% } %>
+
+              <div class="meta-numbers">
+                <strong>
+                  <%= meta.valor_atual %> /
+                  <%= meta.valor_meta %>
+                  <%= meta.unidade %>
+                </strong>
+
+                <span>
+                  <%= meta.status %>
+                </span>
+              </div>
+
+              <div class="progress-bg">
+                <div
+                  class="progress-fill <%= meta.tipo %>"
+                  style="width: <%= meta.porcentagem || 0 %>%"
+                ></div>
+              </div>
+
+              <small>
+                <%= meta.porcentagem || 0 %>% de progresso
+              </small>
+
+              <details class="edit-meta">
+                <summary>
+                  <i class="fa-solid fa-pen"></i>
+                  Editar meta
+                </summary>
+
+                <form
+                  action="/metas/editar/<%= meta.id %>"
+                  method="POST"
+                  class="edit-form"
+                >
+                  <label>Título</label>
+
+                  <input
+                    type="text"
+                    name="titulo"
+                    value="<%= meta.titulo %>"
+                    required
+                  />
+
+                  <label>Tipo</label>
+
+                  <select name="tipo" required>
+                    <option value="tarefas" <%= meta.tipo === "tarefas" ? "selected" : "" %>>
+                      Tarefas concluídas
+                    </option>
+
+                    <option value="foco" <%= meta.tipo === "foco" ? "selected" : "" %>>
+                      Tempo de foco
+                    </option>
+
+                    <option value="atrasos" <%= meta.tipo === "atrasos" ? "selected" : "" %>>
+                      Limite de atrasos
+                    </option>
+                  </select>
+
+                  <label>Valor da meta</label>
+
+                  <input
+                    type="number"
+                    name="valor_meta"
+                    min="0"
+                    value="<%= meta.valor_meta %>"
+                    required
+                  />
+
+                  <label>Descrição</label>
+
+                  <textarea name="descricao"><%= meta.descricao || "" %></textarea>
+
+                  <button type="submit" class="btn-primary">
+                    Salvar Alterações
+                  </button>
+                </form>
+              </details>
+            </article>
+          <% }) %>
+        </div>
+      </section>
+    </main>
+    <script src="/js/metas.js"></script>
+  </body>
+</html>

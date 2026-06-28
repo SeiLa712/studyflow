@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Relatórios - StudyFlow</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/css/barra-lateral.css" />
+    <link rel="stylesheet" href="/css/relatorios.css" />
+  </head>
+
+  <body>
+    <% locals.pagina = "relatorios"; %>
+
+    <%- include('../partials/barra-lateral') %>
+
+    <%
+      const dados = relatorio || {};
+
+      const resumo = dados.resumo || {};
+
+      const foco = dados.foco || {
+        total_minutos: 0,
+        total_horas: 0,
+        total_sessoes: 0,
+        media_por_sessao: 0
+      };
+
+      const prioridades = dados.prioridades || {
+        alta: 0,
+        media: 0,
+        baixa: 0
+      };
+
+      const score = dados.score || {
+        valor: 0,
+        status: "Sem dados",
+        mensagem: "Nenhum dado encontrado."
+      };
+
+      const sugestoes = dados.sugestoes || [];
+      const riscos = dados.riscos || [];
+      const kanban = dados.kanban || {};
+
+      const metas = dados.metas || {
+        total_metas: 0,
+        metas_concluidas: 0,
+        progresso_medio: 0,
+        lista: [],
+        sugestoes: []
+      };
+
+      const melhorDia = dados.melhor_dia || {
+        dia: "Sem dados",
+        total: 0
+      };
+
+      const periodo = dados.periodo || {
+        inicio: null,
+        fim: null
+      };
+
+      const semanaRelatorio =
+        typeof semanaSelecionada !== "undefined"
+          ? Number(semanaSelecionada)
+          : 0;
+
+      const semanaAnterior = semanaRelatorio + 1;
+
+      const proximaSemana =
+        semanaRelatorio > 0
+          ? semanaRelatorio - 1
+          : 0;
+
+      function dataBR(data) {
+        if (!data) return "Sem data";
+
+        const partes = String(data).split("-");
+
+        if (partes.length !== 3) {
+          return String(data);
+        }
+
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+      }
+
+      const maiorPrioridade = Math.max(
+        prioridades.alta || 0,
+        prioridades.media || 0,
+        prioridades.baixa || 0,
+        1
+      );
+    %>
+
+    <main class="relatorios-page">
+      <header class="relatorios-header">
+        <div>
+          <h1>Relatórios</h1>
+
+          <p>
+            Análise inteligente da sua produtividade semanal.
+          </p>
+        </div>
+
+        <div class="relatorios-actions">
+          <div class="week-navigation">
+            <a
+              href="/relatorios?semana=<%= semanaAnterior %>"
+              class="btn-week"
+            >
+              <i class="fa-solid fa-chevron-left"></i>
+              Semana anterior
+            </a>
+
+            <% if (semanaRelatorio > 0) { %>
+              <a
+                href="/relatorios?semana=<%= proximaSemana %>"
+                class="btn-week"
+              >
+                Próxima semana
+                <i class="fa-solid fa-chevron-right"></i>
+              </a>
+            <% } else { %>
+              <span class="btn-week disabled">
+                Semana atual
+              </span>
+            <% } %>
+          </div>
+
+          <span class="periodo-badge">
+            <% if (semanaRelatorio === 0) { %>
+              Semana atual:
+            <% } else { %>
+              <%= semanaRelatorio %> semana(s) atrás:
+            <% } %>
+
+            <%= dataBR(periodo.inicio) %> até <%= dataBR(periodo.fim) %>
+          </span>
+
+          <a
+            href="/relatorios/pdf?semana=<%= semanaRelatorio %>"
+            class="btn-pdf"
+          >
+            <i class="fa-solid fa-file-pdf"></i>
+            Baixar PDF
+          </a>
+        </div>
+      </header>
+
+      <section class="score-section">
+        <div class="score-card">
+          <div class="score-circle">
+            <span><%= score.valor || 0 %>%</span>
+          </div>
+
+          <div>
+            <h2>Score de Produtividade</h2>
+
+            <strong>
+              <%= score.status || "Sem dados" %>
+            </strong>
+
+            <p>
+              <%= score.mensagem || "Nenhuma mensagem disponível." %>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cards-grid">
+        <article class="metric-card">
+          <i class="fa-solid fa-plus"></i>
+
+          <div>
+            <span>Atividades criadas</span>
+            <strong><%= resumo.atividades_criadas || 0 %></strong>
+          </div>
+        </article>
+
+        <article class="metric-card">
+          <i class="fa-solid fa-check"></i>
+
+          <div>
+            <span>Concluídas</span>
+            <strong><%= resumo.atividades_concluidas || 0 %></strong>
+          </div>
+        </article>
+
+        <article class="metric-card focus">
+          <i class="fa-solid fa-stopwatch"></i>
+
+          <div>
+            <span>Tempo de foco</span>
+            <strong><%= foco.total_minutos || 0 %> min</strong>
+          </div>
+        </article>
+
+        <article class="metric-card">
+          <i class="fa-solid fa-bullseye"></i>
+
+          <div>
+            <span>Metas concluídas</span>
+
+            <strong>
+              <%= metas.metas_concluidas || 0 %> /
+              <%= metas.total_metas || 0 %>
+            </strong>
+          </div>
+        </article>
+
+        <article class="metric-card">
+          <i class="fa-solid fa-clock"></i>
+
+          <div>
+            <span>Pendentes</span>
+            <strong><%= resumo.atividades_pendentes || 0 %></strong>
+          </div>
+        </article>
+
+        <article class="metric-card danger">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+
+          <div>
+            <span>Atrasadas</span>
+            <strong><%= resumo.atividades_atrasadas || 0 %></strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Atividades por Prioridade</h2>
+            <i class="fa-solid fa-chart-simple"></i>
+          </div>
+
+          <div class="bar-list">
+            <div class="bar-item">
+              <div>
+                <span>Alta</span>
+                <strong><%= prioridades.alta || 0 %></strong>
+              </div>
+
+              <div class="bar-bg">
+                <div
+                  class="bar-fill alta"
+                  style="width: <%= ((prioridades.alta || 0) / maiorPrioridade) * 100 %>%"
+                ></div>
+              </div>
+            </div>
+
+            <div class="bar-item">
+              <div>
+                <span>Média</span>
+                <strong><%= prioridades.media || 0 %></strong>
+              </div>
+
+              <div class="bar-bg">
+                <div
+                  class="bar-fill media"
+                  style="width: <%= ((prioridades.media || 0) / maiorPrioridade) * 100 %>%"
+                ></div>
+              </div>
+            </div>
+
+            <div class="bar-item">
+              <div>
+                <span>Baixa</span>
+                <strong><%= prioridades.baixa || 0 %></strong>
+              </div>
+
+              <div class="bar-bg">
+                <div
+                  class="bar-fill baixa"
+                  style="width: <%= ((prioridades.baixa || 0) / maiorPrioridade) * 100 %>%"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Progresso das Metas</h2>
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+
+          <% if (!metas.lista || metas.lista.length === 0) { %>
+            <div class="empty-state">
+              Nenhuma meta cadastrada para esta semana.
+            </div>
+          <% } else { %>
+            <div class="relatorio-metas-list">
+              <div class="meta-geral">
+                <strong>
+                  <%= metas.progresso_medio || 0 %>%
+                </strong>
+
+                <span>
+                  Progresso médio das metas
+                </span>
+              </div>
+
+              <% metas.lista.forEach(meta => { %>
+                <div class="relatorio-meta-item">
+                  <div class="relatorio-meta-top">
+                    <div>
+                      <strong><%= meta.titulo %></strong>
+
+                      <span>
+                        <%= meta.valor_atual %> /
+                        <%= meta.valor_meta %>
+                        <%= meta.unidade %>
+                      </span>
+                    </div>
+
+                    <b>
+                      <%= meta.status %>
+                    </b>
+                  </div>
+
+                  <div class="meta-progress-bg">
+                    <div
+                      class="meta-progress-fill <%= meta.tipo %>"
+                      style="width: <%= meta.porcentagem || 0 %>%"
+                    ></div>
+                  </div>
+
+                  <small>
+                    <%= meta.porcentagem || 0 %>% de progresso
+                  </small>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Melhor Dia</h2>
+            <i class="fa-solid fa-calendar-day"></i>
+          </div>
+
+          <div class="highlight-box">
+            <strong>
+              <%= melhorDia.dia || "Sem dados" %>
+            </strong>
+
+            <p>
+              <%= melhorDia.total || 0 %> atividade(s) registrada(s)
+            </p>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Resumo de Foco</h2>
+            <i class="fa-solid fa-hourglass-half"></i>
+          </div>
+
+          <div class="kanban-summary">
+            <p>
+              Tempo total:
+              <strong><%= foco.total_minutos || 0 %> minutos</strong>
+            </p>
+
+            <p>
+              Total de sessões:
+              <strong><%= foco.total_sessoes || 0 %></strong>
+            </p>
+
+            <p>
+              Média por sessão:
+              <strong><%= foco.media_por_sessao || 0 %> min</strong>
+            </p>
+
+            <span>
+              <% if ((foco.total_minutos || 0) > 0) { %>
+                Você registrou <%= foco.total_minutos %> minutos de foco nesta semana.
+              <% } else { %>
+                Nenhuma sessão Pomodoro concluída nesta semana.
+              <% } %>
+            </span>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Sugestões Inteligentes</h2>
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+
+          <div class="suggestions-list">
+            <% if (!sugestoes || sugestoes.length === 0) { %>
+              <div class="empty-state">
+                Nenhuma sugestão encontrada.
+              </div>
+            <% } %>
+
+            <% sugestoes.forEach(sugestao => { %>
+              <div class="suggestion-item">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                <p><%= sugestao %></p>
+              </div>
+            <% }) %>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Resumo do Kanban</h2>
+            <i class="fa-solid fa-table-columns"></i>
+          </div>
+
+          <div class="kanban-summary">
+            <p>
+              Total de cards:
+              <strong><%= kanban.total_cards || 0 %></strong>
+            </p>
+
+            <p>
+              Coluna com mais cards:
+              <strong><%= kanban.coluna_mais_cheia || "Sem dados" %></strong>
+            </p>
+
+            <span>
+              <%= kanban.sugestao || "Nenhum dado encontrado no Kanban." %>
+            </span>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel full-panel">
+        <div class="panel-header">
+          <h2>Risco de Atraso</h2>
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+
+        <% if (!riscos || riscos.length === 0) { %>
+          <div class="empty-state">
+            Nenhuma atividade com risco encontrada.
+          </div>
+        <% } %>
+
+        <% riscos.forEach(item => { %>
+          <div class="risk-item <%= item.risco === 'Alto' ? 'alto' : item.risco === 'Médio' ? 'medio' : 'baixo' %>">
+            <div>
+              <strong><%= item.nome %></strong>
+              <p><%= item.motivo %></p>
+            </div>
+
+            <div class="risk-meta">
+              <span><%= dataBR(item.data_vencimento) %></span>
+              <b><%= item.risco %></b>
+            </div>
+          </div>
+        <% }) %>
+      </section>
+    </main>
+
+    <script src="/js/relatorios.js"></script>
+  </body>
+</html>
