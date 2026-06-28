@@ -1,4 +1,5 @@
 StudyFlow/client/public/relatorios/*.pdf
+StudyFlow/client/public/uploads/grupos/*
 
 node_modules/
 StudyFlow/node_modules/
