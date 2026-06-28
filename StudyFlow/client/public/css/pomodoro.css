@@ -1,25 +1,74 @@
 /* =========================
-   RESET
+   POMODORO - STUDYFLOW
+========================= */
+
+/* =========================
+   RESET E VARIÁVEIS
 ========================= */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body {
-    font-family: "Inter", "Segoe UI", Arial, sans-serif;
-    background: #f5f6fb;
-    color: #1f2937;
+:root {
+  --sidebar-open: 260px;
+  --sidebar-closed: 80px;
+
+  --bg-page: #f5f6fb;
+  --bg-card: #ffffff;
+  --bg-soft: #f9fafb;
+  --bg-muted: #f3f4f6;
+
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-soft: #94a3b8;
+  --text-label: #374151;
+
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+
+  --danger: #ef4444;
+
+  --border: #e5e7eb;
+  --input-border: #d1d5db;
+  --ring-bg: #e5e7eb;
+
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 8px 20px rgba(99, 102, 241, 0.25);
+
+  --transition: 0.3s ease;
+}
+
+body.dark-mode {
+  --bg-page: #0f172a;
+  --bg-card: #111827;
+  --bg-soft: #1e293b;
+  --bg-muted: #1f2937;
+
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --text-soft: #94a3b8;
+  --text-label: #e5e7eb;
+
+  --border: #334155;
+  --input-border: #475569;
+  --ring-bg: #1e293b;
+
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.45);
 }
 
 /* =========================
-   VARIÁVEIS
+   BASE
 ========================= */
 
-:root {
-    --sidebar-width: 260px;
+body {
+  background: var(--bg-page);
+  color: var(--text-main);
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
 }
 
 /* =========================
@@ -27,10 +76,24 @@ body {
 ========================= */
 
 .pomodoro-content {
-    margin-left: var(--sidebar-width);
-    padding: 40px;
-    min-height: 100vh;
-    transition: margin-left 0.3s ease;
+  min-height: 100vh;
+  padding: 40px;
+
+  background: var(--bg-page);
+
+  transition: margin-left var(--transition), width var(--transition);
+}
+
+/* Sidebar aberta */
+body:not(.sidebar-collapsed) .pomodoro-content {
+  margin-left: var(--sidebar-open);
+  width: calc(100% - var(--sidebar-open));
+}
+
+/* Sidebar fechada */
+body.sidebar-collapsed .pomodoro-content {
+  margin-left: var(--sidebar-closed);
+  width: calc(100% - var(--sidebar-closed));
 }
 
 /* =========================
@@ -38,19 +101,22 @@ body {
 ========================= */
 
 .header {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .header h1 {
-    font-size: 34px;
-    font-weight: 700;
-    color: #111827;
+  color: var(--text-main);
+
+  font-size: 34px;
+  font-weight: 750;
 }
 
 .header p {
-    margin-top: 8px;
-    color: #6b7280;
-    font-size: 16px;
+  margin-top: 8px;
+
+  color: var(--text-muted);
+
+  font-size: 16px;
 }
 
 /* =========================
@@ -58,197 +124,230 @@ body {
 ========================= */
 
 .grid {
-    display: grid;
-    grid-template-columns: 1.3fr 0.9fr;
-    gap: 30px;
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 30px;
 }
 
 /* =========================
-   TIMER CARD
+   CARDS
 ========================= */
 
+.timer-card,
+.sessions-card {
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 22px;
+
+  box-shadow: var(--shadow-card);
+}
+
 .timer-card {
-    background: #ffffff;
-    border-radius: 22px;
-    padding: 35px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  padding: 35px;
+}
+
+.sessions-card {
+  padding: 25px;
 }
 
 /* =========================
-   TABS
+   TABS DO TIMER
 ========================= */
 
 .timer-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .tab {
-    border: none;
-    padding: 10px 25px;
-    border-radius: 10px;
-    background: #f3f4f6;
-    color: #374151;
-    cursor: pointer;
-    font-size: 15px;
-    transition: 0.2s ease;
+  padding: 10px 25px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: var(--bg-muted);
+  color: var(--text-label);
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
 .tab:hover {
-    background: #e5e7eb;
+  background: #e5e7eb;
+}
+
+body.dark-mode .tab:hover {
+  background: #334155;
 }
 
 .tab.active {
-    background: #6366f1;
-    color: white;
+  background: var(--primary);
+  color: #ffffff;
 }
 
 /* =========================
-   TIMER CÍRCULO
+   CÍRCULO DO TIMER
 ========================= */
 
 .timer-circle {
-    width: 280px;
-    height: 280px;
-    margin: 35px auto;
-    position: relative;
+  width: 280px;
+  height: 280px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin: 35px auto;
 
-    background: #ffffff;
+  position: relative;
+
+  background: var(--bg-card);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .progress-ring {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: rotate(-90deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  transform: rotate(-90deg);
 }
 
 .ring-bg {
-    fill: none;
-    stroke: #e5e7eb;
-    stroke-width: 12;
+  fill: none;
+  stroke: var(--ring-bg);
+  stroke-width: 12;
 }
 
 .ring-fill {
-    fill: none;
-    stroke: #6366f1;
-    stroke-width: 12;
-    stroke-linecap: round;
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 12;
+  stroke-linecap: round;
 
-    stroke-dasharray: 753.98;
-    stroke-dashoffset: 753.98;
+  stroke-dasharray: 753.98;
+  stroke-dashoffset: 753.98;
 
-    transition: stroke-dashoffset 0.4s linear;
+  transition: stroke-dashoffset 0.4s linear;
 }
 
 .timer-circle h1 {
-    font-size: 68px;
-    font-weight: 700;
-    color: #1f2937;
-    z-index: 2;
-    position: relative;
-}
+  position: relative;
+  z-index: 2;
 
-/* =========================
-   TEXTO DO TIMER
-========================= */
+  color: var(--text-main);
+
+  font-size: 68px;
+  font-weight: 750;
+}
 
 .timer-text {
-    text-align: center;
-    color: #6b7280;
-    font-size: 16px;
+  color: var(--text-muted);
+
+  text-align: center;
+  font-size: 16px;
 }
 
 /* =========================
-   BOTÕES TIMER
+   BOTÕES DO TIMER
 ========================= */
 
 .timer-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    margin-top: 35px;
+  margin-top: 35px;
+
+  display: flex;
+  justify-content: center;
+  gap: 18px;
 }
 
 .timer-buttons button {
-    width: 58px;
-    height: 58px;
+  width: 58px;
+  height: 58px;
 
-    border: none;
-    border-radius: 50%;
+  border: none;
+  border-radius: 50%;
 
-    cursor: pointer;
-    font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  font-size: 22px;
 
-    transition: 0.2s ease;
+  cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
 .timer-buttons button:hover {
-    transform: scale(1.08);
+  transform: scale(1.08);
 }
 
 #btnToggle {
-    background: #6366f1;
-    color: white;
-    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
+  background: var(--primary);
+  color: #ffffff;
+
+  box-shadow: var(--shadow-primary);
+}
+
+#btnToggle:hover {
+  background: var(--primary-hover);
 }
 
 #btnReset {
-    background: #f3f4f6;
-    color: #6b7280;
+  background: var(--bg-muted);
+  color: var(--text-muted);
 }
 
 #btnReset:hover {
-    background: #e5e7eb;
+  background: #e5e7eb;
+}
+
+body.dark-mode #btnReset:hover {
+  background: #334155;
 }
 
 /* =========================
-   CARD DE SESSÕES
+   SESSÕES
 ========================= */
 
-.sessions-card {
-    background: #ffffff;
-    border-radius: 22px;
-    border: 1px solid #e5e7eb;
-    padding: 25px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-}
-
 .sessions-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
 }
 
 .sessions-header h2 {
-    font-size: 22px;
-    color: #111827;
+  color: var(--text-main);
+
+  font-size: 22px;
 }
 
 .novaSessao {
-    background: #6366f1;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s ease;
+  padding: 10px 18px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: var(--primary);
+  color: #ffffff;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
 .novaSessao:hover {
-    background: #4f46e5;
+  background: var(--primary-hover);
+  transform: translateY(-1px);
 }
 
 /* =========================
@@ -256,62 +355,86 @@ body {
 ========================= */
 
 .formulario {
-    display: none;
-    margin-bottom: 25px;
-    background: #f9fafb;
-    padding: 16px;
-    border-radius: 14px;
-    border: 1px solid #e5e7eb;
+  display: none;
+
+  margin-bottom: 25px;
+  padding: 16px;
+
+  background: var(--bg-soft);
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
 }
 
 .formulario input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
+  width: 100%;
 
-    border-radius: 10px;
-    border: 1px solid #d1d5db;
+  margin-bottom: 10px;
+  padding: 12px;
 
-    outline: none;
-    font-size: 14px;
-    background: white;
+  background: var(--bg-card);
+  color: var(--text-main);
+
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition: 0.2s ease;
 }
 
 .formulario input:focus {
-    border-color: #6366f1;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.14);
 }
 
 .form-buttons {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .form-buttons button {
-    flex: 1;
-    border: none;
-    padding: 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s ease;
+  flex: 1;
+
+  padding: 12px;
+
+  border: none;
+  border-radius: 10px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
 .form-buttons button[type="submit"] {
-    background: #6366f1;
-    color: white;
+  background: var(--primary);
+  color: #ffffff;
 }
 
 .form-buttons button[type="submit"]:hover {
-    background: #4f46e5;
+  background: var(--primary-hover);
 }
 
 .form-buttons button[type="button"] {
-    background: #e5e7eb;
-    color: #6b7280;
+  background: #e5e7eb;
+  color: var(--text-muted);
 }
 
 .form-buttons button[type="button"]:hover {
-    background: #d1d5db;
+  background: #d1d5db;
+}
+
+body.dark-mode .form-buttons button[type="button"] {
+  background: #1e293b;
+  color: #e5e7eb;
+}
+
+body.dark-mode .form-buttons button[type="button"]:hover {
+  background: #334155;
 }
 
 /* =========================
@@ -319,86 +442,98 @@ body {
 ========================= */
 
 #listaSessoes {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 #listaSessoes > p {
-    color: #6b7280;
-    font-size: 15px;
+  color: var(--text-muted);
+
+  font-size: 15px;
 }
 
 .sessao-card {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    padding: 16px 18px;
-    transition: 0.3s ease;
-    cursor: pointer;
+  padding: 16px 18px;
+
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
 }
 
 .sessao-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .sessao-topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
 }
 
 .sessao-topo h3 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
+  color: var(--text-main);
+
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .acoes-topo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .btn-iniciar,
 .btn-excluir {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 18px;
-    transition: 0.2s ease;
-    text-decoration: none;
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+  text-decoration: none;
+
+  font-size: 18px;
+
+  transition: 0.2s ease;
 }
 
 .btn-iniciar {
-    color: #6366f1;
+  color: var(--primary);
 }
 
 .btn-excluir {
-    color: #ef4444;
+  color: var(--danger);
 }
 
 .btn-iniciar:hover,
 .btn-excluir:hover {
-    transform: scale(1.15);
+  transform: scale(1.15);
 }
 
 .sessao-info {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
+  margin-top: 15px;
 
-    margin-top: 15px;
+  color: var(--text-soft);
 
-    color: #94a3b8;
-    font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+
+  font-size: 14px;
 }
 
 .sessao-info span {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 /* =========================
@@ -406,66 +541,67 @@ body {
 ========================= */
 
 @media (max-width: 1200px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
-    .timer-circle {
-        width: 240px;
-        height: 240px;
-    }
+  .timer-circle,
+  .progress-ring {
+    width: 240px;
+    height: 240px;
+  }
 
-    .progress-ring {
-        width: 240px;
-        height: 240px;
-    }
-
-    .timer-circle h1 {
-        font-size: 56px;
-    }
+  .timer-circle h1 {
+    font-size: 56px;
+  }
 }
 
 @media (max-width: 768px) {
-    .pomodoro-content {
-        margin-left: 80px;
-        padding: 20px;
-    }
+  .pomodoro-content {
+    margin-left: var(--sidebar-closed);
+    width: calc(100% - var(--sidebar-closed));
 
-    .header h1 {
-        font-size: 28px;
-    }
+    padding: 20px;
+  }
 
-    .timer-card,
-    .sessions-card {
-        padding: 22px;
-    }
+  .header h1 {
+    font-size: 28px;
+  }
 
-    .sessions-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
+  .timer-card,
+  .sessions-card {
+    padding: 22px;
+  }
 
-    .novaSessao {
-        width: 100%;
-    }
+  .sessions-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .timer-circle {
-        width: 220px;
-        height: 220px;
-    }
+  .novaSessao {
+    width: 100%;
+  }
 
-    .progress-ring {
-        width: 220px;
-        height: 220px;
-    }
+  .timer-circle,
+  .progress-ring {
+    width: 220px;
+    height: 220px;
+  }
 
-    .timer-circle h1 {
-        font-size: 48px;
-    }
+  .timer-circle h1 {
+    font-size: 48px;
+  }
 
-    .sessao-info {
-        flex-direction: column;
-        gap: 8px;
-    }
+  .sessao-topo {
+    flex-direction: column;
+  }
+
+  .sessao-info {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
 }

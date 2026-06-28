@@ -1,3 +1,11 @@
+/* =========================
+   METAS - STUDYFLOW
+========================= */
+
+/* =========================
+   RESET E VARIÁVEIS
+========================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -5,35 +13,143 @@
   font-family: "Segoe UI", sans-serif;
 }
 
-body {
-  background: #f5f6fb;
-  color: #111827;
+:root {
+  --sidebar-open: 260px;
+  --sidebar-closed: 80px;
+
+  --bg-page: #f5f6fb;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-soft: #4b5563;
+  --text-label: #374151;
+
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-soft: #eef2ff;
+  --primary-border: #c7d2fe;
+
+  --focus: #0284c7;
+  --focus-soft: #e0f2fe;
+
+  --success: #22c55e;
+  --success-text: #166534;
+  --success-soft: #ecfdf5;
+  --success-border: #bbf7d0;
+
+  --danger: #dc2626;
+  --danger-text: #991b1b;
+  --danger-soft: #fee2e2;
+  --danger-alert: #fef2f2;
+  --danger-border: #fecaca;
+
+  --border: #e5e7eb;
+  --input-border: #d1d5db;
+  --progress-bg: #e5e7eb;
+
+  --shadow-card: 0 10px 28px rgba(15, 23, 42, 0.06);
+  --transition: 0.3s ease;
 }
 
+body.dark-mode {
+  --bg-page: #0f172a;
+  --bg-card: #111827;
+  --bg-input: #020617;
+
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --text-soft: #cbd5e1;
+  --text-label: #e5e7eb;
+
+  --primary-soft: #1e293b;
+  --primary-border: #475569;
+
+  --focus-soft: rgba(14, 165, 233, 0.16);
+
+  --success-soft: rgba(34, 197, 94, 0.16);
+  --success-text: #bbf7d0;
+  --success-border: rgba(74, 222, 128, 0.45);
+
+  --danger-soft: rgba(239, 68, 68, 0.16);
+  --danger-alert: rgba(239, 68, 68, 0.16);
+  --danger-text: #fecaca;
+  --danger-border: rgba(248, 113, 113, 0.45);
+
+  --border: #334155;
+  --input-border: #475569;
+  --progress-bg: #1e293b;
+
+  --shadow-card: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================
+   BASE
+========================= */
+
+body {
+  background: var(--bg-page);
+  color: var(--text-main);
+}
+
+/* =========================
+   PÁGINA
+========================= */
+
 .metas-page {
-  margin-left: 260px;
   min-height: 100vh;
   padding: 36px;
-  transition: margin-left 0.3s ease, width 0.3s ease;
+
+  background: var(--bg-page);
+  color: var(--text-main);
+
+  transition: margin-left var(--transition), width var(--transition);
 }
+
+/* Sidebar aberta */
+body:not(.sidebar-collapsed) .metas-page {
+  margin-left: var(--sidebar-open);
+  width: calc(100% - var(--sidebar-open));
+}
+
+/* Sidebar fechada */
+body.sidebar-collapsed .metas-page {
+  margin-left: var(--sidebar-closed);
+  width: calc(100% - var(--sidebar-closed));
+}
+
+/* =========================
+   HEADER
+========================= */
 
 .metas-header {
   margin-bottom: 26px;
 }
 
 .metas-header h1 {
+  margin-bottom: 6px;
+
+  color: var(--text-main);
+
   font-size: 36px;
   font-weight: 850;
-  margin-bottom: 6px;
 }
 
 .metas-header p {
-  color: #6b7280;
+  color: var(--text-muted);
+
   font-size: 16px;
 }
 
+/* =========================
+   ALERTAS
+========================= */
+
 .alert {
+  margin-bottom: 20px;
   padding: 14px 16px;
+
   border-radius: 14px;
 
   display: flex;
@@ -41,51 +157,79 @@ body {
   gap: 10px;
 
   font-weight: 700;
-
-  margin-bottom: 20px;
 }
 
 .alert.success {
-  background: #ecfdf5;
-  color: #166534;
-  border: 1px solid #bbf7d0;
+  background: var(--success-soft);
+  color: var(--success-text);
+  border: 1px solid var(--success-border);
 }
 
 .alert.error {
-  background: #fef2f2;
-  color: #991b1b;
-  border: 1px solid #fecaca;
+  background: var(--danger-alert);
+  color: var(--danger-text);
+  border: 1px solid var(--danger-border);
 }
+
+/* =========================
+   CARDS
+========================= */
 
 .create-meta-card,
 .meta-card,
 .empty-state {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 20px;
-
   padding: 24px;
 
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 20px;
+
+  box-shadow: var(--shadow-card);
 }
 
 .create-meta-card {
   margin-bottom: 30px;
 }
 
+.meta-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* =========================
+   TÍTULOS DE SEÇÃO
+========================= */
+
 .section-title {
   margin-bottom: 20px;
 }
 
 .section-title h2 {
+  margin-bottom: 5px;
+
+  color: var(--text-main);
+
   font-size: 26px;
   font-weight: 850;
-  margin-bottom: 5px;
 }
 
 .section-title p {
-  color: #6b7280;
+  color: var(--text-muted);
 }
+
+/* Card de criação com botão de minimizar */
+.create-meta-card .section-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* =========================
+   FORMULÁRIOS
+========================= */
 
 .meta-form {
   display: grid;
@@ -98,16 +242,24 @@ body {
   grid-column: 1 / -1;
 }
 
+.edit-form {
+  margin-top: 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .meta-form label,
 .edit-form label {
   display: block;
 
-  color: #374151;
+  margin-bottom: 7px;
+
+  color: var(--text-label);
 
   font-size: 14px;
   font-weight: 700;
-
-  margin-bottom: 7px;
 }
 
 .meta-form input,
@@ -120,32 +272,49 @@ body {
 
   padding: 13px 14px;
 
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
+  background: var(--bg-input);
+  color: var(--text-main);
 
-  background: #ffffff;
-  color: #111827;
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
 
   font-size: 15px;
   font-weight: 600;
 
   outline: none;
+
+  transition: 0.2s ease;
+}
+
+.meta-form input:focus,
+.meta-form select:focus,
+.meta-form textarea:focus,
+.edit-form input:focus,
+.edit-form select:focus,
+.edit-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 
 .meta-form textarea,
 .edit-form textarea {
   min-height: 90px;
+
   resize: vertical;
 }
 
+/* =========================
+   BOTÕES
+========================= */
+
 .btn-primary {
+  padding: 13px 18px;
+
   border: none;
   border-radius: 12px;
 
-  padding: 13px 18px;
-
-  background: #4f46e5;
-  color: white;
+  background: var(--primary);
+  color: #ffffff;
 
   font-size: 15px;
   font-weight: 800;
@@ -156,21 +325,67 @@ body {
 }
 
 .btn-primary:hover {
-  background: #4338ca;
+  background: var(--primary-hover);
   transform: translateY(-1px);
 }
+
+.btn-delete-meta,
+.btn-minimize-meta {
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  transition: 0.2s ease;
+}
+
+.btn-delete-meta {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.btn-delete-meta:hover {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+.btn-minimize-meta {
+  background: var(--primary-soft);
+  color: var(--primary);
+
+  border: 1px solid var(--primary-border);
+}
+
+.btn-minimize-meta:hover {
+  background: var(--primary);
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+/* =========================
+   GRID DE METAS
+========================= */
 
 .metas-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  align-items: start;
   gap: 22px;
 }
 
-.meta-card {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+/* =========================
+   CARD DA META
+========================= */
 
 .meta-header {
   display: flex;
@@ -184,6 +399,42 @@ body {
   align-items: center;
   gap: 13px;
 }
+
+.meta-header h3 {
+  color: var(--text-main);
+
+  font-size: 20px;
+  font-weight: 850;
+}
+
+.meta-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-type {
+  color: var(--text-muted);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.meta-description {
+  color: var(--text-soft);
+
+  line-height: 1.5;
+}
+
+.meta-card small {
+  color: var(--text-muted);
+
+  font-weight: 700;
+}
+
+/* =========================
+   ÍCONES DAS METAS
+========================= */
 
 .meta-icon {
   width: 46px;
@@ -201,82 +452,51 @@ body {
 }
 
 .meta-icon.tarefas {
-  background: #eef2ff;
-  color: #4f46e5;
+  background: var(--primary-soft);
+  color: var(--primary);
 }
 
 .meta-icon.foco {
-  background: #e0f2fe;
-  color: #0284c7;
+  background: var(--focus-soft);
+  color: var(--focus);
 }
 
 .meta-icon.atrasos {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
-.meta-header h3 {
-  font-size: 20px;
-  font-weight: 850;
-  color: #111827;
-}
-
-.meta-type {
-  color: #6b7280;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.btn-delete-meta {
-  width: 36px;
-  height: 36px;
-
-  border: none;
-  border-radius: 10px;
-
-  background: #fee2e2;
-  color: #dc2626;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-.btn-delete-meta:hover {
-  background: #dc2626;
-  color: white;
-}
-
-.meta-description {
-  color: #4b5563;
-  line-height: 1.5;
-}
+/* =========================
+   NÚMEROS E PROGRESSO
+========================= */
 
 .meta-numbers {
+  margin-top: 4px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-
-  margin-top: 4px;
 }
 
 .meta-numbers strong {
-  color: #4f46e5;
+  color: var(--primary);
+
   font-size: 18px;
 }
 
 .meta-numbers span {
-  color: #374151;
-  font-weight: 800;
+  color: var(--text-label);
+
   font-size: 13px;
+  font-weight: 800;
 }
 
 .progress-bg {
   width: 100%;
   height: 12px;
 
-  background: #e5e7eb;
+  background: var(--progress-bg);
 
   border-radius: 999px;
   overflow: hidden;
@@ -285,218 +505,69 @@ body {
 .progress-fill {
   height: 100%;
 
-  background: #4f46e5;
+  background: var(--primary);
 
   border-radius: 999px;
+
+  transition: 0.3s ease;
 }
 
 .progress-fill.foco {
-  background: #0284c7;
+  background: var(--focus);
 }
 
 .progress-fill.atrasos {
-  background: #22c55e;
+  background: var(--success);
 }
 
-.meta-card small {
-  color: #6b7280;
-  font-weight: 700;
-}
+/* =========================
+   EDITAR META
+========================= */
 
 .edit-meta {
   margin-top: 8px;
-
-  border-top: 1px solid #e5e7eb;
-
   padding-top: 14px;
+
+  border-top: 1px solid var(--border);
 }
 
 .edit-meta summary {
-  color: #4f46e5;
+  color: var(--primary);
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
   font-weight: 800;
 
   cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
-.edit-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  margin-top: 14px;
-}
+/* =========================
+   EMPTY STATE
+========================= */
 
 .empty-state {
   text-align: center;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 .empty-state i {
-  font-size: 46px;
-  color: #cbd5e1;
   margin-bottom: 12px;
+
+  color: #cbd5e1;
+
+  font-size: 46px;
 }
 
 .empty-state h3 {
-  color: #111827;
   margin-bottom: 6px;
+
+  color: var(--text-main);
 }
 
 /* =========================
-   MODO ESCURO
-========================= */
-
-body.dark-mode .metas-page {
-  background: #0f172a !important;
-  color: #e5e7eb !important;
-}
-
-body.dark-mode .metas-header h1,
-body.dark-mode .section-title h2,
-body.dark-mode .meta-header h3,
-body.dark-mode .empty-state h3 {
-  color: #f8fafc !important;
-}
-
-body.dark-mode .metas-header p,
-body.dark-mode .section-title p,
-body.dark-mode .meta-description,
-body.dark-mode .meta-card small,
-body.dark-mode .meta-type {
-  color: #cbd5e1 !important;
-}
-
-body.dark-mode .create-meta-card,
-body.dark-mode .meta-card,
-body.dark-mode .empty-state {
-  background: #111827 !important;
-  border-color: #334155 !important;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35) !important;
-}
-
-body.dark-mode .meta-form label,
-body.dark-mode .edit-form label {
-  color: #e5e7eb !important;
-}
-
-body.dark-mode .meta-form input,
-body.dark-mode .meta-form select,
-body.dark-mode .meta-form textarea,
-body.dark-mode .edit-form input,
-body.dark-mode .edit-form select,
-body.dark-mode .edit-form textarea {
-  background: #020617 !important;
-  color: #f8fafc !important;
-  border-color: #475569 !important;
-}
-
-body.dark-mode .progress-bg {
-  background: #1e293b !important;
-}
-
-body.dark-mode .meta-numbers span {
-  color: #e5e7eb !important;
-}
-
-body.dark-mode .edit-meta {
-  border-top-color: #334155 !important;
-}
-
-body.dark-mode .alert.success {
-  background: rgba(34, 197, 94, 0.16) !important;
-  color: #bbf7d0 !important;
-  border-color: rgba(74, 222, 128, 0.45) !important;
-}
-
-body.dark-mode .alert.error {
-  background: rgba(239, 68, 68, 0.16) !important;
-  color: #fecaca !important;
-  border-color: rgba(248, 113, 113, 0.45) !important;
-}
-
-/* =========================
-   RESPONSIVO
-========================= */
-
-@media (max-width: 1000px) {
-  .meta-form {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .metas-page {
-    margin-left: 80px;
-    padding: 24px 18px;
-  }
-
-  .metas-header h1 {
-    font-size: 30px;
-  }
-
-  .metas-grid {
-    grid-template-columns: 1fr;
-  }
-}
-/* =====================================================
-   MINIMIZAR CARDS DE METAS
-===================================================== */
-
-/* evita os cards ficarem esticados */
-.metas-grid {
-  align-items: start;
-}
-
-/* card de criação com header alinhado */
-.create-meta-card .section-title {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-/* ações no card da meta */
-.meta-card-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* botão minimizar */
-.btn-minimize-meta {
-  width: 36px;
-  height: 36px;
-
-  border: none;
-  border-radius: 10px;
-
-  background: #eef2ff;
-  color: #4f46e5;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-
-  font-size: 14px;
-
-  transition: 0.2s ease;
-}
-
-.btn-minimize-meta:hover {
-  background: #4f46e5;
-  color: #ffffff;
-  transform: translateY(-1px);
-}
-
-/* =========================
-   CARD CRIAR META MINIMIZADO
+   CARDS MINIMIZADOS
 ========================= */
 
 .create-meta-card.collapsed {
@@ -512,10 +583,6 @@ body.dark-mode .alert.error {
 .create-meta-card.collapsed .meta-form {
   display: none !important;
 }
-
-/* =========================
-   CARD DE META MINIMIZADO
-========================= */
 
 .meta-card.collapsed {
   height: auto !important;
@@ -535,33 +602,43 @@ body.dark-mode .alert.error {
   margin: 0 !important;
 }
 
-/* mantém botão de lixeira e minimizar visíveis */
 .meta-card.collapsed .meta-card-actions {
   display: flex !important;
 }
 
 /* =========================
-   MODO ESCURO
+   RESPONSIVO
 ========================= */
 
-body.dark-mode .btn-minimize-meta {
-  background: #1e293b !important;
-  color: #c7d2fe !important;
-  border: 1px solid #475569 !important;
+@media (max-width: 1000px) {
+  .meta-form {
+    grid-template-columns: 1fr;
+  }
 }
 
-body.dark-mode .btn-minimize-meta:hover {
-  background: #6366f1 !important;
-  color: #ffffff !important;
-}
+@media (max-width: 768px) {
+  .metas-page {
+    margin-left: var(--sidebar-closed);
+    width: calc(100% - var(--sidebar-closed));
 
-body:not(.dark-mode) .btn-minimize-meta {
-  background: #eef2ff !important;
-  color: #4f46e5 !important;
-  border: 1px solid #c7d2fe !important;
-}
+    padding: 24px 18px;
+  }
 
-body:not(.dark-mode) .btn-minimize-meta:hover {
-  background: #4f46e5 !important;
-  color: #ffffff !important;
+  .metas-header h1 {
+    font-size: 30px;
+  }
+
+  .metas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .create-meta-card .section-title,
+  .meta-header {
+    flex-direction: column;
+  }
+
+  .meta-card-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }

@@ -1,438 +1,295 @@
-/* =======================
-   CONFIGURAÇÕES GERAIS
-======================= */
+/* =========================
+   PÁGINA INICIAL - STUDYFLOW
+========================= */
+
+/* =========================
+   RESET E VARIÁVEIS
+========================= */
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
 }
+
+:root {
+  --sidebar-open: 260px;
+  --sidebar-closed: 80px;
+
+  --bg-page: #f5f6fb;
+  --bg-card: #ffffff;
+  --bg-soft: #f9fafb;
+  --bg-muted: #f3f4f6;
+
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-soft: #9ca3af;
+  --text-label: #374151;
+
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-soft: #eef2ff;
+
+  --danger: #ef4444;
+  --danger-text: #dc2626;
+  --danger-soft: #fee2e2;
+
+  --warning: #f59e0b;
+  --warning-text: #d97706;
+  --warning-soft: #fef3c7;
+
+  --success: #16a34a;
+  --success-soft: #dcfce7;
+
+  --blue: #3b82f6;
+  --blue-text: #2563eb;
+  --blue-soft: #dbeafe;
+
+  --purple: #8b5cf6;
+  --purple-text: #7c3aed;
+  --purple-soft: #ede9fe;
+
+  --border: #e5e7eb;
+  --input-border: #d1d5db;
+
+  --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.06);
+  --shadow-modal: 0 20px 40px rgba(15, 23, 42, 0.18);
+
+  --transition: 0.3s ease;
+}
+
+body.dark-mode {
+  --bg-page: #0f172a;
+  --bg-card: #111827;
+  --bg-soft: #1e293b;
+  --bg-muted: #1f2937;
+
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --text-soft: #94a3b8;
+  --text-label: #e5e7eb;
+
+  --primary-soft: #1e1b4b;
+
+  --danger-soft: rgba(239, 68, 68, 0.16);
+  --warning-soft: rgba(245, 158, 11, 0.16);
+  --success-soft: rgba(34, 197, 94, 0.16);
+  --blue-soft: rgba(59, 130, 246, 0.16);
+  --purple-soft: rgba(139, 92, 246, 0.16);
+
+  --border: #334155;
+  --input-border: #475569;
+
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-modal: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* =========================
+   BASE
+========================= */
 
 body {
-  background: #f5f5f7;
+  background: var(--bg-page);
+  color: var(--text-main);
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
 }
 
-/* =======================
+/* =========================
    DASHBOARD
-======================= */
+========================= */
 
 .dashboard {
-  margin-left: 260px;
+  min-height: 100vh;
   padding: 30px;
+
+  background: var(--bg-page);
 
   display: flex;
   gap: 24px;
+
+  transition: margin-left var(--transition), width var(--transition);
+}
+
+/* Sidebar aberta */
+body:not(.sidebar-collapsed) .dashboard {
+  margin-left: var(--sidebar-open);
+  width: calc(100% - var(--sidebar-open));
+}
+
+/* Sidebar fechada */
+body.sidebar-collapsed .dashboard {
+  margin-left: var(--sidebar-closed);
+  width: calc(100% - var(--sidebar-closed));
 }
 
 .main-content {
   flex: 1;
+  min-width: 0;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 .header {
+  margin-bottom: 30px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  margin-bottom: 30px;
+  gap: 18px;
 }
 
 .header h1 {
   margin-bottom: 8px;
+
+  color: var(--text-main);
+
+  font-size: 34px;
+  font-weight: 800;
 }
 
 .header p {
-  color: #6b7280;
+  color: var(--text-muted);
+}
+
+/* =========================
+   BOTÕES
+========================= */
+
+.btn-add,
+.play-btn,
+.save-btn,
+.cancel-btn,
+.reset-btn,
+.btn-edit,
+.btn-delete,
+.btn-complete {
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.btn-add,
+.play-btn,
+.save-btn {
+  background: var(--primary);
+  color: #ffffff;
 }
 
 .btn-add {
-  background: #6366f1;
-  color: white;
-  border: none;
-
   padding: 12px 24px;
-  border-radius: 10px;
-  cursor: pointer;
+
+  font-weight: 700;
 }
 
+.btn-add:hover,
+.play-btn:hover,
+.save-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.cancel-btn,
+.reset-btn {
+  background: var(--bg-muted);
+  color: var(--text-label);
+}
+
+.cancel-btn:hover,
+.reset-btn:hover {
+  background: #e5e7eb;
+}
+
+body.dark-mode .cancel-btn:hover,
+body.dark-mode .reset-btn:hover {
+  background: #334155;
+}
+
+/* =========================
+   LISTA DE ATIVIDADES
+========================= */
+
 .activities {
+  max-height: 500px;
+  padding-right: 8px;
+
   display: flex;
   flex-direction: column;
   gap: 16px;
 
-  max-height: 500px;
   overflow-y: auto;
-
-  padding-right: 8px;
 }
-
-.task-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-
-  border: 1px solid #e5e7eb;
-
-  position: relative;
-}
-
-.task-card p {
-  margin-top: 6px;
-  color: #6b7280;
-}
-
-.event.urgent {
-  border-left: 5px solid #ef4444;
-  background: #fee2e2;
-  color: #dc2626;
-}
-
-.event.medium {
-  border-left: 5px solid #f59e0b;
-  background: #fef3c7;
-  color: #d97706;
-}
-
-.event.low {
-  border-left: 5px solid #42f50b;
-  background: #dcfce7;
-  color: #16a34a;
-}
-.task-card.urgent {
-  border-left: 5px solid #ef4444;
-}
-
-.task-card.medium {
-  border-left: 5px solid #f59e0b;
-}
-
-.task-card.low {
-  border-left: 5px solid #42f50b;
-}
-
-/* =======================
-   POMODORO
-======================= */
-
-.pomodoro-card {
-  width: 320px;
-
-  background: white;
-  border-radius: 12px;
-
-  padding: 24px;
-  border: 1px solid #e5e7eb;
-
-  height: fit-content;
-}
-
-.timer-circle {
-  width: 200px;
-  height: 200px;
-
-  border: 6px solid #6366f1;
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin: 20px auto;
-
-  font-size: 36px;
-  font-weight: bold;
-}
-
-.play-btn {
-  width: 100%;
-
-  border: none;
-  background: #6366f1;
-  color: white;
-
-  padding: 14px;
-  border-radius: 10px;
-
-  cursor: pointer;
-}
-
-.reset-btn {
-  width: 100%;
-  margin-top: 10px;
-  padding: 14px;
-
-  border: none;
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  background: #ffffff;
-} 
-
-/* ==========================
-   CALENDÁRIO SEMANAL
-========================== */
-
-.weekly-calendar {
-  margin-top: 40px;
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.calendar-header {
-  padding: 20px;
-  border-bottom: 1px solid #e5e7eb;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.calendar-header h2 {
-  font-size: 22px;
-}
-
-.calendar-header span {
-  color: #9ca3af;
-  font-size: 14px;
-}
-
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-
-.day-column {
-  min-height: 180px;
-  border-right: 1px solid #e5e7eb;
-  position: relative;
-}
-
-.day-column:last-child {
-  border-right: none;
-}
-
-.day-header {
-  padding: 15px;
-  text-align: center;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.day-header span {
-  display: block;
-  color: #9ca3af;
-  font-size: 13px;
-}
-
-.day-header strong {
-  font-size: 18px;
-  color: #111827;
-}
-
-.active-day {
-  background: #f8f9ff;
-}
-
-.active-day strong {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 32px;
-  height: 32px;
-
-  background: #6366f1;
-  color: white;
-  border-radius: 50%;
-}
-
-.event {
-  margin: 12px;
-  padding: 10px;
-
-  border-radius: 10px;
-
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.prova {
-  background: #fee2e2;
-  color: #dc2626;
-}
-
-.trabalho {
-  background: #dbeafe;
-  color: #2563eb;
-}
-
-.estudo {
-  background: #ede9fe;
-  color: #7c3aed;
-}
-
-.calendar-legend {
-  display: flex;
-  gap: 20px;
-
-  padding: 16px 20px;
-  border-top: 1px solid #e5e7eb;
-
-  color: #6b7280;
-  font-size: 14px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-
-  border-radius: 50%;
-  display: inline-block;
-
-  margin-right: 6px;
-}
-
-.red {
-  background: #ef4444;
-}
-
-.blue {
-  background: #3b82f6;
-}
-
-.purple {
-  background: #8b5cf6;
-}
-/* =======================
-   MODAL
-======================= */
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-
-  background: rgba(0, 0, 0, 0.45);
-
-  display: none;
-  justify-content: center;
-  align-items: center;
-
-  z-index: 999;
-}
-
-.modal-overlay.show {
-  display: flex;
-}
-
-.modal {
-  width: 500px;
-  background: white;
-
-  border-radius: 16px;
-
-  padding: 25px;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  margin-bottom: 20px;
-}
-
-.modal-header button {
-  border: none;
-  background: none;
-
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.modal form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.modal input,
-.modal select {
-  padding: 12px;
-
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-}
-
-.modal-buttons {
-  display: flex;
-  gap: 10px;
-
-  margin-top: 15px;
-}
-
-.cancel-btn {
-  flex: 1;
-  padding: 12px;
-
-  border: none;
-  border-radius: 10px;
-
-  background: #e5e7eb;
-  cursor: pointer;
-}
-
-.save-btn {
-  flex: 1;
-  padding: 12px;
-
-  border: none;
-  border-radius: 10px;
-
-  background: #6366f1;
-  color: white;
-
-  cursor: pointer;
-}
-
-/* =======================
-   SCROLL PERSONALIZADO
-======================= */
 
 .activities::-webkit-scrollbar {
   width: 8px;
 }
 
 .activities::-webkit-scrollbar-track {
-  background: #f3f4f6;
+  background: var(--bg-muted);
   border-radius: 10px;
 }
 
 .activities::-webkit-scrollbar-thumb {
-  background: #6366f1;
+  background: var(--primary);
   border-radius: 10px;
 }
 
-/* =======================
-   EVENTOS DO CALENDÁRIO
-======================= */
-
-.events-container {
-  padding: 8px;
-}
-/* =======================
-   AÇÕES DA ATIVIDADE
-   EDITAR E EXCLUIR SÓ NO HOVER
-======================= */
+/* =========================
+   CARD DE TAREFA
+========================= */
 
 .task-card {
   position: relative;
-  padding-right: 110px;
+
+  padding: 20px 155px 20px 20px;
+
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
   cursor: pointer;
+
+  box-shadow: var(--shadow-card);
+
+  transition: 0.2s ease;
 }
 
-/* container dos botões */
+.task-card:hover {
+  transform: translateY(-2px);
+}
+
+.task-card p {
+  margin-top: 6px;
+
+  color: var(--text-muted);
+}
+
+.task-card.urgent {
+  border-left: 5px solid var(--danger);
+}
+
+.task-card.medium {
+  border-left: 5px solid var(--warning);
+}
+
+.task-card.low {
+  border-left: 5px solid var(--success);
+}
+
+.task-card.completed {
+  opacity: 0.5;
+  transform: scale(0.98);
+}
+
+/* =========================
+   AÇÕES DA TAREFA
+========================= */
+
 .task-actions {
   position: absolute;
   top: 16px;
@@ -444,60 +301,403 @@ body {
 
   opacity: 0;
   pointer-events: none;
+
   transform: translateX(10px);
 
   transition: 0.2s ease;
 }
 
-/* aparece quando passa o mouse no card */
 .task-card:hover .task-actions {
   opacity: 1;
   pointer-events: auto;
+
   transform: translateX(0);
 }
 
-/* botão editar e excluir */
 .btn-edit,
-.btn-delete {
-  position: static;
-
+.btn-delete,
+.btn-complete {
   width: 36px;
   height: 36px;
-
-  border: none;
-  border-radius: 10px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  cursor: pointer;
-  transition: 0.2s ease;
 }
 
-/* editar */
 .btn-edit {
-  background: #eef2ff;
-  color: #6366f1;
+  background: var(--primary-soft);
+  color: var(--primary);
 }
 
 .btn-edit:hover {
-  background: #6366f1;
-  color: white;
+  background: var(--primary);
+  color: #ffffff;
 }
 
-/* excluir */
 .btn-delete {
-  background: #fee2e2;
-  color: #ef4444;
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
 .btn-delete:hover {
-  background: #ef4444;
-  color: white;
+  background: var(--danger);
+  color: #ffffff;
 }
 
-/* modal detalhes */
+.btn-complete {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.btn-complete:hover {
+  background: var(--success);
+  color: #ffffff;
+}
+
+/* =========================
+   POMODORO RÁPIDO
+========================= */
+
+.pomodoro-card {
+  width: 320px;
+  height: fit-content;
+
+  padding: 24px;
+
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-card);
+}
+
+.pomodoro-card h2 {
+  color: var(--text-main);
+}
+
+.timer-circle {
+  width: 200px;
+  height: 200px;
+
+  margin: 20px auto;
+
+  border: 6px solid var(--primary);
+  border-radius: 50%;
+
+  color: var(--text-main);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 36px;
+  font-weight: 800;
+}
+
+.play-btn,
+.reset-btn {
+  width: 100%;
+
+  padding: 14px;
+
+  font-weight: 700;
+}
+
+.reset-btn {
+  margin-top: 10px;
+}
+
+/* =========================
+   CALENDÁRIO SEMANAL
+========================= */
+
+.weekly-calendar {
+  margin-top: 40px;
+
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow: var(--shadow-card);
+}
+
+.calendar-header {
+  padding: 20px;
+
+  border-bottom: 1px solid var(--border);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.calendar-header h2 {
+  color: var(--text-main);
+
+  font-size: 22px;
+}
+
+.calendar-header span {
+  color: var(--text-soft);
+
+  font-size: 14px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day-column {
+  min-height: 180px;
+
+  border-right: 1px solid var(--border);
+
+  position: relative;
+}
+
+.day-column:last-child {
+  border-right: none;
+}
+
+.day-header {
+  padding: 15px;
+
+  border-bottom: 1px solid var(--border);
+
+  text-align: center;
+}
+
+.day-header span {
+  display: block;
+
+  color: var(--text-soft);
+
+  font-size: 13px;
+}
+
+.day-header strong {
+  color: var(--text-main);
+
+  font-size: 18px;
+}
+
+.active-day {
+  background: var(--bg-soft);
+}
+
+.active-day strong {
+  width: 32px;
+  height: 32px;
+
+  background: var(--primary);
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.events-container {
+  padding: 8px;
+}
+
+/* =========================
+   EVENTOS
+========================= */
+
+.event {
+  margin: 12px;
+  padding: 10px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.event.urgent,
+.prova {
+  background: var(--danger-soft);
+  color: var(--danger-text);
+  border-left: 5px solid var(--danger);
+}
+
+.event.medium {
+  background: var(--warning-soft);
+  color: var(--warning-text);
+  border-left: 5px solid var(--warning);
+}
+
+.event.low {
+  background: var(--success-soft);
+  color: var(--success);
+  border-left: 5px solid var(--success);
+}
+
+.trabalho {
+  background: var(--blue-soft);
+  color: var(--blue-text);
+}
+
+.estudo {
+  background: var(--purple-soft);
+  color: var(--purple-text);
+}
+
+/* =========================
+   LEGENDA DO CALENDÁRIO
+========================= */
+
+.calendar-legend {
+  padding: 16px 20px;
+
+  border-top: 1px solid var(--border);
+
+  color: var(--text-muted);
+
+  display: flex;
+  gap: 20px;
+
+  font-size: 14px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+
+  margin-right: 6px;
+
+  border-radius: 50%;
+
+  display: inline-block;
+}
+
+.red {
+  background: var(--danger);
+}
+
+.blue {
+  background: var(--blue);
+}
+
+.purple {
+  background: var(--purple);
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal {
+  width: 500px;
+  max-width: 90%;
+
+  padding: 25px;
+
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  box-shadow: var(--shadow-modal);
+}
+
+.modal-header {
+  margin-bottom: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  color: var(--text-main);
+}
+
+.modal-header button {
+  border: none;
+
+  background: transparent;
+  color: var(--text-label);
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal input,
+.modal select,
+.modal textarea {
+  padding: 12px;
+
+  background: var(--bg-card);
+  color: var(--text-main);
+
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+}
+
+.modal input:focus,
+.modal select:focus,
+.modal textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.modal-buttons {
+  margin-top: 15px;
+
+  display: flex;
+  gap: 10px;
+}
+
+.cancel-btn,
+.save-btn {
+  flex: 1;
+
+  padding: 12px;
+}
+
+/* =========================
+   DETALHES DA ATIVIDADE
+========================= */
+
 .detalhes-atividade {
   display: flex;
   flex-direction: column;
@@ -505,57 +705,85 @@ body {
 }
 
 .detalhes-atividade p {
-  color: #374151;
+  color: var(--text-label);
+
   font-size: 15px;
   line-height: 1.5;
 }
 
 .detalhes-atividade strong {
-  color: #111827;
+  color: var(--text-main);
 }
 
-.activity-tag {
-  cursor: pointer;
-}
-
+.activity-tag,
 .calendar-day:not(.empty) {
   cursor: pointer;
 }
 
-/* =======================
-   BOTÃO CONCLUIR
-======================= */
+/* =========================
+   RESPONSIVO
+========================= */
 
-.task-card {
-  padding-right: 155px;
+@media (max-width: 1100px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .pomodoro-card {
+    width: 100%;
+  }
 }
 
-.btn-complete {
-  position: static;
+@media (max-width: 768px) {
+  .dashboard {
+    margin-left: var(--sidebar-closed);
+    width: calc(100% - var(--sidebar-closed));
 
-  width: 36px;
-  height: 36px;
+    padding: 24px 18px;
+  }
 
-  border: none;
-  border-radius: 10px;
+  .header,
+  .calendar-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .header h1 {
+    font-size: 28px;
+  }
 
-  cursor: pointer;
-  transition: 0.2s ease;
+  .btn-add {
+    width: 100%;
+  }
 
-  background: #dcfce7;
-  color: #16a34a;
-}
+  .task-card {
+    padding-right: 20px;
+  }
 
-.btn-complete:hover {
-  background: #16a34a;
-  color: white;
-}
+  .task-actions {
+    position: static;
 
-.task-card.completed {
-  opacity: 0.5;
-  transform: scale(0.98);
+    margin-top: 14px;
+
+    opacity: 1;
+    pointer-events: auto;
+
+    transform: none;
+  }
+
+  .calendar-grid {
+    overflow-x: auto;
+  }
+
+  .day-column {
+    min-width: 120px;
+  }
+
+  .calendar-legend {
+    flex-wrap: wrap;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+  }
 }

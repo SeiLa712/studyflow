@@ -1,6 +1,10 @@
-/* =======================
-   CONFIGURAÇÕES GERAIS
-======================= */
+/* =========================
+   CALENDÁRIO - STUDYFLOW
+========================= */
+
+/* =========================
+   RESET E VARIÁVEIS
+========================= */
 
 * {
   margin: 0;
@@ -9,111 +13,251 @@
   font-family: "Segoe UI", sans-serif;
 }
 
-body {
-  background: #f5f5f7;
+:root {
+  --sidebar-open: 260px;
+  --sidebar-closed: 80px;
+
+  --bg-page: #f5f6fb;
+  --bg-card: #ffffff;
+  --bg-soft: #f9fafb;
+  --bg-hover: #eef2ff;
+
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-soft: #374151;
+
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+
+  --border: #e5e7eb;
+
+  --success: #16a34a;
+  --success-soft: #dcfce7;
+
+  --danger: #ef4444;
+  --danger-soft: #fee2e2;
+
+  --warning: #f59e0b;
+
+  --blue: #3b82f6;
+  --pink: #ec4899;
+
+  --shadow-modal: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+  --transition: 0.3s ease;
 }
 
-/* =======================
+body.dark-mode {
+  --bg-page: #0f172a;
+  --bg-card: #111827;
+  --bg-soft: #1e293b;
+  --bg-hover: #1f2937;
+
+  --text-main: #ffffff;
+  --text-muted: #cbd5e1;
+  --text-soft: #d1d5db;
+
+  --border: #334155;
+
+  --shadow-modal: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* =========================
+   BASE
+========================= */
+
+body {
+  background: var(--bg-page);
+  color: var(--text-main);
+}
+
+/* =========================
    CONTAINER PRINCIPAL
-======================= */
+========================= */
 
 .main-container {
-  width: 100%;
+  min-height: 100vh;
+
+  transition: margin-left var(--transition), width var(--transition);
 }
 
+/* Sidebar aberta */
+body:not(.sidebar-collapsed) .main-container {
+  margin-left: var(--sidebar-open) !important;
+  width: calc(100% - var(--sidebar-open)) !important;
+}
+
+/* Sidebar fechada */
+body.sidebar-collapsed .main-container {
+  margin-left: var(--sidebar-closed) !important;
+  width: calc(100% - var(--sidebar-closed)) !important;
+}
+
+/* IMPORTANTE: evita espaço duplo */
 .calendar-section {
-  margin-left: 260px; /* mesma sidebar da página inicial */
+  width: 100% !important;
+  margin-left: 0 !important;
   padding: 30px;
+
+  transition: padding var(--transition);
 }
 
-/* =======================
+/* =========================
    CABEÇALHO
-======================= */
+========================= */
 
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 18px;
+
   margin-bottom: 24px;
 }
 
 .calendar-header h1 {
-  font-size: 2rem;
-  color: #111827;
   margin-bottom: 4px;
+
+  color: var(--text-main);
+
+  font-size: 2rem;
+  font-weight: 850;
 }
 
 .subtitle {
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
+/* =========================
+   BOTÃO NOVA ATIVIDADE
+========================= */
+
 .btn-nova-atividade {
-  background: #6366f1;
-  color: white;
   border: none;
+  border-radius: 12px;
+
   padding: 12px 24px;
-  border-radius: 10px;
+
+  background: var(--primary);
+  color: #ffffff;
+
+  font-weight: 750;
+
   cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
 .btn-nova-atividade:hover {
-  background: #4f46e5;
+  background: var(--primary-hover);
+
+  transform: translateY(-1px);
 }
 
-/* =======================
-   NAVEGAÇÃO DE MESES
-======================= */
+/* =========================
+   NAVEGAÇÃO DO MÊS
+========================= */
 
 .month-navigation {
-  display: flex;
+  margin: 25px 0;
+
+  display: grid;
+  grid-template-columns: 48px 280px 48px;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 24px;
+  justify-content: center;
+  gap: 12px;
+}
+
+.month-title-box {
+  width: 280px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .month-navigation h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #111827;
+  color: var(--text-main);
+
+  text-align: center;
+  font-size: 30px;
+  font-weight: 850;
+
+  white-space: nowrap;
+}
+
+.current-month-label {
+  margin-top: 4px;
+
+  padding: 4px 10px;
+
+  border-radius: 999px;
+
+  background: var(--bg-hover);
+  color: var(--primary);
+
+  font-size: 13px;
+  font-weight: 750;
+
+  text-transform: lowercase;
 }
 
 .arrow-btn {
+  width: 48px;
+  height: 48px;
+
   border: none;
-  background: none;
-  font-size: 22px;
+  border-radius: 14px;
+
+  background: transparent;
+  color: var(--text-main);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+
   cursor: pointer;
-  color: #374151;
+
+  transition: 0.2s ease;
 }
 
 .arrow-btn:hover {
-  color: #6366f1;
+  background: var(--bg-hover);
+  color: var(--primary);
 }
 
-/* =======================
+/* =========================
    CALENDÁRIO
-======================= */
+========================= */
 
 .calendar-grid-container {
+  width: 100% !important;
+
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
 
   overflow: hidden;
 }
 
 .weekday-header {
-  text-align: center;
   padding: 16px;
-  font-weight: 600;
-  color: #6b7280;
 
-  border-bottom: 1px solid #e5e7eb;
-  border-right: 1px solid #e5e7eb;
+  background: var(--bg-soft);
+  color: var(--text-muted);
 
-  background: #fafafa;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+
+  text-align: center;
+  font-weight: 750;
 }
 
 .weekday-header:last-child {
@@ -125,27 +269,39 @@ body {
 
   padding: 10px;
 
-  border-right: 1px solid #e5e7eb;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--bg-card);
 
-  background: white;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.calendar-day:hover:not(.empty) {
+  background: var(--bg-soft);
 }
 
 .calendar-day.empty {
-  background: #fafafa;
+  background: var(--bg-soft);
+  cursor: default;
 }
 
 .day-number {
-  font-size: 14px;
-  color: #374151;
+  display: block;
+
   margin-bottom: 8px;
 
-  display: block;
+  color: var(--text-soft);
+
+  font-size: 14px;
+  font-weight: 700;
 }
 
-/* =======================
-   TAREFAS
-======================= */
+/* =========================
+   TAREFAS NO CALENDÁRIO
+========================= */
 
 .activities-wrapper {
   display: flex;
@@ -156,33 +312,50 @@ body {
 .activity-tag {
   padding: 5px 8px;
 
-  border-radius: 6px;
+  border-radius: 7px;
+
+  color: #ffffff;
 
   font-size: 12px;
-  font-weight: 600;
-
-  color: white;
+  font-weight: 700;
 
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.activity-tag:hover {
+  transform: translateY(-1px);
 }
 
 .tag-estudo {
-  background: #3b82f6;
+  background: var(--blue);
 }
 
 .tag-trabalho {
-  background: #ec4899;
+  background: var(--pink);
 }
 
 .tag-prova {
-  background: #ef4444;
+  background: var(--danger);
 }
 
-/* =======================
-   MODAL
-======================= */
+.activity-tag.concluida {
+  background: var(--success-soft) !important;
+  color: #15803d !important;
+
+  text-decoration: line-through;
+
+  opacity: 0.85;
+}
+
+/* =========================
+   MODAIS
+========================= */
 
 .modal-overlay {
   position: fixed;
@@ -191,8 +364,8 @@ body {
   background: rgba(0, 0, 0, 0.45);
 
   display: none;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   z-index: 9999;
 }
@@ -205,27 +378,36 @@ body {
   width: 500px;
   max-width: 90%;
 
-  background: white;
-  border-radius: 16px;
-
   padding: 25px;
 
-  box-shadow: 0 10px 30px rgba(0,0,0,.15);
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  box-shadow: var(--shadow-modal);
 }
 
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
   margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h2 {
+  color: var(--text-main);
 }
 
 .modal-header button {
-  background: none;
   border: none;
 
+  background: transparent;
+  color: var(--text-main);
+
   font-size: 20px;
+
   cursor: pointer;
 }
 
@@ -236,7 +418,9 @@ body {
 }
 
 .modal label {
-  font-weight: 600;
+  color: var(--text-main);
+
+  font-weight: 700;
 }
 
 .modal input,
@@ -246,21 +430,40 @@ body {
 
   border: 1px solid #d1d5db;
   border-radius: 10px;
+
+  background: #ffffff;
+  color: #111827;
+}
+
+body.dark-mode .modal input,
+body.dark-mode .modal textarea,
+body.dark-mode .modal select {
+  background: #0f172a;
+  color: #ffffff;
+
+  border-color: #475569;
 }
 
 .modal textarea {
-  resize: vertical;
   min-height: 100px;
+
+  resize: vertical;
 }
 
 .modal-buttons {
+  margin-top: 15px;
+
   display: flex;
   gap: 10px;
-  margin-top: 15px;
 }
 
+/* =========================
+   BOTÕES DO MODAL
+========================= */
+
 .cancel-btn,
-.save-btn {
+.save-btn,
+.complete-btn {
   flex: 1;
 
   padding: 12px;
@@ -268,25 +471,48 @@ body {
   border: none;
   border-radius: 10px;
 
+  font-weight: 750;
+
   cursor: pointer;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.2s ease;
 }
 
 .cancel-btn {
   background: #e5e7eb;
+  color: #374151;
+}
+
+.cancel-btn:hover {
+  background: #d1d5db;
 }
 
 .save-btn {
-  background: #6366f1;
-  color: white;
+  background: var(--primary);
+  color: #ffffff;
 }
 
 .save-btn:hover {
-  background: #4f46e5;
+  background: var(--primary-hover);
 }
 
-/* =======================
-   MODAL DE DETALHES
-======================= */
+.complete-btn {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.complete-btn:hover {
+  background: var(--success);
+  color: #ffffff;
+}
+
+/* =========================
+   DETALHES DA ATIVIDADE
+========================= */
 
 .detalhes-atividade {
   display: flex;
@@ -295,29 +521,23 @@ body {
 }
 
 .detalhes-atividade p {
-  color: #374151;
+  color: var(--text-soft);
+
   font-size: 15px;
   line-height: 1.5;
 }
 
 .detalhes-atividade strong {
-  color: #111827;
+  color: var(--text-main);
 }
+
+/* =========================
+   AÇÕES DA ATIVIDADE
+========================= */
 
 .task-card {
   cursor: pointer;
 }
-
-.activity-tag {
-  cursor: pointer;
-}
-
-.calendar-day:not(.empty) {
-  cursor: pointer;
-}
-/* =======================
-   BOTÕES DE AÇÃO DA ATIVIDADE
-======================= */
 
 .task-actions {
   display: flex;
@@ -338,235 +558,83 @@ body {
   justify-content: center;
 
   cursor: pointer;
+
   transition: 0.2s ease;
 }
 
 .btn-edit {
-  background: #eef2ff;
-  color: #6366f1;
+  background: var(--bg-hover);
+  color: var(--primary);
 }
 
 .btn-edit:hover {
-  background: #6366f1;
-  color: white;
+  background: var(--primary);
+  color: #ffffff;
 }
 
 .btn-delete {
-  background: #fee2e2;
-  color: #ef4444;
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
 .btn-delete:hover {
-  background: #ef4444;
-  color: white;
+  background: var(--danger);
+  color: #ffffff;
 }
 
-.activity-tag {
-  cursor: pointer;
-}
-
-/* =======================
-   ATIVIDADE CONCLUÍDA
-======================= */
-
-.activity-tag.concluida {
-  background: #dcfce7 !important;
-  color: #15803d !important;
-  text-decoration: line-through;
-  opacity: 0.85;
-}
-
-/* BOTÃO CONCLUIR NO MODAL */
-
-.complete-btn {
-  flex: 1;
-  padding: 12px;
-
-  border: none;
-  border-radius: 10px;
-
-  background: #dcfce7;
-  color: #16a34a;
-
-  font-weight: 600;
-  cursor: pointer;
-
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
-  transition: 0.2s ease;
-}
-
-.complete-btn:hover {
-  background: #16a34a;
-  color: white;
-}
 /* =========================
-   NAVEGAÇÃO DO MÊS FIXA
+   RESPONSIVO
 ========================= */
 
-.month-navigation {
-  display: grid;
-  grid-template-columns: 48px 280px 48px;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-
-  margin: 25px 0;
-}
-
-.month-navigation h2 {
-  text-align: center;
-  font-size: 30px;
-  font-weight: 800;
-  color: #111827;
-
-  white-space: nowrap;
-}
-
-.arrow-btn {
-  width: 48px;
-  height: 48px;
-
-  border: none;
-  border-radius: 14px;
-
-  background: transparent;
-  color: #111827;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 24px;
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-.arrow-btn:hover {
-  background: #eef2ff;
-  color: #6366f1;
-}
-/* =========================
-   INDICADOR DE MÊS ATUAL
-========================= */
-
-.month-title-box {
-  width: 280px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.current-month-label {
-  margin-top: 4px;
-
-  font-size: 13px;
-  font-weight: 700;
-
-  color: #6366f1;
-  background: #eef2ff;
-
-  padding: 4px 10px;
-  border-radius: 999px;
-
-  text-transform: lowercase;
-}
-/* =========================
-   CORREÇÃO DO ESPAÇO DA SIDEBAR
-========================= */
-
-.calendar-section {
-  transition: margin-left 0.3s ease, width 0.3s ease;
-}
-
-/* sidebar aberta */
-body:not(.sidebar-collapsed) .calendar-section {
-  margin-left: 260px !important;
-  width: calc(100% - 260px) !important;
-}
-
-/* sidebar fechada */
-body.sidebar-collapsed .calendar-section {
-  margin-left: 80px !important;
-  width: calc(100% - 80px) !important;
-}
-
-/* remove centralização exagerada */
-.calendar-container,
-.calendar-wrapper,
-.calendar-content {
-  margin-left: 0 !important;
-}
-
-/* deixa o calendário ocupar melhor a tela */
-.calendar-section {
-  margin-left: 0 !important;
-  padding: 30px;
-  width: 100% !important;
-}
-
-/* responsivo */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .calendar-section {
-    margin-left: 80px !important;
-    width: calc(100% - 80px) !important;
-    padding-left: 18px !important;
-    padding-right: 18px !important;
+    padding: 24px 18px;
+  }
+
+  .calendar-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-nova-atividade {
+    width: 100%;
+  }
+
+  .month-navigation {
+    grid-template-columns: 44px 1fr 44px;
+  }
+
+  .month-title-box {
+    width: 100%;
+  }
+
+  .month-navigation h2 {
+    font-size: 24px;
+  }
+
+  .arrow-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .calendar-grid-container {
+    overflow-x: auto;
+  }
+
+  .weekday-header,
+  .calendar-day {
+    min-width: 105px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
   }
 }
-/* =========================
-   CORREÇÃO DEFINITIVA DO ESPAÇO
-   CALENDÁRIO + SIDEBAR
-========================= */
 
-/* quem deve empurrar o conteúdo é o main-container */
-.main-container {
-  min-height: 100vh;
-  transition: margin-left 0.3s ease, width 0.3s ease;
-}
-
-/* calendar-section NÃO pode ter margin-left */
-.main-container > .calendar-section {
-  margin-left: 0 !important;
-  width: 100% !important;
-}
-
-/* sidebar aberta */
-body:not(.sidebar-collapsed) .main-container {
-  margin-left: 260px !important;
-  width: calc(100% - 260px) !important;
-}
-
-/* sidebar fechada */
-body.sidebar-collapsed .main-container {
-  margin-left: 80px !important;
-  width: calc(100% - 80px) !important;
-}
-
-/* caso a classe esteja na própria sidebar */
-.sidebar.collapsed ~ .main-container {
-  margin-left: 80px !important;
-  width: calc(100% - 80px) !important;
-}
-
-.sidebar:not(.collapsed) ~ .main-container {
-  margin-left: 260px !important;
-  width: calc(100% - 260px) !important;
-}
-
-/* garante que nada interno fique centralizado com margem extra */
-.calendar-header,
-.month-navigation,
-.calendar-grid-container {
-  margin-left: 0 !important;
-}
-
-/* calendário ocupa toda a área útil */
-.calendar-grid-container {
-  width: 100% !important;
+@media (max-width: 768px) {
+  body.sidebar-collapsed .main-container,
+  body:not(.sidebar-collapsed) .main-container {
+    margin-left: var(--sidebar-closed) !important;
+    width: calc(100% - var(--sidebar-closed)) !important;
+  }
 }

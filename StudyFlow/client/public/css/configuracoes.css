@@ -1,3 +1,11 @@
+/* =========================
+   CONFIGURAÇÕES - STUDYFLOW
+========================= */
+
+/* =========================
+   RESET E VARIÁVEIS
+========================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -5,32 +13,115 @@
   font-family: "Segoe UI", sans-serif;
 }
 
-body {
-  background: #f5f6fb;
-  color: #111827;
+:root {
+  --sidebar-open: 260px;
+  --sidebar-closed: 80px;
+
+  --bg-page: #f5f6fb;
+  --bg-card: #ffffff;
+  --bg-soft: #f8f9ff;
+  --bg-input: #ffffff;
+
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-soft: #4b5563;
+  --text-label: #374151;
+
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-soft: #eef2ff;
+  --primary-border: #c7d2fe;
+
+  --success: #16a34a;
+  --success-soft: #ecfdf5;
+  --success-border: #bbf7d0;
+
+  --danger: #dc2626;
+  --danger-soft: #fee2e2;
+  --danger-border: #fecaca;
+
+  --border: #e5e7eb;
+  --input-border: #d1d5db;
+
+  --shadow-card: 0 10px 28px rgba(15, 23, 42, 0.06);
+  --transition: 0.3s ease;
 }
 
+body.dark-mode {
+  --bg-page: #0f172a;
+  --bg-card: #111827;
+  --bg-soft: #0f172a;
+  --bg-input: #020617;
+
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --text-soft: #e5e7eb;
+  --text-label: #e5e7eb;
+
+  --primary-soft: #1e1b4b;
+  --primary-border: #6366f1;
+
+  --border: #334155;
+  --input-border: #475569;
+
+  --shadow-card: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================
+   BASE
+========================= */
+
+body {
+  background: var(--bg-page);
+  color: var(--text-main);
+}
+
+/* =========================
+   PÁGINA
+========================= */
+
 .configuracoes-page {
-  margin-left: 260px;
   min-height: 100vh;
   padding: 36px;
 
-  transition: margin-left 0.3s ease, width 0.3s ease;
+  background: var(--bg-page);
+  color: var(--text-main);
+
+  transition: margin-left var(--transition), width var(--transition);
 }
+
+/* Sidebar aberta */
+body:not(.sidebar-collapsed) .configuracoes-page {
+  margin-left: var(--sidebar-open);
+  width: calc(100% - var(--sidebar-open));
+}
+
+/* Sidebar fechada */
+body.sidebar-collapsed .configuracoes-page {
+  margin-left: var(--sidebar-closed);
+  width: calc(100% - var(--sidebar-closed));
+}
+
+/* =========================
+   HEADER
+========================= */
 
 .configuracoes-header {
   margin-bottom: 26px;
 }
 
 .configuracoes-header h1 {
+  margin-bottom: 6px;
+
+  color: var(--text-main);
+
   font-size: 36px;
   font-weight: 850;
-  margin-bottom: 6px;
-  color: #111827;
 }
 
 .configuracoes-header p {
-  color: #6b7280;
+  color: var(--text-muted);
+
   font-size: 16px;
 }
 
@@ -41,7 +132,9 @@ body {
 .alert {
   width: 100%;
 
+  margin-bottom: 20px;
   padding: 14px 16px;
+
   border-radius: 14px;
 
   display: flex;
@@ -49,20 +142,30 @@ body {
   gap: 10px;
 
   font-weight: 700;
-
-  margin-bottom: 20px;
 }
 
 .alert.success {
-  background: #ecfdf5;
+  background: var(--success-soft);
   color: #166534;
-  border: 1px solid #bbf7d0;
+  border: 1px solid var(--success-border);
 }
 
 .alert.error {
   background: #fef2f2;
   color: #991b1b;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--danger-border);
+}
+
+body.dark-mode .alert.success {
+  background: rgba(34, 197, 94, 0.16);
+  color: #bbf7d0;
+  border-color: rgba(74, 222, 128, 0.45);
+}
+
+body.dark-mode .alert.error {
+  background: rgba(239, 68, 68, 0.16);
+  color: #fecaca;
+  border-color: rgba(248, 113, 113, 0.45);
 }
 
 /* =========================
@@ -77,29 +180,33 @@ body {
   margin-bottom: 26px;
 }
 
+/* =========================
+   CARDS
+========================= */
+
 .config-card,
 .premium-card,
 .meta-progress-card {
-  background: #ffffff;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 20px;
-
   padding: 24px;
 
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 20px;
+
+  box-shadow: var(--shadow-card);
 }
 
 /* =========================
-   HEADERS DOS CARDS
+   HEADER DOS CARDS
 ========================= */
 
 .card-header {
+  margin-bottom: 22px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  margin-bottom: 22px;
 }
 
 .card-header > div {
@@ -109,15 +216,18 @@ body {
 }
 
 .card-header h2 {
+  color: var(--text-main);
+
   font-size: 22px;
   font-weight: 800;
-  color: #111827;
 }
 
 .card-header p {
-  color: #6b7280;
-  font-size: 14px;
   margin-top: 3px;
+
+  color: var(--text-muted);
+
+  font-size: 14px;
 }
 
 .card-icon {
@@ -126,8 +236,8 @@ body {
 
   border-radius: 14px;
 
-  background: #eef2ff;
-  color: #4f46e5;
+  background: var(--primary-soft);
+  color: var(--primary);
 
   display: inline-flex;
   align-items: center;
@@ -149,9 +259,10 @@ body {
 }
 
 .config-form label {
+  color: var(--text-label);
+
   font-size: 14px;
   font-weight: 700;
-  color: #374151;
 }
 
 .config-form input {
@@ -159,11 +270,11 @@ body {
 
   padding: 13px 14px;
 
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
+  background: var(--bg-input);
+  color: var(--text-main);
 
-  background: #ffffff;
-  color: #111827;
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
 
   font-size: 15px;
   font-weight: 600;
@@ -174,8 +285,12 @@ body {
 }
 
 .config-form input:focus {
-  border-color: #4f46e5;
+  border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.config-form input::placeholder {
+  color: #94a3b8;
 }
 
 /* =========================
@@ -189,37 +304,39 @@ body {
 
   padding: 13px 18px;
 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   font-size: 15px;
   font-weight: 800;
 
   cursor: pointer;
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
   transition: 0.2s ease;
 }
 
 .btn-primary {
-  background: #4f46e5;
-  color: white;
+  background: var(--primary);
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-  background: #4338ca;
+  background: var(--primary-hover);
   transform: translateY(-1px);
 }
 
 .btn-danger {
-  background: #fee2e2;
+  background: var(--danger-soft);
   color: #991b1b;
-  border: 1px solid #fecaca;
+
+  border: 1px solid var(--danger-border);
 }
 
 .btn-danger:hover {
-  background: #dc2626;
-  color: white;
+  background: var(--danger);
+  color: #ffffff;
+
   transform: translateY(-1px);
 }
 
@@ -236,42 +353,45 @@ body {
   grid-template-columns: 1fr 300px;
   gap: 26px;
 
-  background: linear-gradient(135deg, #ffffff, #f8f9ff);
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-soft));
 }
 
 .premium-badge {
   width: fit-content;
 
-  background: #eef2ff;
-  color: #4f46e5;
-
+  margin-bottom: 14px;
   padding: 8px 14px;
+
+  background: var(--primary-soft);
+  color: var(--primary);
+
   border-radius: 999px;
 
   display: inline-flex;
   align-items: center;
   gap: 8px;
 
-  font-weight: 800;
   font-size: 13px;
-
-  margin-bottom: 14px;
+  font-weight: 800;
 }
 
 .premium-content h2 {
+  margin-bottom: 8px;
+
+  color: var(--text-main);
+
   font-size: 28px;
   font-weight: 850;
-  color: #111827;
-  margin-bottom: 8px;
 }
 
 .premium-content > p {
-  color: #4b5563;
-  line-height: 1.6;
-
   max-width: 760px;
 
   margin-bottom: 22px;
+
+  color: var(--text-soft);
+
+  line-height: 1.6;
 }
 
 .plans-grid {
@@ -281,18 +401,25 @@ body {
 }
 
 .plan-box {
-  background: #ffffff;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-
   padding: 18px;
+
+  background: var(--bg-card);
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.plan-box.premium {
+  background: var(--primary-soft);
+  border-color: var(--primary-border);
 }
 
 .plan-box h3 {
-  color: #111827;
-  font-size: 20px;
   margin-bottom: 12px;
+
+  color: var(--text-main);
+
+  font-size: 20px;
 }
 
 .plan-box ul {
@@ -304,32 +431,31 @@ body {
 }
 
 .plan-box li {
-  color: #374151;
+  color: var(--text-label);
 
   display: flex;
   align-items: center;
   gap: 8px;
 
-  font-weight: 600;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .plan-box li i {
   color: #22c55e;
 }
 
-.plan-box.premium {
-  border-color: #c7d2fe;
-  background: #eef2ff;
-}
+/* =========================
+   LATERAL PREMIUM
+========================= */
 
 .premium-side {
+  padding: 22px;
+
   background: #111827;
-  color: white;
+  color: #ffffff;
 
   border-radius: 18px;
-
-  padding: 22px;
 
   display: flex;
   flex-direction: column;
@@ -339,21 +465,28 @@ body {
 
 .premium-side p {
   color: #d1d5db;
+
   line-height: 1.5;
 }
 
 .premium-side strong {
-  color: white;
+  color: #ffffff;
+}
+
+body.dark-mode .premium-side {
+  background: #020617;
+  border: 1px solid var(--border);
 }
 
 .plan-status {
   width: fit-content;
 
   padding: 7px 12px;
+
   border-radius: 999px;
 
-  font-weight: 800;
   font-size: 13px;
+  font-weight: 800;
 }
 
 .plan-status.active {
@@ -379,14 +512,16 @@ body {
 }
 
 .section-title h2 {
+  margin-bottom: 5px;
+
+  color: var(--text-main);
+
   font-size: 28px;
   font-weight: 850;
-  color: #111827;
-  margin-bottom: 5px;
 }
 
 .section-title p {
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 .metas-grid {
@@ -417,15 +552,29 @@ body {
 }
 
 .meta-top h3 {
+  color: var(--text-main);
+
   font-size: 18px;
-  color: #111827;
 }
 
 .meta-top strong {
-  color: #4f46e5;
+  color: var(--primary);
+
   font-size: 20px;
+
   white-space: nowrap;
 }
+
+.meta-progress-card p {
+  color: var(--text-muted);
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* =========================
+   BARRA DE PROGRESSO
+========================= */
 
 .progress-bg {
   width: 100%;
@@ -437,10 +586,14 @@ body {
   overflow: hidden;
 }
 
+body.dark-mode .progress-bg {
+  background: #1e293b;
+}
+
 .progress-fill {
   height: 100%;
 
-  background: #4f46e5;
+  background: var(--primary);
 
   border-radius: 999px;
 
@@ -455,11 +608,9 @@ body {
   background: #22c55e;
 }
 
-.meta-progress-card p {
-  color: #6b7280;
-  font-weight: 600;
-  font-size: 14px;
-}
+/* =========================
+   FORMULÁRIO DE METAS
+========================= */
 
 .metas-form-card {
   margin-top: 10px;
@@ -474,93 +625,6 @@ body {
 
 .metas-form button {
   height: 48px;
-}
-
-/* =========================
-   MODO ESCURO
-========================= */
-
-body.dark-mode .configuracoes-page {
-  background: #0f172a !important;
-  color: #e5e7eb !important;
-}
-
-body.dark-mode .configuracoes-header h1,
-body.dark-mode .card-header h2,
-body.dark-mode .premium-content h2,
-body.dark-mode .section-title h2,
-body.dark-mode .meta-top h3,
-body.dark-mode .plan-box h3 {
-  color: #f8fafc !important;
-}
-
-body.dark-mode .configuracoes-header p,
-body.dark-mode .card-header p,
-body.dark-mode .premium-content > p,
-body.dark-mode .section-title p,
-body.dark-mode .meta-progress-card p {
-  color: #cbd5e1 !important;
-}
-
-body.dark-mode .config-card,
-body.dark-mode .meta-progress-card {
-  background: #111827 !important;
-  border-color: #334155 !important;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35) !important;
-}
-
-body.dark-mode .premium-card {
-  background: #111827 !important;
-  border-color: #334155 !important;
-}
-
-body.dark-mode .plan-box {
-  background: #0f172a !important;
-  border-color: #334155 !important;
-}
-
-body.dark-mode .plan-box.premium {
-  background: #1e1b4b !important;
-  border-color: #6366f1 !important;
-}
-
-body.dark-mode .plan-box li {
-  color: #e5e7eb !important;
-}
-
-body.dark-mode .config-form label {
-  color: #e5e7eb !important;
-}
-
-body.dark-mode .config-form input {
-  background: #020617 !important;
-  color: #f8fafc !important;
-  border-color: #475569 !important;
-}
-
-body.dark-mode .config-form input::placeholder {
-  color: #94a3b8 !important;
-}
-
-body.dark-mode .progress-bg {
-  background: #1e293b !important;
-}
-
-body.dark-mode .premium-side {
-  background: #020617 !important;
-  border: 1px solid #334155 !important;
-}
-
-body.dark-mode .alert.success {
-  background: rgba(34, 197, 94, 0.16) !important;
-  color: #bbf7d0 !important;
-  border-color: rgba(74, 222, 128, 0.45) !important;
-}
-
-body.dark-mode .alert.error {
-  background: rgba(239, 68, 68, 0.16) !important;
-  color: #fecaca !important;
-  border-color: rgba(248, 113, 113, 0.45) !important;
 }
 
 /* =========================
@@ -586,10 +650,7 @@ body.dark-mode .alert.error {
 }
 
 @media (max-width: 900px) {
-  .config-grid {
-    grid-template-columns: 1fr;
-  }
-
+  .config-grid,
   .plans-grid {
     grid-template-columns: 1fr;
   }
@@ -597,7 +658,9 @@ body.dark-mode .alert.error {
 
 @media (max-width: 768px) {
   .configuracoes-page {
-    margin-left: 80px;
+    margin-left: var(--sidebar-closed);
+    width: calc(100% - var(--sidebar-closed));
+
     padding: 24px 18px;
   }
 

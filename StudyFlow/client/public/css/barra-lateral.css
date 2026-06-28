@@ -1,12 +1,59 @@
-/* =======================
+/* =========================
    SIDEBAR - STUDYFLOW
-======================= */
+   Arquivo limpo e organizado
+========================= */
+
+/* =========================
+   VARIÁVEIS
+========================= */
+
+:root {
+  --sidebar-open: 260px;
+  --sidebar-closed: 80px;
+
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e5e7eb;
+
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-soft: #9ca3af;
+
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-soft: #eef2ff;
+
+  --danger: #ef4444;
+  --danger-soft: #fef2f2;
+
+  --badge-bg: #ef4444;
+  --badge-text: #ffffff;
+
+  --transition: 0.3s ease;
+}
+
+body.dark-mode {
+  --sidebar-bg: #111827;
+  --sidebar-border: #334155;
+
+  --text-main: #ffffff;
+  --text-muted: #d1d5db;
+  --text-soft: #94a3b8;
+
+  --primary-soft: #1f2937;
+
+  --danger-soft: rgba(239, 68, 68, 0.14);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar {
-  width: 260px;
+  width: var(--sidebar-open);
   height: 100vh;
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
+
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
 
   display: flex;
   flex-direction: column;
@@ -17,12 +64,16 @@
   left: 0;
   z-index: 1000;
 
-  transition: width 0.3s ease;
+  transition: width var(--transition), background var(--transition);
 }
 
-/* =======================
+.sidebar.collapsed {
+  width: var(--sidebar-closed);
+}
+
+/* =========================
    LOGO
-======================= */
+========================= */
 
 .logo-area {
   padding: 24px 20px;
@@ -30,25 +81,28 @@
 }
 
 .logo-area h2 {
+  margin-bottom: 6px;
+
+  color: var(--text-main);
+
   font-size: 32px;
   font-weight: 800;
-  color: #111827;
-  margin-bottom: 6px;
 }
 
 .logo-area span {
-  color: #9ca3af;
+  color: var(--text-soft);
+
   font-size: 15px;
 }
 
-/* =======================
-   BOTÃO DE FECHAR / ABRIR
-======================= */
+/* =========================
+   BOTÃO DE ABRIR / FECHAR
+========================= */
 
 .collapse-btn {
   position: absolute;
-  right: -14px;
   top: 24px;
+  right: -14px;
 
   width: 28px;
   height: 28px;
@@ -56,8 +110,8 @@
   border: none;
   border-radius: 50%;
 
-  background: #6366f1;
-  color: white;
+  background: var(--primary);
+  color: #ffffff;
 
   display: flex;
   align-items: center;
@@ -66,424 +120,177 @@
   cursor: pointer;
   z-index: 1001;
 
-  transition: 0.3s ease;
+  transition: var(--transition);
 }
 
 .collapse-btn:hover {
-  background: #4f46e5;
+  background: var(--primary-hover);
   transform: scale(1.08);
 }
 
-/* =======================
+/* =========================
    MENU
-======================= */
+========================= */
 
 .menu {
+  padding: 16px;
+
   display: flex;
   flex-direction: column;
   gap: 8px;
-
-  padding: 16px;
 }
 
-.menu-item {
-  text-decoration: none;
-  color: #374151;
-
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  padding: 14px;
-  border-radius: 12px;
-
-  font-size: 16px;
-  font-weight: 500;
-
-  transition: 0.2s ease;
-}
-
-.menu-item i {
-  width: 22px;
-  min-width: 22px;
-  font-size: 18px;
-  text-align: center;
-}
-
-.menu-item:hover {
-  background: #f3f4f6;
-  color: #111827;
-}
-
-.menu-item.active {
-  background: #6366f1;
-  color: white;
-}
-
-.menu-item.active i {
-  color: white;
-}
-
-/* =======================
-   RODAPÉ
-======================= */
-
-.sidebar-footer {
-  padding: 16px;
-}
-
-.project-card {
-  background: #f3f4f6;
-  padding: 14px;
-  border-radius: 12px;
-  margin-bottom: 16px;
-}
-
-.project-card strong {
-  display: block;
-  color: #111827;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.project-card p {
-  color: #6b7280;
-  font-size: 13px;
-}
-
+.menu-item,
+.footer-link,
 .logout {
+  min-height: 48px;
+
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
   text-decoration: none;
-  color: #6b7280;
 
   display: flex;
   align-items: center;
   gap: 10px;
 
-  padding: 12px 14px;
-  border-radius: 12px;
+  color: var(--text-muted);
 
   font-size: 15px;
+  font-weight: 700;
+
   transition: 0.2s ease;
 }
 
+.menu-item {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.menu-item i,
+.footer-link i,
 .logout i {
   width: 22px;
   min-width: 22px;
+
   text-align: center;
+  font-size: 18px;
+}
+
+.menu-item:hover,
+.footer-link:hover {
+  background: var(--primary-soft);
+  color: var(--primary-hover);
+}
+
+.menu-item.active,
+.footer-link.active {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.menu-item.active i,
+.menu-item.active span,
+.footer-link.active i,
+.footer-link.active span {
+  color: #ffffff;
+}
+
+/* =========================
+   RODAPÉ
+========================= */
+
+.sidebar-footer {
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-card {
+  margin-bottom: 8px;
+  padding: 14px;
+
+  background: #f3f4f6;
+  border-radius: 12px;
+}
+
+.project-card strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #111827;
+
+  font-size: 14px;
+}
+
+.project-card p {
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+body.dark-mode .project-card {
+  background: #1f2937;
+}
+
+body.dark-mode .project-card strong {
+  color: #ffffff;
+}
+
+body.dark-mode .project-card p {
+  color: #cbd5e1;
 }
 
 .logout:hover {
-  background: #fef2f2;
-  color: #ef4444;
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
-/* ==========================
+/* =========================
    SIDEBAR FECHADA
-========================== */
+========================= */
 
-.sidebar.collapsed {
-  width: 80px;
-}
-
-/* Esconde textos quando fechada */
 .sidebar.collapsed .logo-area h2,
 .sidebar.collapsed .logo-area span,
 .sidebar.collapsed .menu-item span,
+.sidebar.collapsed .footer-link span,
 .sidebar.collapsed .logout span,
 .sidebar.collapsed .project-card {
   display: none;
 }
 
-/* Centraliza ícones quando fechada */
+.sidebar.collapsed .logo-area {
+  padding: 24px 0;
+
+  display: flex;
+  justify-content: center;
+}
+
 .sidebar.collapsed .menu-item,
+.sidebar.collapsed .footer-link,
 .sidebar.collapsed .logout {
   justify-content: center;
+
   padding: 14px 0;
 }
 
 .sidebar.collapsed .menu-item i,
+.sidebar.collapsed .footer-link i,
 .sidebar.collapsed .logout i {
   width: auto;
   min-width: auto;
+
   font-size: 20px;
 }
 
-/* Ajusta área da logo fechada */
-.sidebar.collapsed .logo-area {
-  padding: 24px 0;
-  display: flex;
-  justify-content: center;
-}
-
-/* Reposiciona botão quando fechada */
 .sidebar.collapsed .collapse-btn {
   right: -14px;
 }
 
-/* ==========================
-   CONTEÚDOS DAS PÁGINAS
-   Quando sidebar fecha
-========================== */
-
-/* Página inicial */
-.sidebar.collapsed + .dashboard {
-  margin-left: 80px;
-}
-
-/* Pomodoro */
-.sidebar.collapsed + .pomodoro-content {
-  margin-left: 80px;
-}
-
-/* Kanban */
-.sidebar.collapsed + .kanban-board-page {
-  margin-left: 80px;
-}
-
-/* Grupos */
-.sidebar.collapsed + .grupos-page {
-  margin-left: 80px;
-}
-
-/* Calendário */
-.sidebar.collapsed + .calendario-page {
-  margin-left: 80px;
-}
-
-/* Caso alguma página use .main-content-page */
-.sidebar.collapsed + .main-content-page {
-  margin-left: 80px;
-}
-
-/* ==========================
-   TRANSIÇÃO DO CONTEÚDO
-========================== */
-
-.dashboard,
-.pomodoro-content,
-.kanban-board-page,
-.grupos-page,
-.calendario-page,
-.main-content-page {
-  transition: margin-left 0.3s ease;
-}
-
-/* ==========================
-   RESPONSIVO
-========================== */
-
-@media (max-width: 768px) {
-  .sidebar {
-    width: 80px;
-  }
-
-  .sidebar .logo-area h2,
-  .sidebar .logo-area span,
-  .sidebar .menu-item span,
-  .sidebar .logout span,
-  .sidebar .project-card {
-    display: none;
-  }
-
-  .sidebar .menu-item,
-  .sidebar .logout {
-    justify-content: center;
-    padding: 14px 0;
-  }
-
-  .sidebar .menu-item i,
-  .sidebar .logout i {
-    width: auto;
-    min-width: auto;
-    font-size: 20px;
-  }
-
-  .logo-area {
-    padding: 24px 0;
-    display: flex;
-    justify-content: center;
-  }
-
-  .collapse-btn {
-    display: none;
-  }
-
-  .dashboard,
-  .pomodoro-content,
-  .kanban-board-page,
-  .grupos-page,
-  .calendario-page,
-  .main-content-page {
-    margin-left: 80px;
-  }
-}
-/* ==========================
-   CONTEÚDO ACOMPANHA SIDEBAR
-   FUNCIONA EM TODAS AS PÁGINAS
-========================== */
-
-:root {
-  --sidebar-open: 260px;
-  --sidebar-closed: 80px;
-}
-
-/* Todas as páginas principais */
-.dashboard,
-.main-container,
-.calendar-section,
-.pomodoro-content,
-.grupos-container,
-.grupos-page,
-.kanban-board-page,
-.relatorios-page,
-.assinatura-page,
-.main-content-page {
-  transition: margin-left 0.3s ease, width 0.3s ease;
-}
-
-/* Sidebar aberta */
-body:not(.sidebar-collapsed) .dashboard,
-body:not(.sidebar-collapsed) .main-container,
-body:not(.sidebar-collapsed) .calendar-section,
-body:not(.sidebar-collapsed) .pomodoro-content,
-body:not(.sidebar-collapsed) .grupos-container,
-body:not(.sidebar-collapsed) .grupos-page,
-body:not(.sidebar-collapsed) .kanban-board-page,
-body:not(.sidebar-collapsed) .relatorios-page,
-body:not(.sidebar-collapsed) .assinatura-page,
-body:not(.sidebar-collapsed) .main-content-page {
-  margin-left: var(--sidebar-open) !important;
-}
-
-/* Sidebar fechada */
-body.sidebar-collapsed .dashboard,
-body.sidebar-collapsed .main-container,
-body.sidebar-collapsed .calendar-section,
-body.sidebar-collapsed .pomodoro-content,
-body.sidebar-collapsed .grupos-container,
-body.sidebar-collapsed .grupos-page,
-body.sidebar-collapsed .kanban-board-page,
-body.sidebar-collapsed .relatorios-page,
-body.sidebar-collapsed .assinatura-page,
-body.sidebar-collapsed .main-content-page {
-  margin-left: var(--sidebar-closed) !important;
-}
-
-/* Corrige páginas que usam largura total */
-body.sidebar-collapsed .dashboard,
-body.sidebar-collapsed .main-container,
-body.sidebar-collapsed .pomodoro-content,
-body.sidebar-collapsed .grupos-container,
-body.sidebar-collapsed .kanban-board-page,
-body.sidebar-collapsed .relatorios-page,
-body.sidebar-collapsed .assinatura-page {
-  width: calc(100% - var(--sidebar-closed)) !important;
-}
-
-/* Sidebar aberta com largura correta */
-body:not(.sidebar-collapsed) .dashboard,
-body:not(.sidebar-collapsed) .main-container,
-body:not(.sidebar-collapsed) .pomodoro-content,
-body:not(.sidebar-collapsed) .grupos-container,
-body:not(.sidebar-collapsed) .kanban-board-page,
-body:not(.sidebar-collapsed) .relatorios-page,
-body:not(.sidebar-collapsed) .assinatura-page {
-  width: calc(100% - var(--sidebar-open)) !important;
-}
-/* ==========================
-   LINKS DO RODAPÉ DA SIDEBAR
-========================== */
-
-.sidebar-footer {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.footer-link {
-  text-decoration: none;
-  color: #6b7280;
-
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 12px 14px;
-  border-radius: 12px;
-
-  font-size: 15px;
-  font-weight: 600;
-
-  transition: 0.2s ease;
-}
-
-.footer-link i {
-  width: 22px;
-  min-width: 22px;
-  text-align: center;
-}
-
-.footer-link:hover {
-  background: #eef2ff;
-  color: #6366f1;
-}
-
-.footer-link.active {
-  background: #6366f1;
-  color: white;
-}
-
-.footer-link.active i,
-.footer-link.active span {
-  color: white;
-}
-
-/* sidebar fechada */
-.sidebar.collapsed .footer-link span {
-  display: none;
-}
-
-.sidebar.collapsed .footer-link {
-  justify-content: center;
-  padding: 14px 0;
-}
-
-.sidebar.collapsed .footer-link i {
-  width: auto;
-  min-width: auto;
-  font-size: 20px;
-}
-
-/* tema claro */
-body:not(.dark-mode) .footer-link {
-  color: #374151 !important;
-  font-weight: 700 !important;
-}
-
-body:not(.dark-mode) .footer-link:hover {
-  background: #eef2ff !important;
-  color: #3730a3 !important;
-}
-
-body:not(.dark-mode) .footer-link.active {
-  background: #4f46e5 !important;
-  color: #ffffff !important;
-}
-
-/* tema escuro */
-body.dark-mode .footer-link {
-  color: #d1d5db !important;
-}
-
-body.dark-mode .footer-link:hover {
-  background: #1f2937 !important;
-  color: #818cf8 !important;
-}
-
-body.dark-mode .footer-link.active {
-  background: #6366f1 !important;
-  color: #ffffff !important;
-}
 /* =========================
    NOTIFICAÇÕES NA SIDEBAR
 ========================= */
@@ -497,11 +304,13 @@ body.dark-mode .footer-link.active {
   height: 22px;
 
   padding: 0 6px;
+  margin-left: auto;
 
   border-radius: 999px;
+  border: 2px solid var(--sidebar-bg);
 
-  background: #ef4444;
-  color: #ffffff;
+  background: var(--badge-bg);
+  color: var(--badge-text);
 
   display: inline-flex;
   align-items: center;
@@ -510,10 +319,9 @@ body.dark-mode .footer-link.active {
   font-size: 12px;
   font-weight: 900;
 
-  margin-left: auto;
+  box-shadow: 0 8px 18px rgba(239, 68, 68, 0.45);
 }
 
-/* Quando a sidebar estiver fechada */
 .sidebar.collapsed .notification-badge {
   position: absolute;
   top: 8px;
@@ -522,65 +330,119 @@ body.dark-mode .footer-link.active {
   margin-left: 0;
 }
 
-/* Modo escuro */
-body.dark-mode .notification-badge {
-  background: #ef4444 !important;
-  color: #ffffff !important;
-}
-/* =========================
-   COR DO BADGE DO SININHO
-========================= */
-
-.notification-badge {
-  background: #ef4444 !important;
-  color: #ffffff !important;
-
-  border: 2px solid #ffffff;
-
-  box-shadow: 0 8px 18px rgba(239, 68, 68, 0.45);
-}
-
-body.dark-mode .notification-badge {
-  background: #ef4444 !important;
-  color: #ffffff !important;
-
-  border: 2px solid #0f172a;
-
-  box-shadow: 0 8px 18px rgba(239, 68, 68, 0.45);
-}
-/* =========================
-   ESCONDER BADGE ZERADO
-========================= */
-
 .notification-badge.badge-hidden,
 .notification-badge[hidden] {
   display: none !important;
 }
+
 /* =========================
-   FIX ESPECÍFICO DO CALENDÁRIO
+   CONTEÚDO DAS PÁGINAS
 ========================= */
 
-body .main-container > .calendar-section {
+.dashboard,
+.main-container,
+.pomodoro-content,
+.grupos-container,
+.grupos-page,
+.kanban-board-page,
+.relatorios-page,
+.assinatura-page,
+.main-content-page {
+  transition: margin-left var(--transition), width var(--transition);
+}
+
+body:not(.sidebar-collapsed) .dashboard,
+body:not(.sidebar-collapsed) .main-container,
+body:not(.sidebar-collapsed) .pomodoro-content,
+body:not(.sidebar-collapsed) .grupos-container,
+body:not(.sidebar-collapsed) .grupos-page,
+body:not(.sidebar-collapsed) .kanban-board-page,
+body:not(.sidebar-collapsed) .relatorios-page,
+body:not(.sidebar-collapsed) .assinatura-page,
+body:not(.sidebar-collapsed) .main-content-page {
+  margin-left: var(--sidebar-open) !important;
+  width: calc(100% - var(--sidebar-open)) !important;
+}
+
+body.sidebar-collapsed .dashboard,
+body.sidebar-collapsed .main-container,
+body.sidebar-collapsed .pomodoro-content,
+body.sidebar-collapsed .grupos-container,
+body.sidebar-collapsed .grupos-page,
+body.sidebar-collapsed .kanban-board-page,
+body.sidebar-collapsed .relatorios-page,
+body.sidebar-collapsed .assinatura-page,
+body.sidebar-collapsed .main-content-page {
+  margin-left: var(--sidebar-closed) !important;
+  width: calc(100% - var(--sidebar-closed)) !important;
+}
+
+/* =========================
+   CORREÇÃO DO CALENDÁRIO
+   Evita espaço duplo
+========================= */
+
+.main-container > .calendar-section {
   margin-left: 0 !important;
   width: 100% !important;
 }
 
-body.sidebar-collapsed .main-container {
-  margin-left: 80px !important;
-  width: calc(100% - 80px) !important;
-}
+/* =========================
+   RESPONSIVO
+========================= */
 
-body:not(.sidebar-collapsed) .main-container {
-  margin-left: 260px !important;
-  width: calc(100% - 260px) !important;
-}
+@media (max-width: 768px) {
+  .sidebar {
+    width: var(--sidebar-closed);
+  }
 
-.sidebar.collapsed ~ .main-container {
-  margin-left: 80px !important;
-  width: calc(100% - 80px) !important;
-}
+  .collapse-btn {
+    display: none;
+  }
 
-.sidebar:not(.collapsed) ~ .main-container {
-  margin-left: 260px !important;
-  width: calc(100% - 260px) !important;
+  .sidebar .logo-area h2,
+  .sidebar .logo-area span,
+  .sidebar .menu-item span,
+  .sidebar .footer-link span,
+  .sidebar .logout span,
+  .sidebar .project-card {
+    display: none;
+  }
+
+  .sidebar .logo-area {
+    padding: 24px 0;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .sidebar .menu-item,
+  .sidebar .footer-link,
+  .sidebar .logout {
+    justify-content: center;
+
+    padding: 14px 0;
+  }
+
+  .sidebar .menu-item i,
+  .sidebar .footer-link i,
+  .sidebar .logout i {
+    width: auto;
+    min-width: auto;
+
+    font-size: 20px;
+  }
+
+  .dashboard,
+  .main-container,
+  .pomodoro-content,
+  .grupos-container,
+  .grupos-page,
+  .kanban-board-page,
+  .relatorios-page,
+  .assinatura-page,
+  .main-content-page {
+    margin-left: var(--sidebar-closed) !important;
+    width: calc(100% - var(--sidebar-closed)) !important;
+  }
 }
