@@ -476,3 +476,97 @@ body {
 
   text-transform: lowercase;
 }
+/* =========================
+   CORREÇÃO DO ESPAÇO DA SIDEBAR
+========================= */
+
+.calendar-section {
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* sidebar aberta */
+body:not(.sidebar-collapsed) .calendar-section {
+  margin-left: 260px !important;
+  width: calc(100% - 260px) !important;
+}
+
+/* sidebar fechada */
+body.sidebar-collapsed .calendar-section {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+/* remove centralização exagerada */
+.calendar-container,
+.calendar-wrapper,
+.calendar-content {
+  margin-left: 0 !important;
+}
+
+/* deixa o calendário ocupar melhor a tela */
+.calendar-section {
+  margin-left: 0 !important;
+  padding: 30px;
+  width: 100% !important;
+}
+
+/* responsivo */
+@media (max-width: 768px) {
+  .calendar-section {
+    margin-left: 80px !important;
+    width: calc(100% - 80px) !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+}
+/* =========================
+   CORREÇÃO DEFINITIVA DO ESPAÇO
+   CALENDÁRIO + SIDEBAR
+========================= */
+
+/* quem deve empurrar o conteúdo é o main-container */
+.main-container {
+  min-height: 100vh;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* calendar-section NÃO pode ter margin-left */
+.main-container > .calendar-section {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+/* sidebar aberta */
+body:not(.sidebar-collapsed) .main-container {
+  margin-left: 260px !important;
+  width: calc(100% - 260px) !important;
+}
+
+/* sidebar fechada */
+body.sidebar-collapsed .main-container {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+/* caso a classe esteja na própria sidebar */
+.sidebar.collapsed ~ .main-container {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+.sidebar:not(.collapsed) ~ .main-container {
+  margin-left: 260px !important;
+  width: calc(100% - 260px) !important;
+}
+
+/* garante que nada interno fique centralizado com margem extra */
+.calendar-header,
+.month-navigation,
+.calendar-grid-container {
+  margin-left: 0 !important;
+}
+
+/* calendário ocupa toda a área útil */
+.calendar-grid-container {
+  width: 100% !important;
+}

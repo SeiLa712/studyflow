@@ -556,3 +556,31 @@ body.dark-mode .notification-badge {
 .notification-badge[hidden] {
   display: none !important;
 }
+/* =========================
+   FIX ESPECÍFICO DO CALENDÁRIO
+========================= */
+
+body .main-container > .calendar-section {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+body.sidebar-collapsed .main-container {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+body:not(.sidebar-collapsed) .main-container {
+  margin-left: 260px !important;
+  width: calc(100% - 260px) !important;
+}
+
+.sidebar.collapsed ~ .main-container {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+.sidebar:not(.collapsed) ~ .main-container {
+  margin-left: 260px !important;
+  width: calc(100% - 260px) !important;
+}
