@@ -861,3 +861,8 @@ VALUES
 -- Free:
 -- email: free@studyflow.com
 -- senha: 123456
+
+--reportlab
+--mysql.connector
+--python 
+--modulos para relatorio
