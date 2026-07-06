@@ -25,28 +25,16 @@
         <span>Pomodoro</span>
       </a>
 
-      <a href="/usuarios/grupos" class="menu-item <%= locals.pagina === 'grupos' ? 'active' : '' %>">
-        <i class="fa-solid fa-users"></i>
-        <span>Grupos</span>
-      </a>
-
       <a href="/kanban" class="menu-item <%= locals.pagina === 'kanban' ? 'active' : '' %>">
         <i class="fa-solid fa-tasks"></i>
         <span>Kanban</span>
       </a>
 
-      <a href="/notificacoes" class="menu-item notification-link <%= locals.pagina === 'notificacoes' ? 'active' : '' %>">
-        <i class="fa-solid fa-bell"></i>
-        <span>Notificações</span>
-
-        <b
-        class="notification-badge"
-        id="notificationBadge"
-        hidden
-        >
-          0
-        </b>
+      <a href="/usuarios/grupos" class="menu-item <%= locals.pagina === 'grupos' ? 'active' : '' %>">
+        <i class="fa-solid fa-users"></i>
+        <span>Grupos</span>
       </a>
+
       
       <a href="/metas" class="menu-item <%= locals.pagina === 'metas' ? 'active' : '' %>">
         <i class="fa-solid fa-bullseye"></i>
