@@ -100,7 +100,7 @@ def calcular_risco_tarefa(tarefa, hoje):
             "motivo": "Atividade atrasada"
         }
 
-    if prioridade == "alta" and dias_restantes <= 2:
+    if prioridade == "alta" and dias_restantes <= 6:
         return {
             "risco": "Alto",
             "motivo": "Alta prioridade e vencimento próximo"

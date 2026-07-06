@@ -20,3 +20,46 @@ Você já acumulou 50 minutos de foco hoje.
 
 Nenhuma meta cadastrada
 Crie metas semanais para acompanhar melhor sua evolução.
+
+
+textos que podem aparecer nas sugestões inteligentes
+
+ sugestoes = []
+
+    if total_criadas == 0:
+        sugestoes.append(
+            "Você ainda não criou atividades nesta semana. Planeje algumas tarefas para manter sua rotina de estudos organizada."
+        )
+
+    if total_atrasadas > 0:
+        sugestoes.append(
+            "Você possui {total_atrasadas} atividade(s) atrasada(s). Priorize resolver essas tarefas antes de criar novas."
+        )
+
+    if riscos_altos > 0:
+        sugestoes.append(
+            "Você possui {riscos_altos} atividade(s) com risco alto. Foque nelas primeiro."
+        )
+
+    if (
+        prioridade_contagem["alta"] > prioridade_contagem["media"]
+        and prioridade_contagem["alta"] > prioridade_contagem["baixa"]
+    ):
+        sugestoes.append(
+            "A maioria das suas atividades está em alta prioridade. Tente dividir melhor as tarefas para evitar acúmulo."
+        )
+
+    if total_pendentes >= 8:
+        sugestoes.append(
+            "Você tem muitas atividades pendentes. Uma boa estratégia é separar as tarefas em blocos menores usando o Pomodoro."
+        )
+
+    if total_minutos_foco == 0:
+        sugestoes.append(
+            "Nenhuma sessão Pomodoro foi concluída nesta semana. Tente registrar pelo menos uma sessão de foco."
+        )
+
+    if total_minutos_foco >= 100:
+        sugestoes.append(
+            "Você acumulou um bom tempo de foco nesta semana. Continue usando o Pomodoro para manter o ritmo."
+        )

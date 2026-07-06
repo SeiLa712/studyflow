@@ -310,10 +310,9 @@ CREATE TABLE kanban_cards (
         REFERENCES kanban_colunas(id)
         ON DELETE CASCADE
 );
-
 -- ===========================
--- USUÁRIOS PADRÃO
--- senha dos três: 123456
+-- DADOS PARA APRESENTAÇÃO DO TCC
+-- Senha de todos os usuários: 123456
 -- bcrypt fator 10
 -- ===========================
 
@@ -331,17 +330,17 @@ INSERT INTO usuarios
 VALUES
 (
     1,
-    'Usuário Assinante',
-    'premium@studyflow.com',
+    'apresentador - Apresentação',
+    'adm@studyflow.com',
     '$2b$10$6FG.Au0xR.hGjkXSLe/sCuLOBEE/lWDcQUlEmThMw2f5izAhv/UtC',
     'estudante',
     'premium',
     TRUE,
-    DATE_ADD(NOW(), INTERVAL 30 DAY)
+    DATE_ADD(NOW(), INTERVAL 60 DAY)
 ),
 (
     2,
-    'Usuário Gratuito',
+    'Usuário Gratuito - Teste',
     'free@studyflow.com',
     '$2b$10$6FG.Au0xR.hGjkXSLe/sCuLOBEE/lWDcQUlEmThMw2f5izAhv/UtC',
     'estudante',
@@ -351,17 +350,37 @@ VALUES
 ),
 (
     3,
-    'Usuário Premium sem nada',
-    'premium.novo@studyflow.com',
+    'Ana Clara',
+    'ana@studyflow.com',
     '$2b$10$6FG.Au0xR.hGjkXSLe/sCuLOBEE/lWDcQUlEmThMw2f5izAhv/UtC',
     'estudante',
     'premium',
     TRUE,
-    DATE_ADD(NOW(), INTERVAL 30 DAY)
+    DATE_ADD(NOW(), INTERVAL 60 DAY)
+),
+(
+    4,
+    'Miguel Pacheco',
+    'miguel@studyflow.com',
+    '$2b$10$6FG.Au0xR.hGjkXSLe/sCuLOBEE/lWDcQUlEmThMw2f5izAhv/UtC',
+    'estudante',
+    'premium',
+    TRUE,
+    DATE_ADD(NOW(), INTERVAL 60 DAY)
+),
+(
+    5,
+    'Pedro Henrique',
+    'pedro@studyflow.com',
+    '$2b$10$6FG.Au0xR.hGjkXSLe/sCuLOBEE/lWDcQUlEmThMw2f5izAhv/UtC',
+    'estudante',
+    'free',
+    FALSE,
+    NULL
 );
 
 -- ===========================
--- METAS PADRÃO DOS USUÁRIOS
+-- METAS SEMANAIS
 -- ===========================
 
 INSERT INTO metas_semanais
@@ -376,79 +395,63 @@ INSERT INTO metas_semanais
 VALUES
 (
     1,
-    'Concluir tarefas',
-    'Meta semanal para concluir atividades do StudyFlow.',
+    'Concluir tarefas da semana',
+    'Finalizar as principais atividades acadêmicas cadastradas no sistema.',
     'tarefas',
-    5,
+    8,
     'tarefas'
 ),
 (
     1,
-    'Tempo de foco',
-    'Meta semanal de minutos estudando com Pomodoro.',
+    'Estudar com Pomodoro',
+    'Atingir pelo menos 180 minutos de foco usando o Pomodoro.',
     'foco',
-    120,
+    180,
     'minutos'
 ),
 (
     1,
-    'Controlar atrasos',
-    'Limite máximo de tarefas atrasadas na semana.',
-    'atrasos',
-    0,
-    'atrasos'
-),
-(
-    2,
-    'Concluir tarefas',
-    'Meta semanal para concluir atividades do StudyFlow.',
-    'tarefas',
-    3,
-    'tarefas'
-),
-(
-    2,
-    'Tempo de foco',
-    'Meta semanal de minutos estudando com Pomodoro.',
-    'foco',
-    90,
-    'minutos'
-),
-(
-    2,
-    'Controlar atrasos',
-    'Limite máximo de tarefas atrasadas na semana.',
+    'Evitar atrasos',
+    'Manter no máximo uma tarefa atrasada durante a semana.',
     'atrasos',
     1,
     'atrasos'
 ),
 (
-    3,
-    'Concluir tarefas',
-    'Meta semanal para concluir atividades do StudyFlow.',
+    1,
+    'Preparar apresentação',
+    'Organizar a apresentação final do projeto StudyFlow.',
     'tarefas',
-    5,
+    4,
     'tarefas'
 ),
 (
+    1,
+    'Revisar documentação',
+    'Conferir README, relatório técnico, PMC e roteiro de apresentação.',
+    'tarefas',
     3,
-    'Tempo de foco',
-    'Meta semanal de minutos estudando com Pomodoro.',
-    'foco',
-    120,
-    'minutos'
+    'tarefas'
 ),
 (
+    2,
+    'Criar rotina básica',
+    'Organizar algumas atividades simples para testar a versão gratuita.',
+    'tarefas',
     3,
-    'Controlar atrasos',
-    'Limite máximo de tarefas atrasadas na semana.',
-    'atrasos',
-    0,
-    'atrasos'
+    'tarefas'
+),
+(
+    2,
+    'Foco inicial',
+    'Realizar pelo menos 60 minutos de estudo.',
+    'foco',
+    60,
+    'minutos'
 );
 
 -- ===========================
--- DADOS DO USUÁRIO ASSINANTE
+-- GRUPOS DO USUÁRIO PREMIUM
 -- ===========================
 
 INSERT INTO grupos
@@ -463,12 +466,32 @@ INSERT INTO grupos
 VALUES
 (
     1,
-    'Grupo de Estudos',
+    'TCC - StudyFlow',
     'Desenvolvimento de Sistemas',
-    'Grupo principal para organizar atividades e materiais de estudo.',
+    'Grupo principal para organizar o desenvolvimento, testes e apresentação do TCC.',
+    'alta',
+    1
+),
+(
+    2,
+    'Revisão Banco de Dados',
+    'Banco de Dados',
+    'Grupo destinado à revisão das tabelas, relacionamentos e scripts SQL do sistema.',
+    'media',
+    1
+),
+(
+    3,
+    'Preparação para Banca',
+    'Projeto Integrador',
+    'Grupo usado para organizar ensaio, roteiro de apresentação e possíveis perguntas da banca.',
     'alta',
     1
 );
+
+-- ===========================
+-- MEMBROS DOS GRUPOS
+-- ===========================
 
 INSERT INTO grupo_membros
 (
@@ -478,12 +501,21 @@ INSERT INTO grupo_membros
     status
 )
 VALUES
-(
-    1,
-    1,
-    'admin',
-    'ativo'
-);
+(1, 1, 'admin', 'ativo'),
+(1, 3, 'membro', 'ativo'),
+(1, 4, 'membro', 'ativo'),
+(1, 5, 'membro', 'ativo'),
+
+(2, 1, 'admin', 'ativo'),
+(2, 3, 'membro', 'ativo'),
+
+(3, 1, 'admin', 'ativo'),
+(3, 4, 'membro', 'ativo'),
+(3, 5, 'membro', 'ativo');
+
+-- ===========================
+-- SESSÕES DOS GRUPOS
+-- ===========================
 
 INSERT INTO grupo_sessoes
 (
@@ -495,10 +527,32 @@ INSERT INTO grupo_sessoes
 VALUES
 (
     1,
-    DATE_ADD(CURDATE(), INTERVAL 2 DAY),
+    DATE_ADD(CURDATE(), INTERVAL 1 DAY),
+    '18:30:00',
+    'Reunião para revisar funcionalidades do StudyFlow antes da apresentação.'
+),
+(
+    1,
+    DATE_ADD(CURDATE(), INTERVAL 3 DAY),
     '19:00:00',
-    'Reunião de estudos para revisar o projeto.'
+    'Validação final do fluxo de login, tarefas, calendário, Kanban e relatórios.'
+),
+(
+    2,
+    DATE_ADD(CURDATE(), INTERVAL 2 DAY),
+    '17:30:00',
+    'Revisão das tabelas, chaves estrangeiras e dados de demonstração.'
+),
+(
+    3,
+    DATE_ADD(CURDATE(), INTERVAL 4 DAY),
+    '20:00:00',
+    'Ensaio geral da apresentação para a banca.'
 );
+
+-- ===========================
+-- TAREFAS DO USUÁRIO PREMIUM
+-- ===========================
 
 INSERT INTO tarefas
 (
@@ -513,210 +567,129 @@ INSERT INTO tarefas
 )
 VALUES
 (
-    'Finalizar relatório do StudyFlow',
-    'Revisar os dados da semana e validar os relatórios inteligentes.',
+    'Finalizar slides da apresentação',
+    'Revisar os slides do Canva e alinhar a fala da equipe.',
+    'alta',
+    DATE_ADD(CURDATE(), INTERVAL 1 DAY),
+    FALSE,
+    NULL,
+    1,
+    3
+),
+(
+    'Testar login premium e gratuito',
+    'Entrar com usuário premium e usuário free para demonstrar o bloqueio de recursos.',
     'alta',
     CURDATE(),
     FALSE,
     NULL,
     1,
-    1
+    NULL
 ),
 (
-    'Revisar layout do calendário',
-    'Ajustar detalhes visuais da tela de calendário.',
-    'media',
-    DATE_SUB(CURDATE(), INTERVAL 1 DAY),
+    'Revisar middleware de assinatura',
+    'Garantir que grupos e recursos premium sejam bloqueados para usuários gratuitos.',
+    'alta',
+    DATE_ADD(CURDATE(), INTERVAL 2 DAY),
     TRUE,
     NOW(),
     1,
     1
 ),
 (
-    'Preparar apresentação do projeto',
-    'Organizar os principais pontos para apresentação do StudyFlow.',
+    'Conferir banco de dados',
+    'Validar se usuários, tarefas, grupos, metas e Kanban estão cadastrados corretamente.',
+    'media',
+    DATE_ADD(CURDATE(), INTERVAL 2 DAY),
+    FALSE,
+    NULL,
+    1,
+    2
+),
+(
+    'Gravar vídeo de testes',
+    'Demonstrar o funcionamento das principais telas do StudyFlow.',
+    'media',
+    DATE_SUB(CURDATE(), INTERVAL 1 DAY),
+    TRUE,
+    DATE_SUB(NOW(), INTERVAL 1 DAY),
+    1,
+    1
+),
+(
+    'Enviar relatório técnico',
+    'Enviar o relatório técnico e o PMC para o docente antes da apresentação.',
+    'alta',
+    DATE_SUB(CURDATE(), INTERVAL 2 DAY),
+    TRUE,
+    DATE_SUB(NOW(), INTERVAL 2 DAY),
+    1,
+    NULL
+),
+(
+    'Corrigir pequenos ajustes visuais',
+    'Revisar espaçamentos, sidebar, cards e tema escuro.',
+    'media',
+    DATE_ADD(CURDATE(), INTERVAL 3 DAY),
+    FALSE,
+    NULL,
+    1,
+    NULL
+),
+(
+    'Preparar respostas da banca',
+    'Treinar perguntas sobre problema, solução, banco, segurança e modelo premium.',
+    'alta',
+    DATE_ADD(CURDATE(), INTERVAL 4 DAY),
+    FALSE,
+    NULL,
+    1,
+    3
+),
+(
+    'Atualizar README do GitHub',
+    'Conferir tecnologias, funcionalidades, prints e instruções de execução.',
     'baixa',
     DATE_ADD(CURDATE(), INTERVAL 5 DAY),
     FALSE,
     NULL,
     1,
     NULL
-);
-
-INSERT INTO pomodoros
-(
-    nome,
-    descricao,
-    foco_min,
-    pausa_min,
-    ciclos,
-    cor,
-    id_usuario
-)
-VALUES
-(
-    'Sessão de Foco',
-    'Pomodoro padrão para estudos.',
-    25,
-    5,
-    4,
-    '#6366f1',
-    1
-);
-
-INSERT INTO pomodoro_sessoes
-(
-    id_usuario,
-    duracao_min,
-    origem
-)
-VALUES
-(
-    1,
-    25,
-    'pomodoro'
 ),
 (
-    1,
-    25,
-    'timer-rapido'
-);
-
-INSERT INTO kanbans
-(
-    id,
-    nome,
-    descricao,
-    id_usuario
-)
-VALUES
-(
-    1,
-    'Meu Kanban',
-    'Quadro principal para organizar tarefas do projeto.',
-    1
-);
-
-INSERT INTO kanban_colunas
-(
-    id,
-    nome,
-    ordem,
-    posicao,
-    id_kanban
-)
-VALUES
-(
-    1,
-    'A Fazer',
-    1,
-    1,
-    1
-),
-(
-    2,
-    'Em Andamento',
-    2,
-    2,
-    1
-),
-(
-    3,
-    'Revisão',
-    3,
-    3,
-    1
-),
-(
-    4,
-    'Concluído',
-    4,
-    4,
-    1
-);
-
-INSERT INTO kanban_cards
-(
-    titulo,
-    descricao,
-    prioridade,
-    data_entrega,
-    progresso,
-    posicao,
-    id_coluna
-)
-VALUES
-(
-    'Organizar tarefas do TCC',
-    'Separar as próximas etapas do projeto.',
+    'Tarefa atrasada de exemplo',
+    'Exemplo para demonstrar alerta de atraso nas notificações e relatórios.',
     'alta',
-    DATE_ADD(CURDATE(), INTERVAL 2 DAY),
-    20,
+    DATE_SUB(CURDATE(), INTERVAL 3 DAY),
+    FALSE,
+    NULL,
+    1,
+    NULL
+),
+(
+    'Validar tela de grupos',
+    'Testar criação de grupos, membros e sessões de estudo.',
+    'media',
+    CURDATE(),
+    FALSE,
+    NULL,
     1,
     1
 ),
 (
-    'Ajustar relatório inteligente',
-    'Melhorar a exibição dos dados de produtividade.',
-    'media',
-    DATE_ADD(CURDATE(), INTERVAL 4 DAY),
-    60,
+    'Ensaiar apresentação final',
+    'Simular a apresentação completa do projeto para ganhar segurança.',
+    'alta',
+    DATE_ADD(CURDATE(), INTERVAL 6 DAY),
+    FALSE,
+    NULL,
     1,
-    2
+    3
 );
 
 -- ===========================
--- DADOS DO USUÁRIO GRATUITO
+-- TAREFAS DO USUÁRIO GRATUITO
 -- ===========================
-
-INSERT INTO grupos
-(
-    id,
-    nome,
-    disciplina,
-    descricao,
-    prioridade,
-    id_usuario
-)
-VALUES
-(
-    2,
-    'Grupo de Estudos',
-    'Estudos Gerais',
-    'Grupo principal para organizar estudos e atividades.',
-    'media',
-    2
-);
-
-INSERT INTO grupo_membros
-(
-    id_grupo,
-    id_usuario,
-    papel,
-    status
-)
-VALUES
-(
-    2,
-    2,
-    'admin',
-    'ativo'
-);
-
-INSERT INTO grupo_sessoes
-(
-    id_grupo,
-    data_sessao,
-    hora_sessao,
-    descricao
-)
-VALUES
-(
-    2,
-    DATE_ADD(CURDATE(), INTERVAL 3 DAY),
-    '18:30:00',
-    'Sessão de estudos gerais.'
-);
 
 INSERT INTO tarefas
 (
@@ -731,25 +704,39 @@ INSERT INTO tarefas
 )
 VALUES
 (
-    'Organizar rotina de estudos',
-    'Criar uma rotina semanal usando o StudyFlow.',
-    'media',
-    DATE_ADD(CURDATE(), INTERVAL 1 DAY),
-    FALSE,
-    NULL,
-    2,
-    2
-),
-(
-    'Criar primeira tarefa',
-    'Atividade concluída para testar o painel inicial.',
+    'Criar primeira atividade',
+    'Teste simples da versão gratuita do StudyFlow.',
     'baixa',
     CURDATE(),
     TRUE,
     NOW(),
     2,
     NULL
+),
+(
+    'Organizar semana de estudos',
+    'Cadastrar atividades básicas e visualizar no calendário.',
+    'media',
+    DATE_ADD(CURDATE(), INTERVAL 2 DAY),
+    FALSE,
+    NULL,
+    2,
+    NULL
+),
+(
+    'Tentar acessar grupos premium',
+    'Usado na apresentação para demonstrar bloqueio de usuário gratuito.',
+    'alta',
+    DATE_ADD(CURDATE(), INTERVAL 1 DAY),
+    FALSE,
+    NULL,
+    2,
+    NULL
 );
+
+-- ===========================
+-- POMODOROS
+-- ===========================
 
 INSERT INTO pomodoros
 (
@@ -763,14 +750,69 @@ INSERT INTO pomodoros
 )
 VALUES
 (
-    'Sessão de Foco',
-    'Pomodoro padrão para estudos.',
+    'Foco padrão',
+    'Sessão padrão de estudos com 25 minutos de foco e 5 minutos de pausa.',
+    25,
+    5,
+    4,
+    '#6366f1',
+    1
+),
+(
+    'Revisão rápida',
+    'Sessão curta para revisar conteúdos antes da apresentação.',
+    15,
+    5,
+    3,
+    '#22c55e',
+    1
+),
+(
+    'Estudo profundo',
+    'Sessão mais longa para desenvolvimento e correções do projeto.',
+    50,
+    10,
+    2,
+    '#f97316',
+    1
+),
+(
+    'Pomodoro gratuito',
+    'Sessão simples para o usuário gratuito.',
     25,
     5,
     4,
     '#6366f1',
     2
 );
+
+-- ===========================
+-- SESSÕES POMODORO CONCLUÍDAS
+-- ===========================
+
+INSERT INTO pomodoro_sessoes
+(
+    id_usuario,
+    duracao_min,
+    origem,
+    created_at
+)
+VALUES
+(1, 25, 'pomodoro', DATE_SUB(NOW(), INTERVAL 6 DAY)),
+(1, 25, 'pomodoro', DATE_SUB(NOW(), INTERVAL 5 DAY)),
+(1, 50, 'pomodoro', DATE_SUB(NOW(), INTERVAL 4 DAY)),
+(1, 15, 'pomodoro', DATE_SUB(NOW(), INTERVAL 3 DAY)),
+(1, 25, 'timer-rapido', DATE_SUB(NOW(), INTERVAL 2 DAY)),
+(1, 50, 'pomodoro', DATE_SUB(NOW(), INTERVAL 1 DAY)),
+(1, 25, 'pomodoro', NOW()),
+(1, 15, 'timer-rapido', NOW()),
+
+(2, 25, 'pomodoro', DATE_SUB(NOW(), INTERVAL 1 DAY)),
+(2, 25, 'timer-rapido', NOW());
+
+-- ===========================
+-- KANBANS
+-- ===========================
 
 INSERT INTO kanbans
 (
@@ -781,11 +823,27 @@ INSERT INTO kanbans
 )
 VALUES
 (
+    1,
+    'TCC StudyFlow',
+    'Quadro principal para acompanhar o desenvolvimento e apresentação do projeto.',
+    1
+),
+(
     2,
-    'Meu Kanban',
-    'Quadro principal para organizar tarefas.',
+    'Rotina de Estudos',
+    'Quadro pessoal para organizar estudos semanais.',
+    1
+),
+(
+    3,
+    'Kanban Free',
+    'Quadro simples para usuário gratuito.',
     2
 );
+
+-- ===========================
+-- COLUNAS DO KANBAN
+-- ===========================
 
 INSERT INTO kanban_colunas
 (
@@ -796,34 +854,24 @@ INSERT INTO kanban_colunas
     id_kanban
 )
 VALUES
-(
-    5,
-    'A Fazer',
-    1,
-    1,
-    2
-),
-(
-    6,
-    'Em Andamento',
-    2,
-    2,
-    2
-),
-(
-    7,
-    'Revisão',
-    3,
-    3,
-    2
-),
-(
-    8,
-    'Concluído',
-    4,
-    4,
-    2
-);
+(1, 'A Fazer', 1, 1, 1),
+(2, 'Em Andamento', 2, 2, 1),
+(3, 'Revisão', 3, 3, 1),
+(4, 'Concluído', 4, 4, 1),
+
+(5, 'A Fazer', 1, 1, 2),
+(6, 'Em Andamento', 2, 2, 2),
+(7, 'Revisão', 3, 3, 2),
+(8, 'Concluído', 4, 4, 2),
+
+(9, 'A Fazer', 1, 1, 3),
+(10, 'Em Andamento', 2, 2, 3),
+(11, 'Revisão', 3, 3, 3),
+(12, 'Concluído', 4, 4, 3);
+
+-- ===========================
+-- CARDS DO KANBAN
+-- ===========================
 
 INSERT INTO kanban_cards
 (
@@ -837,32 +885,158 @@ INSERT INTO kanban_cards
 )
 VALUES
 (
-    'Planejar semana de estudos',
-    'Criar cards para organizar as tarefas da semana.',
-    'baixa',
+    'Implementar bloqueio premium em grupos',
+    'Garantir que apenas usuários premium acessem a área de grupos.',
+    'alta',
+    DATE_ADD(CURDATE(), INTERVAL 1 DAY),
+    80,
+    1,
+    2
+),
+(
+    'Revisar autenticação JWT',
+    'Conferir login, logout, cookies e proteção de rotas privadas.',
+    'alta',
+    DATE_ADD(CURDATE(), INTERVAL 2 DAY),
+    70,
+    2,
+    2
+),
+(
+    'Organizar banco para apresentação',
+    'Criar dados prontos para demonstrar tarefas, metas, grupos e Kanban.',
+    'alta',
+    CURDATE(),
+    90,
+    1,
+    3
+),
+(
+    'Finalizar documentação',
+    'Revisar README, PMC e relatório técnico.',
+    'media',
     DATE_ADD(CURDATE(), INTERVAL 3 DAY),
-    10,
+    60,
+    2,
+    3
+),
+(
+    'Testar tela de relatórios',
+    'Validar gráficos, dados semanais, sugestões e exportação em PDF.',
+    'media',
+    DATE_ADD(CURDATE(), INTERVAL 4 DAY),
+    40,
+    1,
+    1
+),
+(
+    'Preparar fala da banca',
+    'Treinar explicação sobre problema, solução, tecnologia e segurança.',
+    'alta',
+    DATE_ADD(CURDATE(), INTERVAL 5 DAY),
+    30,
+    2,
+    1
+),
+(
+    'Criar protótipo de baixa fidelidade',
+    'Entregar material inicial da prototipagem.',
+    'baixa',
+    DATE_SUB(CURDATE(), INTERVAL 4 DAY),
+    100,
+    1,
+    4
+),
+(
+    'Gravar demonstração do sistema',
+    'Vídeo mostrando funcionalidades principais do StudyFlow.',
+    'media',
+    DATE_SUB(CURDATE(), INTERVAL 2 DAY),
+    100,
+    2,
+    4
+),
+(
+    'Estudar banco de dados',
+    'Revisar relacionamentos, foreign keys e comandos SQL.',
+    'media',
+    DATE_ADD(CURDATE(), INTERVAL 2 DAY),
+    20,
     1,
     5
+),
+(
+    'Revisar Node.js e Express',
+    'Revisar controllers, routes, middlewares e models.',
+    'alta',
+    DATE_ADD(CURDATE(), INTERVAL 3 DAY),
+    50,
+    1,
+    6
+),
+(
+    'Treinar perguntas da banca',
+    'Praticar respostas sobre segurança, testes e melhorias futuras.',
+    'alta',
+    DATE_ADD(CURDATE(), INTERVAL 4 DAY),
+    70,
+    1,
+    7
+),
+(
+    'Concluir revisão de CSS',
+    'Verificar responsividade e tema escuro.',
+    'baixa',
+    DATE_SUB(CURDATE(), INTERVAL 1 DAY),
+    100,
+    1,
+    8
+),
+(
+    'Criar tarefa de estudo',
+    'Card simples da versão gratuita.',
+    'baixa',
+    DATE_ADD(CURDATE(), INTERVAL 1 DAY),
+    10,
+    1,
+    9
+),
+(
+    'Testar calendário',
+    'Verificar se as atividades aparecem no calendário.',
+    'media',
+    DATE_ADD(CURDATE(), INTERVAL 2 DAY),
+    40,
+    1,
+    10
 );
 
 -- ===========================
--- LOGINS DE TESTE
+-- LOGINS PARA APRESENTAÇÃO
 -- ===========================
 
--- Premium:
--- email: premium@studyflow.com
+-- Usuário premium principal:
+-- email: adm@studyflow.com
 -- senha: 123456
 
--- Premium sem nada registrado:
--- email: premium.novo@studyflow.com
--- senha: 123456
-
--- Free:
+-- Usuário gratuito para demonstrar bloqueio premium:
 -- email: free@studyflow.com
 -- senha: 123456
 
---reportlab
---mysql.connector
---python 
---modulos para relatorio
+-- Outros usuários de exemplo:
+-- email: ana@studyflow.com
+-- senha: 123456
+
+-- email: miguel@studyflow.com
+-- senha: 123456
+
+-- email: pedro@studyflow.com
+-- senha: 123456
+
+-- ===========================
+-- MÓDULOS USADOS NO RELATÓRIO
+-- ===========================
+
+-- reportlab
+-- mysql.connector
+-- python

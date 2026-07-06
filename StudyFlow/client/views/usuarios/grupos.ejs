@@ -23,8 +23,8 @@
           <p>Colabore com colegas em trabalhos e estudos</p>
         </div>
 
-        <button class="btn-add" id="openModal">
-         Novo Grupo
+        <button class="btn-add" id="openModal" type="button">
+          Novo Grupo
         </button>
       </div>
 
@@ -56,6 +56,7 @@
                   class="btn-delete-grupo"
                   data-id="<%= grupo.id %>"
                   title="Excluir grupo"
+                  type="button"
                 >
                   <i class="fa-solid fa-trash"></i>
                 </button>
@@ -81,13 +82,14 @@
                     </span>
                   <% } %>
                 </div>
+              </div>
 
               <button
                 class="btn-add-membro"
                 data-id="<%= grupo.id %>"
                 type="button"
               >
-               Adicionar Membro
+                Adicionar Membro
               </button>
             </div>
           <% }) %>
@@ -140,16 +142,6 @@
                     </span>
                   <% } %>
                 </div>
-
-                <div class="proxima-sessao">
-                  <% if (grupo.proxima_data && grupo.proxima_hora) { %>
-                    <i class="fa-solid fa-calendar"></i>
-                    <span><%= grupo.proxima_data %></span>
-
-                    <i class="fa-solid fa-clock"></i>
-                    <span><%= grupo.proxima_hora %></span>
-                  <% } %>
-                </div>
               </div>
 
               <button
@@ -157,7 +149,7 @@
                 data-id="<%= grupo.id %>"
                 type="button"
               >
-                + Adicionar Membro
+                Adicionar Membro
               </button>
             </div>
           <% }) %>
