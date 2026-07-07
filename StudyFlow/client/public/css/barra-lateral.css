@@ -83,14 +83,14 @@ body.dark-mode {
 .logo-area h2 {
   margin-bottom: 6px;
 
-  color: var(--text-main);
+  color: #512da8;
 
   font-size: 32px;
   font-weight: 800;
 }
 
 .logo-area span {
-  color: var(--text-soft);
+  color: #9ca3af;
 
   font-size: 15px;
 }

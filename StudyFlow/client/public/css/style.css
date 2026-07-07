@@ -25,8 +25,8 @@
   --text-error: #991b1b;
 
   --primary: #512da8;
-  --gradient-main: linear-gradient(to right, #ff006f, #0000ff);
-  --gradient-logo: linear-gradient(to right, #0000ff, #ff006f);
+  --gradient-main: linear-gradient(to right, #512da8, #0000ff);
+  --gradient-logo: linear-gradient(to right, #0000ff, #512da8);
 
   --error-bg: #fee2e2;
   --error-border: #fecaca;
