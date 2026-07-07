@@ -31,16 +31,18 @@
 
   --border: #e5e7eb;
 
+  /* CORES DAS PRIORIDADES */
+  --priority-low: #3eb56a;
+  --priority-low-soft: #3a7a52;
+
+  --priority-medium: #ffff00;
+  --priority-medium-soft: #c3bc58;
+
+  --priority-high: #ff0000;
+  --priority-high-soft: #ec6b6b;
+
   --success: #16a34a;
   --success-soft: #dcfce7;
-
-  --danger: #ef4444;
-  --danger-soft: #fee2e2;
-
-  --warning: #f59e0b;
-
-  --blue: #3b82f6;
-  --pink: #ec4899;
 
   --shadow-modal: 0 10px 30px rgba(0, 0, 0, 0.15);
 
@@ -77,7 +79,6 @@ body {
 
 .main-container {
   min-height: 100vh;
-
   transition: margin-left var(--transition), width var(--transition);
 }
 
@@ -93,12 +94,11 @@ body.sidebar-collapsed .main-container {
   width: calc(100% - var(--sidebar-closed)) !important;
 }
 
-/* IMPORTANTE: evita espaço duplo */
+/* Evita espaço duplo */
 .calendar-section {
   width: 100% !important;
   margin-left: 0 !important;
   padding: 30px;
-
   transition: padding var(--transition);
 }
 
@@ -111,15 +111,12 @@ body.sidebar-collapsed .main-container {
   justify-content: space-between;
   align-items: center;
   gap: 18px;
-
   margin-bottom: 24px;
 }
 
 .calendar-header h1 {
   margin-bottom: 4px;
-
   color: var(--text-main);
-
   font-size: 2rem;
   font-weight: 850;
 }
@@ -135,14 +132,12 @@ body.sidebar-collapsed .main-container {
 .btn-nova-atividade {
   border: none;
   border-radius: 12px;
-
   padding: 12px 24px;
 
   background: var(--primary);
   color: #ffffff;
 
   font-weight: 750;
-
   cursor: pointer;
 
   transition: 0.2s ease;
@@ -150,7 +145,6 @@ body.sidebar-collapsed .main-container {
 
 .btn-nova-atividade:hover {
   background: var(--primary-hover);
-
   transform: translateY(-1px);
 }
 
@@ -189,7 +183,6 @@ body.sidebar-collapsed .main-container {
 
 .current-month-label {
   margin-top: 4px;
-
   padding: 4px 10px;
 
   border-radius: 999px;
@@ -266,7 +259,6 @@ body.sidebar-collapsed .main-container {
 
 .calendar-day {
   min-height: 120px;
-
   padding: 10px;
 
   background: var(--bg-card);
@@ -314,8 +306,6 @@ body.sidebar-collapsed .main-container {
 
   border-radius: 7px;
 
-  color: #ffffff;
-
   font-size: 12px;
   font-weight: 700;
 
@@ -332,25 +322,50 @@ body.sidebar-collapsed .main-container {
   transform: translateY(-1px);
 }
 
+/* 
+   IMPORTANTE:
+   No calendario.ejs:
+   baixa  = tag-estudo
+   media  = tag-trabalho
+   alta   = tag-prova
+
+   Aqui as cores ficam iguais ao calendário semanal:
+   baixa  = azul
+   media  = amarelo/laranja
+   alta   = vermelho
+   concluída = verde
+*/
+
+/* Prioridade baixa */
 .tag-estudo {
-  background: var(--blue);
+  background: var(--priority-low);
+  color: #ffffff;
+  border-left: 4px solid var(--priority-low-soft);
 }
 
+/* Prioridade média */
 .tag-trabalho {
-  background: var(--pink);
+  background: var(--priority-medium-soft);
+  color: #ffffff;
+  border-left: 4px solid var(--priority-medium);
 }
 
+/* Prioridade alta */
 .tag-prova {
-  background: var(--danger);
+  background: var(--priority-high-soft);
+  color: #ffffff;
+  border-left: 4px solid var(--priority-high);
 }
 
+/* Atividade concluída */
 .activity-tag.concluida {
   background: var(--success-soft) !important;
   color: #15803d !important;
+  border-left: 4px solid var(--success) !important;
 
   text-decoration: line-through;
 
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 /* =========================
@@ -573,12 +588,12 @@ body.dark-mode .modal select {
 }
 
 .btn-delete {
-  background: var(--danger-soft);
-  color: var(--danger);
+  background: var(--priority-high-soft);
+  color: var(--priority-high);
 }
 
 .btn-delete:hover {
-  background: var(--danger);
+  background: var(--priority-high);
   color: #ffffff;
 }
 
