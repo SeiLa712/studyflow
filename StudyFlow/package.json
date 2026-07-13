@@ -1,6 +1,11 @@
 {
+  "name": "studyflow",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
   "scripts": {
-    "server": "nodemon ./server.js localhost 3000"
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
