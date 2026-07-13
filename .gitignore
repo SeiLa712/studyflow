@@ -1,7 +1,13 @@
+# Dependências
+node_modules/
+
+# Variáveis de ambiente
+.env
+.env.*
+
+# Permitir modelo sem senhas
+!.env.example
+
+# Arquivos gerados
 StudyFlow/client/public/relatorios/*.pdf
 StudyFlow/client/public/uploads/grupos/*
-
-node_modules/
-StudyFlow/node_modules/
-
-.env
