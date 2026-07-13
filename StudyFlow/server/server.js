@@ -99,20 +99,24 @@ app.use("/notificacoes", notificacoesRoutes);
 
 // Traz as configurações do banco
 const pool = require("./config/db.js");
-//Cria uma conexão teste com o banco
-(async () => {
-  try {
-    // Se o banco de dados estiver ativo, ai sim o servidor será iniciado
-    await pool.getConnection();
-    console.log("Banco conectado");
-    // Se o banco de dados estiver ativo, ai sim o servidor será iniciado
-    app.listen(port, () => {
-      console.log(`Link: http://localhost:${port}`);
-      console.log(`Servidor funcionando na porta ${port}`);
-    });
-  } catch (erro) {
-   // Adicione o (error) ou (err) no final para o terminal nos dizer o motivo
-console.log("Erro ao tentar conectar com o banco de dados", erro)
-    process.exit(1);
-  }
-})();
+
+// Executa app.listen somente no computador local
+if (require.main === module) {
+  (async () => {
+    try {
+      const conexao = await pool.getConnection();
+      conexao.release();
+
+      console.log("Banco conectado");
+
+      app.listen(port, () => {
+        console.log(`Servidor funcionando na porta ${port}`);
+      });
+    } catch (erro) {
+      console.error("Erro ao conectar com o banco:", erro);
+    }
+  })();
+}
+
+// Exporta o Express para a Vercel
+module.exports = app;
