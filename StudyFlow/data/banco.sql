@@ -1,6 +1,6 @@
     CREATE DATABASE IF NOT EXISTS StudyFlow;
 
-    USE railway;
+  USE StudyFlow;
 
 
     SET FOREIGN_KEY_CHECKS = 0;
