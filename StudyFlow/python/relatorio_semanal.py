@@ -435,12 +435,59 @@ def main():
     fim_semana = hoje - timedelta(days=semanas_atras * 7)
     inicio_semana = fim_semana - timedelta(days=6)
 
-    conexao = mysql.connector.connect(
-        host=os.getenv("DB_HOST", "localhost"),
-        user=os.getenv("DB_USER", "root"),
-        password=os.getenv("DB_PASSWORD", ""),
-        database=os.getenv("DB_NAME", "StudyFlow")
-    )
+    db_host = os.getenv("DB_HOST")
+    db_port = os.getenv("DB_PORT", "18330")
+    db_user = os.getenv("DB_USER")
+    db_password = os.getenv("DB_PASSWORD")
+    db_name = os.getenv("DB_NAME", "StudyFlow")
+
+    variaveis_faltando = []
+
+    if not db_host:
+        variaveis_faltando.append("DB_HOST")
+
+    if not db_user:
+        variaveis_faltando.append("DB_USER")
+
+    if not db_password:
+        variaveis_faltando.append("DB_PASSWORD")
+
+    if not db_name:
+        variaveis_faltando.append("DB_NAME")
+
+    if variaveis_faltando:
+        raise RuntimeError(
+            "Variáveis de ambiente ausentes: "
+            + ", ".join(variaveis_faltando)
+        )
+
+    try:
+        db_port = int(db_port)
+    except ValueError as erro:
+        raise RuntimeError(
+            "A variável DB_PORT precisa ser um número válido."
+        ) from erro
+
+    configuracao_banco = {
+        "host": db_host.strip(),
+        "port": db_port,
+        "user": db_user.strip(),
+        "password": db_password,
+        "database": db_name.strip(),
+        "ssl_disabled": False,
+        "ssl_verify_cert": False,
+        "connection_timeout": 15,
+        "charset": "utf8mb4",
+        "autocommit": True
+    }
+
+    caminho_certificado = os.getenv("DB_CA_PATH")
+
+    if caminho_certificado and os.path.exists(caminho_certificado):
+        configuracao_banco["ssl_ca"] = caminho_certificado
+        configuracao_banco["ssl_verify_cert"] = True
+
+    conexao = mysql.connector.connect(**configuracao_banco)
 
     cursor = conexao.cursor(dictionary=True)
 
@@ -695,4 +742,28 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except mysql.connector.Error as erro:
+        print(
+            json.dumps(
+                {
+                    "erro": "Erro ao conectar ou consultar o banco de dados.",
+                    "codigo": erro.errno,
+                    "mensagem": str(erro)
+                },
+                ensure_ascii=False
+            )
+        )
+        sys.exit(1)
+    except Exception as erro:
+        print(
+            json.dumps(
+                {
+                    "erro": "Erro ao gerar o relatório semanal.",
+                    "mensagem": str(erro)
+                },
+                ensure_ascii=False
+            )
+        )
+        sys.exit(1)
